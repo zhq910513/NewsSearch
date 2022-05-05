@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Js获取适时获取鼠标坐标值并显示</title>
+	<style>
+		*{
+			margin: 0;
+		}
+	</style>
+</head>
+<body>
+<script type="text/javascript">
+  var getCoordInDocumentExample = function(){
+    var coords = document.getElementById("coords");
+    coords.onmousemove = function(e){
+      var pointer = getCoordInDocument(e);
+      var coord = document.getElementById("coord");
+      coord.innerHTML = "X,Y=("+pointer.x+", "+pointer.y+")";
+    }
+  }
+  var getCoordInDocument = function(e) {
+    e = e || window.event;
+    var x = e.pageX || (e.clientX +
+      (document.documentElement.scrollLeft
+      || document.body.scrollLeft));
+    var y= e.pageY || (e.clientY +
+      (document.documentElement.scrollTop
+      || document.body.scrollTop));
+    return {'x':x,'y':y};
+  }
+  window.onload = function(){
+     getCoordInDocumentExample();
+ };
+</script>
+<div id="coords" style="width:1904px;height:992px;background:#F2F1D7;border:2px solid #0066cc;">
+请在此移动鼠标。
+	<img style="width:100%" src="./full_screen.png" alt="">
+</div>
+<br />
+<div id="coord" style="width:260px;border:2px solid #336699;">&nbsp;</div>
+	
+</body>
+</html>

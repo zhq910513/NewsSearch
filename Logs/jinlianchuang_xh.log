@@ -1,0 +1,63 @@
+2022-04-20 17:20:17,871 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-20 17:20:18,756 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-20 17:20:19,511 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-20 17:20:22,971 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-20 17:20:23,854 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-20 17:25:22,670 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-20 17:27:16,279 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-20 17:27:16,724 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-20 17:27:16,755 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-20 17:27:21,833 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-20 17:27:21,847 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-20 17:27:24,062 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-20 18:02:22,469 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-20 18:11:14,748 - jinlianchuang_xh.py[line:894] - WARNING: 3638.199299812317
+2022-04-21 23:35:17,413 - jinlianchuang_xh.py[line:894] - WARNING: 3724.6435561180115
+2022-04-22 20:20:52,574 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-22 20:21:12,928 - jinlianchuang_xh.py[line:561] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+2022-04-22 20:21:28,463 - jinlianchuang_xh.py[line:561] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+2022-04-23 20:44:53,817 - jinlianchuang_xh.py[line:894] - WARNING: 200.4406876564026
+2022-04-23 21:50:37,194 - jinlianchuang_xh.py[line:894] - WARNING: 3871.6563336849213
+2022-04-24 21:38:04,824 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-24 22:02:13,308 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-24 22:36:24,122 - jinlianchuang_xh.py[line:894] - WARNING: 3579.6807379722595
+2022-04-25 21:56:13,854 - jinlianchuang_xh.py[line:894] - WARNING: 3884.1449337005615
+2022-04-26 22:34:58,464 - jinlianchuang_xh.py[line:894] - WARNING: 3440.49804520607
+2022-04-27 22:28:35,807 - jinlianchuang_xh.py[line:802] - WARNING: (2013, 'Lost connection to MySQL server during query ([WinError 10053] 你的主机中的软件中止了一个已建立的连接。)')
+2022-04-27 22:28:35,807 - jinlianchuang_xh.py[line:802] - WARNING: (2013, 'Lost connection to MySQL server during query ([WinError 10053] 你的主机中的软件中止了一个已建立的连接。)')
+2022-04-27 22:28:35,808 - jinlianchuang_xh.py[line:803] - WARNING: ('20220426', 1, '国内厂家报价', 'PP粒料', '中化泉州', '', '中化泉州', '', '拉丝', 'L5E89', '', '', '', '', '元/吨', '定价', '', '', '', 0.0, 0.0, 0.0, 0.0, 0.0, '2022-04-27 22:28:30', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691f562d098e378988e0db&startDate=2019-01-01&endDate=2022-04-27&columnid=57691f562d098e378988e0da&timeType=0', '2243e6481ea21dcd719e9417a938be5e')
+2022-04-27 22:28:35,809 - jinlianchuang_xh.py[line:803] - WARNING: ('20220424', 1, '国内厂家报价', 'PP粒料', '中化泉州', '', '中化泉州', '', 'BOPP膜', 'L5D98', '', '', '', '', '元/吨', '', '', '', '', 0.0, 0.0, 0.0, 0.0, 0.0, '2022-04-27 22:28:30', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691f562d098e378988e0dc&startDate=2019-01-01&endDate=2022-04-27&columnid=57691f562d098e378988e0da&timeType=0', '1d04cd54aa1fb86157024d04d4384ba3')
+2022-04-27 22:28:35,810 - jinlianchuang_xh.py[line:784] - WARNING: (0, '')
+2022-04-27 22:28:35,810 - jinlianchuang_xh.py[line:784] - WARNING: (0, '')
+2022-04-27 22:28:35,810 - jinlianchuang_xh.py[line:785] - WARNING: {'0': '2022-04-26', '1': '/', '2': '定价'}
+2022-04-27 22:28:35,812 - jinlianchuang_xh.py[line:785] - WARNING: {'0': '2022-04-24', '1': '/', '2': '  '}
+2022-04-27 22:28:35,812 - jinlianchuang_xh.py[line:784] - WARNING: (0, '')
+2022-04-27 22:28:35,812 - jinlianchuang_xh.py[line:784] - WARNING: (0, '')
+2022-04-27 22:28:35,812 - jinlianchuang_xh.py[line:785] - WARNING: {'0': '2022-04-27', '1': '/', '2': '定价'}
+2022-04-27 22:28:35,813 - jinlianchuang_xh.py[line:785] - WARNING: {'0': '2022-04-25', '1': '/', '2': '定价'}
+2022-04-27 22:28:35,813 - jinlianchuang_xh.py[line:784] - WARNING: (0, '')
+2022-04-27 22:28:35,813 - jinlianchuang_xh.py[line:785] - WARNING: {'0': '2022-04-26', '1': '/', '2': '定价'}
+2022-04-27 22:28:35,813 - jinlianchuang_xh.py[line:784] - WARNING: (0, '')
+2022-04-27 22:28:35,813 - jinlianchuang_xh.py[line:785] - WARNING: {'0': '2022-04-27', '1': '/', '2': '定价'}
+2022-04-27 23:08:12,946 - jinlianchuang_xh.py[line:894] - WARNING: 4141.192394733429
+2022-04-29 02:02:42,357 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-29 02:02:42,496 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-29 02:03:05,070 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-29 02:03:05,522 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-29 02:04:35,304 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-29 02:04:40,419 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-29 02:10:45,162 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-29 02:16:14,652 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-29 02:17:44,664 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-29 02:18:09,099 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-29 02:19:03,720 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-29 02:19:05,627 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-29 02:19:09,483 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-29 02:19:18,781 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-29 02:19:21,312 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-29 02:19:23,050 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-29 02:20:16,602 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-29 02:20:16,713 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-29 02:20:19,820 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-29 02:20:21,814 - jinlianchuang_xh.py[line:561] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-04-29 02:24:40,849 - jinlianchuang_xh.py[line:894] - WARNING: 3542.0239124298096
