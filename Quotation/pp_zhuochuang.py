@@ -2,9 +2,7 @@
 # -*- coding:utf-8 -*-
 import random
 import sys
-import threading
 from multiprocessing.pool import ThreadPool
-
 
 sys.path.append("../")
 import configparser
@@ -207,24 +205,24 @@ class PPZhuoChuang:
                             if Type == '丙烯下游周度开工率统计':
                                 if info['FColumnName'] == '装置动态' and info["WebSite"] == "化工":
                                     if not info.get("ClassName") == "管材管件":
-                                        self.message_coll.update_one({'link': info['link']}, {'$set': info}, upsert=True)
+                                        self.message_coll.update_one({'link': info['link']}, {'$set': info},
+                                                                     upsert=True)
                             elif Type == '塑料两油库存':
                                 if info['ClassName'] == 'PP粒':
                                     if not info.get("ClassName") == "管材管件":
-                                        self.message_coll.update_one({'link': info['link']}, {'$set': info}, upsert=True)
+                                        self.message_coll.update_one({'link': info['link']}, {'$set': info},
+                                                                     upsert=True)
                             else:
                                 if not info.get("ClassName") == "管材管件":
                                     self.message_coll.update_one({'link': info['link']}, {'$set': info}, upsert=True)
         except requests.exceptions.ConnectionError:
             # 标记失效代理
-            if pro:
-                threading.Thread(target=self.DisProxy, args=(pro,)).start()
+            # threading.Thread(target=self.DisProxy, args=(pro,)).start()
             print('网络问题，重试中...')
             return self.GetAllMessages(Type, pageNum, True, history)
         except TimeoutError:
             # 标记失效代理
-            if pro:
-                threading.Thread(target=self.DisProxy, args=(pro,)).start()
+            # threading.Thread(target=self.DisProxy, args=(pro,)).start()
             print('网络问题，重试中...')
             return self.GetAllMessages(Type, pageNum, True, history)
         except Exception as error:
@@ -283,7 +281,8 @@ class PPZhuoChuang:
                     resp = requests.get(url=link.replace('http://', 'https://'), headers=self.articleHeaders, timeout=5,
                                         verify=False)
             else:
-                resp = requests.get(url=link.replace('http://', 'https://'), headers=self.articleHeaders, timeout=5, verify=False)
+                resp = requests.get(url=link.replace('http://', 'https://'), headers=self.articleHeaders, timeout=5,
+                                    verify=False)
             resp.encoding = 'utf-8'
             if resp.status_code == 200:
                 pubTime_new, dataList = self.ParseArticle(Type, resp.text, info['link'], pubTime)
@@ -312,14 +311,12 @@ class PPZhuoChuang:
                                              upsert=True)
         except requests.exceptions.ConnectionError:
             # 标记失效代理
-            if pro:
-                threading.Thread(target=self.DisProxy, args=(pro,)).start()
+            # threading.Thread(target=self.DisProxy, args=(pro,)).start()
             print('网络问题，重试中...')
             return self.GetUrlFromMongo(info, proxy)
         except TimeoutError:
             # 标记失效代理
-            if pro:
-                threading.Thread(target=self.DisProxy, args=(pro,)).start()
+            # threading.Thread(target=self.DisProxy, args=(pro,)).start()
             print('网络问题，重试中...')
             return self.GetUrlFromMongo(info, True)
         except Exception as error:
@@ -340,7 +337,7 @@ class PPZhuoChuang:
                     print('登陆失效，请重新登陆获取cookie！')
                     return None, None
 
-                pubTime_info = re.findall('(\d+-\d+-\d+ \d+:\d+:\d+)', soup.get_text(),re.S)
+                pubTime_info = re.findall('(\d+-\d+-\d+ \d+:\d+:\d+)', soup.get_text(), re.S)
                 if pubTime_info:
                     pubTime = pubTime_info[0]
 
@@ -840,7 +837,7 @@ class PPZhuoChuang:
                         'dateTime': pubTime
                     })
 
-            except Exception as  error:
+            except Exception as error:
                 logger.warning(error)
 
         elif Type == '聚丙烯粉料及上游丙烯价格一览':
@@ -907,12 +904,12 @@ class PPZhuoChuang:
                 else:
                     logger.warning('没有找到数据，可能cookies过期   %s' % link)
                     self.message_coll.update_one({'link': link}, {'$set': {'status': 404}}, upsert=True)
-            except Exception as  error:
+            except Exception as error:
                 logger.warning(error)
 
         elif Type == '塑膜收盘价格表':
             try:
-                date = re.findall('\d+\-\d+\-\d+', soup.find('div', {'style': 'float: left'}).get_text(), re.S)[0]
+                date = re.findall('\d+-\d+-\d+', soup.find('div', {'style': 'float: left'}).get_text(), re.S)[0]
 
                 if '产品' in soup.find('tbody').find_all('tr')[0].find_all('td')[0].get_text().strip() \
                         and '规' in soup.find('tbody').find_all('tr')[0].find_all('td')[1].get_text().strip() \
@@ -945,7 +942,7 @@ class PPZhuoChuang:
         # 设置进程数
         pool = ThreadPool(processes=5)
 
-        for info in self.message_coll.find({'status': None, '$nor':[{"ClassName" : "管材管件"}]}):
+        for info in self.message_coll.find({'status': None, '$nor': [{"ClassName": "管材管件"}]}):
             if Async:
                 out = pool.apply_async(func=self.GetUrlFromMongo, args=(info, proxy,))  # 异步
             else:

@@ -1,9 +1,1 @@
-2022-04-21 22:36:49,773 - pe_wangye.py[line:2171] - WARNING: 188.26480102539062
-2022-04-22 20:17:41,278 - pe_wangye.py[line:2171] - WARNING: 111.84829068183899
-2022-04-23 20:49:42,577 - pe_wangye.py[line:650] - WARNING: 'NoneType' object has no attribute 'find_all'
-2022-04-23 20:49:42,578 - pe_wangye.py[line:2171] - WARNING: 33.359012842178345
-2022-04-25 21:31:13,101 - pe_wangye.py[line:813] - WARNING: Exceeded 30 redirects.
-2022-04-25 21:32:10,684 - pe_wangye.py[line:2171] - WARNING: 117.11080241203308
-2022-04-26 21:51:49,165 - pe_wangye.py[line:2171] - WARNING: 181.7615954875946
-2022-04-29 01:29:17,381 - pe_wangye.py[line:618] - WARNING: HTTPConnectionPool(host='www.dce.com.cn', port=80): Read timed out. (read timeout=5)
-2022-04-29 01:29:17,383 - pe_wangye.py[line:2171] - WARNING: 207.20027804374695
+2022-05-06 19:00:03,823 - pe_wangye.py[line:2178] - WARNING: 190.67628693580627

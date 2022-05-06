@@ -23,7 +23,6 @@ import pytesseract
 import requests
 from PIL import Image
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 
 requests.packages.urllib3.disable_warnings()
@@ -61,14 +60,14 @@ class Cookie:
         self.get_pid()
         self.StartCMD()
         db = conf.get("Mongo", "COOKIE")
-        client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/cookie')
-        # client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/cookie')
+        # client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/cookie')
+        client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/cookie')
         self.cookie_coll = client[db]['cookies']
         print("开始登录...")
 
         # 创建chrome参数对象
         options = webdriver.ChromeOptions()
-        # options.add_argument('--headless')
+        options.add_argument('--headless')
         options.add_argument('--no-sandbox')  # 解决DevToolsActivePort文件不存在的报错
         options.add_argument('--disable-gpu')  # 谷歌文档提到需要加上这个属性来规避bug
         options.add_argument('--hide-scrollbars')  # 隐藏滚动条, 应对一些特殊页面
@@ -78,8 +77,7 @@ class Cookie:
         self.JinLianChuangUrl = 'http://member.315i.com/logreg/toIndex?gotourl=http%3A%2F%2Fwww.315i.cn%2F'
         self.ZhuoChuangUrl = 'https://www.sci99.com/'
         self.LongZhongUrl = 'https://dc.oilchem.net/'
-        s = Service(self.executablePath)
-        self.driver = webdriver.Chrome(options=options, service=s)
+        self.driver = webdriver.Chrome(options=options, executable_path=self.executablePath)
         self.driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {
             "source": """
                Object.defineProperty(navigator, 'webdriver', {
@@ -91,23 +89,23 @@ class Cookie:
         print('driver启动成功...')
         self.captchaApi = None
         self.request_id = ''
+        self.ChoicePlatform()
 
     @staticmethod
     def StartCMD():
-        cmd = r'mitmdump -p 65534 -q -s D:\Projects\NewsSearch\get_mitmproxy_response.py'
-        # cmd = r'mitmdump -p 65534 -q -s /home/zyl/NewsSearch/get_mitmproxy_response.py'
+        # cmd = r'mitmdump -p 65534 -q -s D:\Projects\NewsSearch\get_mitmproxy_response.py'
+        cmd = r'mitmdump -p 65534 -q -s /home/zyl/NewsSearch/get_mitmproxy_response.py'
         subprocess.Popen(cmd, shell=True)
 
-    @staticmethod
-    def Account(platform):
-        usrs = {
-            'jlc': ['jinyang8', 'jinyang168'],
-            'jlc_second': ['18918096272', '123456'],
-            'zc': ['jinyang', 'jy123456'],
-            'zc_second': ['dong135', 'htfc2017'],
-            'lz': ['13428976742', 'a123456']
-        }
-        return usrs.get(platform)
+    # @staticmethod
+    # def Account(platform):
+    #     usrs = {
+    #         'jlc': ['jinyang8', 'jinyang168'],
+    #         'jlc_second': ['18918096272', '123456'],
+    #         'zc': ['jinyang', 'jy123456'],
+    #         'zc_second': ['dong135', 'htfc2017']
+    #     }
+    #     return usrs.get(platform)
 
     # 选择平台
     def ChoicePlatform(self):
@@ -162,15 +160,13 @@ class Cookie:
                         time.sleep(5)
                         if self.driver.find_element(By.XPATH, '//*[@id="loginv"]/div[1]/a[1]').text == self.account:
                             print(f'金联创 {self.account} 登录成功！')
-                            # (type, cookie_name, link)
                             for Type in [
-                                ('jlc', 'jlc_xh_category', 'http://jiag.315i.com/price/newmain?productClassId=004001001&columnClassId=004001001001&dateColumnClassId=004001001001001&timeType=0'),
-                                ('jlc', 'jlc_xh_downloadDetail', 'http://jiag.315i.com/price/historyData?itemIdStr=5769154a2d098e378988c502&startDate=2019-01-01&endDate=2020-11-27&columnid=5769154a2d098e378988c501&timeType=0'),
+                                ('jlc', 'jlc_xh_downloadDetail', 'https://jiag.315i.com/price/historyData?itemIdStr=5769154a2d098e378988c502&startDate=2019-01-01&endDate=2022-05-06&columnid=5769154a2d098e378988c501&timeType=1'), # 3 day
                                 ('jlc', 'jlc_pe_进出口数据_article', 'http://plas.315i.com/infodetail/i14377737_p004001001_c005010.html'),
                                 ('jlc', 'pe_juyixi', 'http://www.dce.com.cn/publicweb/quotesdata/dayQuotesCh.html'),
                                 ('jlc', 'jlc_search', 'http://plas.315i.com/infodetail/i14826098_p004001001_c004002.html'),
-                                ('jlc_second', 'jlc_second', 'http://plas.315i.com/infodetail/i14826098_p004001001_c004002.html'),
-                                ('jlc_third', 'jlc_third', 'http://plas.315i.com/infodetail/i14826098_p004001001_c004002.html')
+                                # ('jlc_second', 'jlc_second', 'http://plas.315i.com/infodetail/i14826098_p004001001_c004002.html'),
+                                # ('jlc_third', 'jlc_third', 'http://plas.315i.com/infodetail/i14826098_p004001001_c004002.html')
                             ]:
                                 if self.platform != Type[0]:
                                     continue
@@ -228,14 +224,12 @@ class Cookie:
             time.sleep(1)
 
             # 获取验证码
-            # captchaNum = self.ParseCaptcha()
-            captchaNum = 1234
+            captchaNum = self.ParseCaptcha()
             print('验证码： %s' % captchaNum)
-            time.sleep(60)
 
             if captchaNum:
                 # 填入验证码
-                # self.driver.find_element(By.ID, 'dialogImgCodeStr').send_keys(captchaNum)
+                self.driver.find_element(By.ID, 'dialogImgCodeStr').send_keys(captchaNum)
 
                 # 登录
                 time.sleep(3)
@@ -334,22 +328,22 @@ class Cookie:
                     # 获取 cookie
                     for Type in [
                         ('zc_sj_category', 'https://prices.sci99.com/cn/product.aspx?ppid=12278&ppname=LDPE&navid=521'),
-                        # ('zc_sj_downloadDetail', 'https://prices.sci99.com/cn/product_price.aspx?diid=39246&datatypeid=37&ppid=12278&ppname=LDPE&cycletype=day'),
-                        # ('zc_zs_category', 'https://index.sci99.com/channel/product/hy/%E5%A1%91%E6%96%99/3.html'),
-                        # ('zc_zs_downloadDetail', 'https://index.sci99.com/channel/product/hy/%E5%A1%91%E6%96%99/3.html'),
-                        # ('zc_pe_装置动态_article', 'https://plas.chem99.com/news/37614094.html'),
-                        # ('zc_pe_国内石化_article', 'https://plas.chem99.com/news/37307264.html'),
-                        # ('zc_pe_农膜日评_article', 'https://plas.chem99.com/news/38097594.html'),
-                        # ('zc_pe_塑膜收盘_article', 'https://plas.chem99.com/news/37294719.html'),
-                        # ('zc_pe_神华竞拍_article', 'https://plas.chem99.com/news/37528935.html'),
-                        # ('zc_pp_messages', 'https://www.sci99.com/search/?key=PP%E8%A3%85%E7%BD%AE%E5%8A%A8%E6%80%81%E6%B1%87%E6%80%BB&siteid=0'),
-                        # ('zc_pp_article', 'https://plas.chem99.com/news/37665388.html'),
-                        # ('zc_pp_bxxy_article', 'https://chem.chem99.com/news/36724085.html'),
-                        # ('zc_search', 'https://plas.chem99.com/news/38213547.html'),
+                        ('zc_sj_downloadDetail', 'https://prices.sci99.com/cn/product_price.aspx?diid=39246&datatypeid=37&ppid=12278&ppname=LDPE&cycletype=day'),
+                        ('zc_zs_category', 'https://index.sci99.com/channel/product/hy/%E5%A1%91%E6%96%99/3.html'),
+                        ('zc_zs_downloadDetail', 'https://index.sci99.com/channel/product/hy/%E5%A1%91%E6%96%99/3.html'),
+                        ('zc_pe_装置动态_article', 'https://plas.chem99.com/news/37614094.html'),
+                        ('zc_pe_国内石化_article', 'https://plas.chem99.com/news/37307264.html'),
+                        ('zc_pe_农膜日评_article', 'https://plas.chem99.com/news/38097594.html'),
+                        ('zc_pe_塑膜收盘_article', 'https://plas.chem99.com/news/37294719.html'),
+                        ('zc_pe_神华竞拍_article', 'https://plas.chem99.com/news/37528935.html'),
+                        ('zc_pp_messages', 'https://www.sci99.com/search/?key=PP%E8%A3%85%E7%BD%AE%E5%8A%A8%E6%80%81%E6%B1%87%E6%80%BB&siteid=0'),
+                        ('zc_pp_article', 'https://plas.chem99.com/news/37665388.html'),
+                        ('zc_pp_bxxy_article', 'https://chem.chem99.com/news/36724085.html'),
+                        ('zc_search', 'https://plas.chem99.com/news/38213547.html'),
 
                         # second
-                        # ('zc_sj_category_second', 'https://prices.sci99.com/cn/product.aspx?ppid=12555&ppname=%u518D%u751F%u9AD8%u538B&navid=552'),
-                        # ('zc_sj_downloadDetail_second', 'https://prices.sci99.com/cn/product_price.aspx?diid=80028&datatypeid=37&ppid=12555&ppname=%u518D%u751F%u9AD8%u538B&cycletype=day'),
+                        ('zc_sj_category_second', 'https://prices.sci99.com/cn/product.aspx?ppid=12555&ppname=%u518D%u751F%u9AD8%u538B&navid=552'),
+                        ('zc_sj_downloadDetail_second', 'https://prices.sci99.com/cn/product_price.aspx?diid=80028&datatypeid=37&ppid=12555&ppname=%u518D%u751F%u9AD8%u538B&cycletype=day'),
                     ]:
                         self.driver.get(Type[1])
                         print('访问 -- %s' % Type[0])
@@ -357,7 +351,8 @@ class Cookie:
                         time.sleep(5)
 
                         # 覆盖该类型cookie
-                        if Type[0] == 'zc_zs_downloadDetail' or Type[0] == 'zc_pp_bxxy_article' or 'zc_pe' in Type[0] or 'zc_pp_article' in Type[0] or '农膜日评' in Type[0]:
+                        if Type[0] == 'zc_zs_downloadDetail' or Type[0] == 'zc_pp_bxxy_article' or 'zc_pe' in Type[
+                            0] or 'zc_pp_article' in Type[0] or '农膜日评' in Type[0]:
                             time.sleep(1)
                             self.driver.refresh()
                             time.sleep(5)
@@ -399,23 +394,18 @@ class Cookie:
             y2 = 380
             x1 = 1450
             y1 = 334
+        elif 'lz' in self.platform:
+            url = self.LongZhongUrl
+            # 无界面
+            x2 = 1118
+            y2 = 527
+            x1 = 1030
+            y1 = 497
             # 有界面
             # x2 = 833
             # y2 = 313
             # x1 = 746
             # y1 = 281
-        elif 'lz' in self.platform:
-            url = self.LongZhongUrl
-            # 无界面
-            # x2 = 1118
-            # y2 = 527
-            # x1 = 1030
-            # y1 = 497
-            # 有界面
-            x2 = 833
-            y2 = 313
-            x1 = 746
-            y1 = 281
         else:
             url = None
             x2 = 0
@@ -461,18 +451,6 @@ class Cookie:
         else:
             pass
 
-    # 关闭浏览器
-    def Close_driver(self, times):
-        try:
-            for i in range(times):
-                handles = self.driver.window_handles
-                self.driver.switch_to_window(handles[-1])
-                self.driver.close()
-        except:
-            pass
-        finally:
-            self.get_pid()
-
     @staticmethod
     def select_pid():
         status = False
@@ -504,13 +482,6 @@ class Cookie:
         """通过pid杀死进程"""
         cmd = "kill -9 {}".format(pid)
         subprocess.Popen(cmd, shell=True)
-
-    @staticmethod
-    def kill_chrome_mitmproxy():
-        for key in ['chrome', 'mitmproxy']:
-            cmd = r"ps -ef|grep " + key + "|awk '{print $2}'|xargs kill -9"
-            subprocess.Popen(cmd, shell=True)
-            time.sleep(1)
 
 
 class CookieSearch:
@@ -544,6 +515,7 @@ class CookieSearch:
         print('driver启动成功...')
         self.captchaApi = ''
         self.request_id = ''
+        self.ChoicePlatform()
 
     # 选择平台
     def ChoicePlatform(self):
@@ -594,35 +566,32 @@ class CookieSearch:
         except Exception as error:
             logger.warning(error)
 
-    # 关闭浏览器
-    def Close_driver(self, times):
-        try:
-            for i in range(times):
-                handles = self.driver.window_handles
-                self.driver.switch_to_window(handles[-1])
-                self.driver.close()
-        except:
-            pass
 
 
-def run():
+def kill_chrome_mitmproxy():
+    for key in ['chrome', 'mitmproxy']:
+        cmd = f"ps -ef|grep {key} " + "|awk '{print $2}'|xargs kill -9"
+        subprocess.Popen(cmd, shell=True)
+        time.sleep(1)
+
+
+def cookies_run():
     accounts = [
-        # {'platform':'jlc', 'account': 'jinyang8', 'pwd': 'jinyang168'},
-        # {'platform': 'jlc_second', 'account': '18918096272', 'pwd': '123456'},
-        # {'platform': 'jlc_third', 'account': 'hshizhi', 'pwd': 'ZYLzyl@123@'},
-        {'platform': 'zc', 'account': 'changsu', 'pwd': 'cs123456'},
-        # {'platform': 'lz', 'account': 'zhq111', 'pwd': 'a123456'}
+        {'platform':'jlc', 'account': 'jinyang8', 'pwd': 'jinyang168'},
+        #{'platform': 'jlc_second', 'account': '18918096272', 'pwd': '123456'},
+        #{'platform': 'jlc_third', 'account': 'hshizhi', 'pwd': 'ZYLzyl@123@'},
+        {'platform': 'lz', 'account': 'zhq111', 'pwd': 'a123456'},
+        {'platform': 'zc', 'account': 'changsu', 'pwd': 'cs123456'}
     ]
     for account in accounts:
-        ck = Cookie(account)
-        ck.ChoicePlatform()
-        ck.Close_driver(3)
-        ck.kill_chrome_mitmproxy()
+        kill_chrome_mitmproxy()
 
-    # cs = CookieSearch()
-    # cs.ChoicePlatform()
-    # cs.Close_driver(3)
+        Cookie(account)
+
+        kill_chrome_mitmproxy()
+
+    CookieSearch()
 
 
 if __name__ == '__main__':
-    run()
+    cookies_run()

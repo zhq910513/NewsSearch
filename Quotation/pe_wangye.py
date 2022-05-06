@@ -5,7 +5,6 @@ import random
 
 # 主函数加入这两行，将项目的根目录(webapp)的上级路径加入到系统PATH中
 import sys
-import threading
 from urllib.parse import urlencode
 
 sys.path.append("../")
@@ -294,7 +293,7 @@ class PE:
                 else:
                     print(resp.status_code)
             except requests.exceptions.ConnectionError:
-                threading.Thread(target=self.DisProxy, args=(pro,)).start()
+                # threading.Thread(target=self.DisProxy, args=(pro,)).start()
                 print('网络问题，重试中...')
                 return self.GetAllMessages(info, proxy, history, pageNum)
             except TimeoutError:
@@ -302,7 +301,6 @@ class PE:
             except Exception as error:
                 logger.warning(error)
                 return
-
         else:
             if 'list.oilchem.net' in link:
                 headers = self.LZHeaders
@@ -360,7 +358,7 @@ class PE:
                 else:
                     print(resp.status_code)
             except requests.exceptions.ConnectionError:
-                threading.Thread(target=self.DisProxy, args=(pro,)).start()
+                # threading.Thread(target=self.DisProxy, args=(pro,)).start()
                 print('网络问题，重试中...')
                 return self.GetAllMessages(info, proxy, history, pageNum)
             except TimeoutError:
@@ -371,6 +369,7 @@ class PE:
 
     @staticmethod
     def ParseMessages(info, Html):
+        maxPage = 0
         if isinstance(Html, str):
             soup = BeautifulSoup(Html, 'lxml')
             data = {}
@@ -540,7 +539,8 @@ class PE:
                 return data
 
     # 价格价差 --- 聚乙烯
-    def GetSelectDate(self, history=False, timeStrf=str(time.strftime("%Y-%m-%d", time.localtime(time.time()))),count=0):
+    def GetSelectDate(self, history=False, timeStrf=str(time.strftime("%Y-%m-%d", time.localtime(time.time()))),
+                      count=0):
 
         print('正在加载 %s 的数据...' % timeStrf)
 
@@ -799,14 +799,12 @@ class PE:
                 print('{} -- 服务器访问太频繁'.format(resp.status_code))
         except requests.exceptions.ConnectionError:
             # 标记失效代理
-            if pro:
-                threading.Thread(target=self.DisProxy, args=(pro,)).start()
+            # threading.Thread(target=self.DisProxy, args=(pro,)).start()
             print('网络问题，重试中...')
             return self.GetUrlFromMongo(info, True)
         except TimeoutError:
             # 标记失效代理
-            if pro:
-                threading.Thread(target=self.DisProxy, args=(pro,)).start()
+            # threading.Thread(target=self.DisProxy, args=(pro,)).start()
             print('网络问题，重试中...')
             return self.GetUrlFromMongo(info, True)
         except Exception as error:
@@ -976,8 +974,11 @@ class PE:
                 num_list = []
                 for num, tr in enumerate(info):
                     try:
-                        if len(tr.find_all('td')) == 1 and '检修' in tr.find('td').get_text() or len(tr.find_all('td')) == 1 and '投产' in tr.find('td').get_text():
-                            if '2020' in tr.find('td').get_text() or '2021' in tr.find('td').get_text()  or '2022' in tr.find('td').get_text()  or '2023' in tr.find('td').get_text():
+                        if len(tr.find_all('td')) == 1 and '检修' in tr.find('td').get_text() or len(
+                                tr.find_all('td')) == 1 and '投产' in tr.find('td').get_text():
+                            if '2020' in tr.find('td').get_text() or '2021' in tr.find(
+                                    'td').get_text() or '2022' in tr.find('td').get_text() or '2023' in tr.find(
+                                    'td').get_text():
                                 num_list.append(num)
                             elif tr.find('td').get_text() == '国外聚乙烯装置投产计划' or tr.find('td').get_text() == '国外聚乙烯装置检修计划':
                                 num_list.append(num)
@@ -1060,18 +1061,18 @@ class PE:
                                 except:
                                     pass
                             if data:
-                                if not data.get('公司名称'):
-                                    data.update({'公司名称': gs})
-                                if not data.get('装置'):
-                                    data.update({'装置': zz})
-                                if not data.get('产能（万吨/年）'):
-                                    data.update({'产能（万吨/年）': cn})
-                                if not data.get('地区'):
-                                    data.update({'地区': dq})
-                                if not data.get('时间'):
-                                    data.update({'时间': sj})
-                                if not data.get('备注'):
-                                    data.update({'备注': bz})
+                                # if not data.get('公司名称'):
+                                #     data.update({'公司名称': gs})
+                                # if not data.get('装置'):
+                                #     data.update({'装置': zz})
+                                # if not data.get('产能（万吨/年）'):
+                                #     data.update({'产能（万吨/年）': cn})
+                                # if not data.get('地区'):
+                                #     data.update({'地区': dq})
+                                # if not data.get('时间'):
+                                #     data.update({'时间': sj})
+                                # if not data.get('备注'):
+                                #     data.update({'备注': bz})
                                 infoList.append(data)
                     if infoList:
                         dataList.append({
@@ -1087,8 +1088,10 @@ class PE:
                         titles = [td.get_text() for td in info[num[0] + 1].find_all('td')]
                         if '检修' in name:
                             Type = '国外聚乙烯装置检修计划'
-                        if '投产' in name:
+                        elif '投产' in name:
                             Type = '国外聚乙烯装置投产计划'
+                        else:
+                            Type = None
 
                         # 捕获完成数据
                         for tr in info[num_list[0] + 2:]:
@@ -1128,7 +1131,7 @@ class PE:
                                 # 录入不完整数据
                                 elif len(tr.find_all('td')) != len(titles):
                                     if '总计' in [td.get_text().strip() for td in tr.find_all('td')]:
-                                        pass
+                                        data = {}
                                     else:
                                         data = {}
                                         for td in tr.find_all('td'):
@@ -1162,18 +1165,18 @@ class PE:
                                             except:
                                                 pass
                                     if data:
-                                        if not data.get('公司名称'):
-                                            data.update({'公司名称': gs})
-                                        if not data.get('装置'):
-                                            data.update({'装置': zz})
-                                        if not data.get('产能（万吨/年）'):
-                                            data.update({'产能（万吨/年）': cn})
-                                        if not data.get('地区'):
-                                            data.update({'地区': dq})
-                                        if not data.get('时间'):
-                                            data.update({'时间': sj})
-                                        if not data.get('备注'):
-                                            data.update({'备注': bz})
+                                        # if not data.get('公司名称'):
+                                        #     data.update({'公司名称': gs})
+                                        # if not data.get('装置'):
+                                        #     data.update({'装置': zz})
+                                        # if not data.get('产能（万吨/年）'):
+                                        #     data.update({'产能（万吨/年）': cn})
+                                        # if not data.get('地区'):
+                                        #     data.update({'地区': dq})
+                                        # if not data.get('时间'):
+                                        #     data.update({'时间': sj})
+                                        # if not data.get('备注'):
+                                        #     data.update({'备注': bz})
                                         infoList.append(data)
                             if infoList:
                                 dataList.append({
@@ -1205,7 +1208,7 @@ class PE:
                                 # 录入不完整数据
                                 elif len(tr.find_all('td')) != len(titles):
                                     if '总计' in [td.get_text().strip() for td in tr.find_all('td')]:
-                                        pass
+                                        data = {}
                                     else:
                                         data = {}
                                         for td in tr.find_all('td'):
@@ -1239,18 +1242,18 @@ class PE:
                                             except:
                                                 pass
                                     if data:
-                                        if not data.get('公司名称'):
-                                            data.update({'公司名称': gs})
-                                        if not data.get('装置'):
-                                            data.update({'装置': zz})
-                                        if not data.get('产能（万吨/年）'):
-                                            data.update({'产能（万吨/年）': cn})
-                                        if not data.get('地区'):
-                                            data.update({'地区': dq})
-                                        if not data.get('时间'):
-                                            data.update({'时间': sj})
-                                        if not data.get('备注'):
-                                            data.update({'备注': bz})
+                                        # if not data.get('公司名称'):
+                                        #     data.update({'公司名称': gs})
+                                        # if not data.get('装置'):
+                                        #     data.update({'装置': zz})
+                                        # if not data.get('产能（万吨/年）'):
+                                        #     data.update({'产能（万吨/年）': cn})
+                                        # if not data.get('地区'):
+                                        #     data.update({'地区': dq})
+                                        # if not data.get('时间'):
+                                        #     data.update({'时间': sj})
+                                        # if not data.get('备注'):
+                                        #     data.update({'备注': bz})
                                         infoList.append(data)
 
                             if infoList:
@@ -1269,8 +1272,10 @@ class PE:
                         # print(titles)
                         if '检修' in name:
                             Type = '计划检修'
-                        if '投产' in name:
+                        elif '投产' in name:
                             Type = '国外聚乙烯装置投产计划'
+                        else:
+                            Type = None
 
                         # 捕获完成数据
                         for tr in info[num_list[0] + 2:]:
@@ -1310,7 +1315,7 @@ class PE:
                                 # 录入不完整数据
                                 elif len(tr.find_all('td')) != len(titles):
                                     if '总计' in [td.get_text().strip() for td in tr.find_all('td')]:
-                                        pass
+                                        data = {}
                                     else:
                                         data = {}
                                         for td in tr.find_all('td'):
@@ -1344,18 +1349,18 @@ class PE:
                                             except:
                                                 pass
                                     if data:
-                                        if not data.get('公司名称'):
-                                            data.update({'公司名称': gs})
-                                        if not data.get('装置'):
-                                            data.update({'装置': zz})
-                                        if not data.get('产能（万吨/年）'):
-                                            data.update({'产能（万吨/年）': cn})
-                                        if not data.get('地区'):
-                                            data.update({'地区': dq})
-                                        if not data.get('时间'):
-                                            data.update({'时间': sj})
-                                        if not data.get('备注'):
-                                            data.update({'备注': bz})
+                                        # if not data.get('公司名称'):
+                                        #     data.update({'公司名称': gs})
+                                        # if not data.get('装置'):
+                                        #     data.update({'装置': zz})
+                                        # if not data.get('产能（万吨/年）'):
+                                        #     data.update({'产能（万吨/年）': cn})
+                                        # if not data.get('地区'):
+                                        #     data.update({'地区': dq})
+                                        # if not data.get('时间'):
+                                        #     data.update({'时间': sj})
+                                        # if not data.get('备注'):
+                                        #     data.update({'备注': bz})
                                         infoList.append(data)
                             if infoList:
                                 dataList.append({
@@ -1387,7 +1392,7 @@ class PE:
                                 # 录入不完整数据
                                 elif len(tr.find_all('td')) != len(titles):
                                     if '总计' in [td.get_text().strip() for td in tr.find_all('td')]:
-                                        pass
+                                        data = {}
                                     else:
                                         data = {}
                                         for td in tr.find_all('td'):
@@ -1421,18 +1426,18 @@ class PE:
                                             except:
                                                 pass
                                     if data:
-                                        if not data.get('公司名称'):
-                                            data.update({'公司名称': gs})
-                                        if not data.get('装置'):
-                                            data.update({'装置': zz})
-                                        if not data.get('产能（万吨/年）'):
-                                            data.update({'产能（万吨/年）': cn})
-                                        if not data.get('地区'):
-                                            data.update({'地区': dq})
-                                        if not data.get('时间'):
-                                            data.update({'时间': sj})
-                                        if not data.get('备注'):
-                                            data.update({'备注': bz})
+                                        # if not data.get('公司名称'):
+                                        #     data.update({'公司名称': gs})
+                                        # if not data.get('装置'):
+                                        #     data.update({'装置': zz})
+                                        # if not data.get('产能（万吨/年）'):
+                                        #     data.update({'产能（万吨/年）': cn})
+                                        # if not data.get('地区'):
+                                        #     data.update({'地区': dq})
+                                        # if not data.get('时间'):
+                                        #     data.update({'时间': sj})
+                                        # if not data.get('备注'):
+                                        #     data.update({'备注': bz})
                                         infoList.append(data)
 
                             if infoList:
@@ -1773,7 +1778,7 @@ class PE:
 
         elif info.get('Type') == '农膜日评':
             try:
-                date = re.findall('\d+\-\d+\-\d+', soup.find('div', {'style': 'float: left'}).get_text(), re.S)[0]
+                date = re.findall('\d+-\d+-\d+', soup.find('div', {'style': 'float: left'}).get_text(), re.S)[0]
 
                 if '类别' in soup.find('tbody').find_all('tr')[0].find_all('td')[0].get_text().strip() and '山东' in \
                         soup.find('tbody').find_all('tr')[0].find_all('td')[1].get_text().strip():
@@ -1782,17 +1787,18 @@ class PE:
                         data.update({
                             tr.find_all('td')[0].get_text().strip(): tr.find_all('td')[1].get_text().strip()
                         })
+                else:
+                    data = None
 
                 if date and data:
                     dataList.append({date: data})
-
             except Exception as error:
                 logger.warning(error)
 
             return dataList
 
         elif info.get('Type') == '塑膜收盘价格表':
-            date = re.findall('\d+\-\d+\-\d+', soup.find('div', {'style': 'float: left'}).get_text(), re.S)[0]
+            date = re.findall('\d+-\d+-\d+', soup.find('div', {'style': 'float: left'}).get_text(), re.S)[0]
             try:
                 if 'Panel_Login' in str(Html) or '未找到您的权限信息' in str(Html):
                     print('未找到您的权限信息，请重新登录')
@@ -1945,6 +1951,7 @@ class PE:
                         tbody = soup.find_all('tbody')[tbody_num]
 
                         # 标题
+                        tb_title = None
                         for p in soup.find('div', {'class': 'xq-content'}).find_all('p'):
                             try:
                                 if tbody_num == 0:
@@ -2100,7 +2107,7 @@ class PE:
         # 设置进程数
         pool = ThreadPool(processes=3)
 
-        for info in self.message_coll.find({'$nor':[{'status': 1}]}).sort('_id', -1):
+        for info in self.message_coll.find({'$nor': [{'status': 1}]}).sort('_id', -1):
             if Async:
                 out = pool.apply_async(func=self.GetUrlFromMongo, args=(info, proxy,))  # 异步
             else:

@@ -4,7 +4,6 @@
 # 主函数加入这两行，将项目的根目录(webapp)的上级路径加入到系统PATH中
 import random
 import sys
-import threading
 
 sys.path.append("../")
 import configparser
@@ -28,8 +27,6 @@ from fake_useragent import UserAgent
 from pymongo import MongoClient
 import pymysql
 from pymysql.err import IntegrityError
-
-from Cookies.GetCookie import run
 
 requests.packages.urllib3.disable_warnings()
 pp = pprint.PrettyPrinter(indent=4)
@@ -105,7 +102,6 @@ class JinLianChuang:
             'Connection': 'keep-alive',
             'Host': 'jiag.315i.com',
             'Pragma': 'no-cache',
-            'Referer': 'http://jiag.315i.com/price/newmain?productClassId=004001001&columnClassId=004001001001&dateColumnClassId=004001001001001&timeType=1',
             'Upgrade-Insecure-Requests': '1',
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.75 Safari/537.36'
         }
@@ -181,9 +177,6 @@ class JinLianChuang:
     # 获取所有层级类目
     def GetCategory(self, proxy=False):
         try:
-            self.categoryHeaders.update({
-                'Cookie': self.cookie_coll.find_one({'name': 'jlc_xh_category'}).get('cookie')
-            })
             if proxy:
                 # 启用代理
                 pro = self.GetProxy()
@@ -206,7 +199,7 @@ class JinLianChuang:
                             self.ParseAreaCategory(proxy, info, timeType)
                     print('jlc_xh 获取所有层级类目--完成')
         except requests.exceptions.ConnectionError:
-            threading.Thread(target=self.DisProxy, args=(pro,)).start()
+            # threading.Thread(target=self.DisProxy, args=(pro,)).start()
             print('网络问题，重试中...')
             return self.GetCategory(proxy)
         except TimeoutError:
@@ -276,10 +269,6 @@ class JinLianChuang:
             link = info.get('link').split('timeType=')[0] + 'timeType={}'.format(timeType)
             info['link'] = link
 
-            self.categoryHeaders.update({
-                'Cookie': self.cookie_coll.find_one({'name': 'jlc_xh_category'}).get('cookie')
-            })
-
             if proxy:
                 # 启用代理
                 pro = self.GetProxy()
@@ -311,14 +300,14 @@ class JinLianChuang:
 
                 if areaList:
                     for areaMsg in areaList:
-                        newLink = link.split('dateColumnClassId')[0] + 'dateColumnClassId={}&timeType={}'.format(
-                            areaMsg[0],
-                            timeType)
+                        newLink = link.split('dateColumnClassId')[
+                                      0] + f'dateColumnClassId={areaMsg[0]}&timeType={timeType}'
                         info['link'] = newLink
                         info['dateColumnClassId'] = areaMsg[0]
                         info['ColumnClassIdText'] = areaMsg[1]
 
                         # 插入数据
+                        print(info)
                         self.category_coll.update_one({'link': newLink}, {'$set': info}, upsert=True)
                 else:
                     try:
@@ -336,6 +325,7 @@ class JinLianChuang:
                         info['ColumnClassIdText'] = ''
 
                     # 插入数据
+                    print(info)
                     self.category_coll.update_one({'link': link}, {'$set': info}, upsert=True)
             else:
                 try:
@@ -353,9 +343,10 @@ class JinLianChuang:
                     info['ColumnClassIdText'] = ''
 
                 # 插入数据
+                print(info)
                 self.category_coll.update_one({'link': link}, {'$set': info}, upsert=True)
         except requests.exceptions.ConnectionError:
-            threading.Thread(target=self.DisProxy, args=(pro,)).start()
+            # threading.Thread(target=self.DisProxy, args=(pro,)).start()
             print('网络问题，重试中...')
             return self.GetCategory(proxy)
         except Exception as error:
@@ -367,12 +358,6 @@ class JinLianChuang:
 
     # 获取层级类目下的细分区域 / 产品链接
     def GetCategoryData(self, info, proxy):
-        print(info)
-        self.categoryDataHeaders.update({
-            'Cookie': self.cookie_coll.find_one({'name': 'jlc_xh_category'}).get('cookie'),
-            'referer': info.get('link')
-        })
-
         Type = info.get('Type')
         timeType = info.get('timeType')
 
@@ -398,7 +383,7 @@ class JinLianChuang:
                                 param.get('ColumnClassIdText'))).encode("utf8")).hexdigest(),  # 数据唯一索引
                             'timeType': timeType
                         })
-                        print(info)
+
                         try:
                             del info['_id']
                         except:
@@ -409,16 +394,17 @@ class JinLianChuang:
                             pass
 
                         # 插入数据
+                        print(info)
                         self.categoryData_coll.update_one({'hashKey': info['hashKey']}, {'$set': info}, upsert=True)
 
                     # 标记已用数据
                     self.category_coll.update_one({'link': info.get('link')}, {'$set': {'status': 1}}, upsert=True)
                 else:
-                    print('{}  没有数据 {} '.format(info.get('link'), resp.status_code))
+                    self.category_coll.update_one({'link': info.get('link')}, {'$set': {'status': 404}}, upsert=True)
             else:
-                pp.pprint(resp.text)
+                self.category_coll.update_one({'link': info.get('link')}, {'$set': {'status': 400}}, upsert=True)
         except requests.exceptions.ConnectionError:
-            threading.Thread(target=self.DisProxy, args=(pro,)).start()
+            # threading.Thread(target=self.DisProxy, args=(pro,)).start()
             print('网络问题，重试中...')
             return self.GetCategoryData(info.get('link'), proxy)
         except TimeoutError:
@@ -515,8 +501,7 @@ class JinLianChuang:
             'startDate': '2019-01-01'
         }
 
-        link = 'http://jiag.315i.com/price/historyData?itemIdStr={}&startDate=2019-01-01&endDate={}&columnid={}&timeType={}'.format(
-            itemIdStr, endDate, columnid, timeType)
+        link = f'http://jiag.315i.com/price/historyData?itemIdStr={itemIdStr}&startDate=2019-01-01&endDate={endDate}&columnid={columnid}&timeType={timeType}'
         print(link)
 
         data = parse.urlencode(formData)
@@ -550,9 +535,9 @@ class JinLianChuang:
                 self.categoryData_coll.update_one({"hashKey": info['hashKey']}, {'$set': {'status': 1}}, upsert=True)
             else:
                 print('没有数据, 无栏目权限')
-                self.categoryData_coll.update_one({"hashKey": info['hashKey']}, {'$set': {'status': 401}}, upsert=True)
+                self.categoryData_coll.update_one({"hashKey": info['hashKey']}, {'$set': {'status': 400}}, upsert=True)
         except requests.exceptions.ConnectionError:
-            threading.Thread(target=self.DisProxy, args=(pro,)).start()
+            # threading.Thread(target=self.DisProxy, args=(pro,)).start()
             print('网络问题，重试中...')
             return self.DownloadHistoryData(info, proxy, history)
         except TimeoutError:
@@ -600,8 +585,10 @@ class JinLianChuang:
                     return
             except ValueError:
                 dt = ''
-            except Exception as  error:
+            except Exception as error:
                 logger.warning(error)
+                dt = ''
+
             hashKey = hashlib.md5(str(info.get('hashKey') + dt).encode("utf8")).hexdigest()  # 数据唯一索引
             dt_type = int(info.get('timeType')) + 1  # 报价类型(1-每日报价，2-周均价，3-月均价，4-季均价，5-年均价）
             prod_quote_type_name = info.get('categoryThree')  # 报价名称(如国际市场报价，国内市场报价，厂家报价等)
@@ -639,6 +626,7 @@ class JinLianChuang:
                 prod_lowest_price = 0.00
             except Exception as error:
                 logger.warning(error)
+                prod_lowest_price = 0.00
 
             try:
                 prod_higest_price = data.get(str(keyList.index('最高价')))  # 最高价
@@ -655,6 +643,7 @@ class JinLianChuang:
                 prod_higest_price = 0.00
             except Exception as error:
                 logger.warning(error)
+                prod_higest_price = 0.00
 
             try:
                 prod_average_price = data.get(str(keyList.index('价格')))  # 平均价(生产厂家报价)
@@ -671,6 +660,7 @@ class JinLianChuang:
                 prod_average_price = 0.00
             except Exception as error:
                 logger.warning(error)
+                prod_average_price = 0.00
 
             try:
                 prod_remark = str(data.get(str(keyList.index('备注')))).replace('/', '').replace('nan', '').replace('-',
@@ -685,6 +675,9 @@ class JinLianChuang:
                     'none', '').replace('Null', '').replace('null', '').replace(' ', '')  # 产品备注
             except Exception as error:
                 logger.warning(error)
+                prod_remark = str(info.get('备注')).replace('/', '').replace('nan', '').replace('-', '').replace('None',
+                                                                                                               '').replace(
+                    'none', '').replace('Null', '').replace('null', '').replace(' ', '')
 
             prod_change_amount = 0.00  # 涨跌额
             prod_change_rate = 0.00  # 涨跌幅
@@ -737,7 +730,6 @@ class JinLianChuang:
                 str(plat_source_name),
                 str(plat_source_url)
             )
-            # print(insertData)
 
             updateSql = "update jlc_price_info set dt='%s', dt_type='%d', prod_quote_type_name='%s', prod_name='%s'," \
                         "prod_factory='%s', prod_sales_area='%s', prod_area='%s', prod_market='%s', prod_type='%s', prod_brand='%s', prod_color='%s', prod_thicknesses='%s'," \
@@ -776,7 +768,6 @@ class JinLianChuang:
                 str(plat_source_url),
                 hashKey
             )
-            # print(updateData)
 
             if insertData and updateData:
                 self.UpdateToMysql(conn, insertSql, insertData, updateSql, updateData)
@@ -806,52 +797,62 @@ class JinLianChuang:
     # 还原状态
     @staticmethod
     def removeStatus(coll, key):
-        for num, info in enumerate(coll.find({'$nor': [{'status': None}]})):
+        for num, info in enumerate(coll.find({'$nor': [{'status': None}, {'status': 400}, {'status': 404}]})):
             print(num)
             coll.update_one({key: info[key]}, {'$unset': {'status': ''}}, upsert=True)
 
     # 多进程获取数据
-    def CommandThread(self, proxy=False, history=False, remove_bad=False, Async=True):
+    def CommandThread(self, proxy=False, history=False, Async=True):
         thread_list = []
 
         # 设置进程数
         pool = ThreadPool(processes=3)
 
-        # 每月第一天获取月数据 4437
-        if (dtime.today() + datetime.timedelta(days=-dtime.today().day + 1)).replace(hour=0, minute=0, second=0, microsecond=0).day == dtime.today().day:
-            for info in self.categoryData_coll.find({"Type": "月均价", 'status': None}):
+        """ 每月第一天 """
+        if (dtime.today() + datetime.timedelta(days=-dtime.today().day + 1)).replace(hour=0, minute=0, second=0,
+                                                                                     microsecond=0).day == dtime.today().day:
+            # 每月更新总目录
+            self.GetCategory()
+
+            # 获取 月数据  共：4334
+            categoryData_coll_list = [i for i in self.categoryData_coll.find({"Type": "月均价", 'status': None})]
+            for info in categoryData_coll_list:
                 if Async:
                     out = pool.apply_async(func=self.DownloadHistoryData, args=(info, proxy, history,))  # 异步
                 else:
                     out = pool.apply(func=self.DownloadHistoryData, args=(info, proxy, history,))  # 同步
                 thread_list.append(out)
+                # break
 
-        # 每周一： 更新详细分类 / 获取周数据
-        # if (pd.to_datetime(str(time.strftime("%Y-%m-%d", time.localtime(time.time())))) - pd.to_datetime('20160103')).days % 7 == 1:
-        #     # 获取分类
-        #     self.GetCategory()
-        #
-        #     # 获取详细产品数据
-        #     for info in self.category_coll.find({}).batch_size(10):
-        #         if Async:
-        #             out = pool.apply_async(func=self.GetCategoryData, args=(info, proxy,))  # 异步
-        #         else:
-        #             out = pool.apply(func=self.GetCategoryData, args=(info, proxy,))  # 同步
-        #         thread_list.append(out)
-        #
-        #     # 获取周数据  4476
-        #     for info in self.categoryData_coll.find({"Type": "周均价", 'status': None}):
-        #         if Async:
-        #             out = pool.apply_async(func=self.DownloadHistoryData, args=(info, proxy, history,))  # 异步
-        #         else:
-        #             out = pool.apply(func=self.DownloadHistoryData, args=(info, proxy, history,))  # 同步
-        #         thread_list.append(out)
-        #         # break
+        """ 每周第一天 """
+        if (pd.to_datetime(str(time.strftime("%Y-%m-%d", time.localtime(time.time())))) - pd.to_datetime(
+                '20160103')).days % 7 == 1:
+            # 每周更新所有分类下详细产品数据
+            for _times in range(3):
+                category_coll_list = [i for i in self.category_coll.find(
+                    {'$nor': [{'status': 1}, {'status': 404}, {'status': 404}]})]  # category_coll总数: 1017
+                for info in category_coll_list:
+                    if Async:
+                        out = pool.apply_async(func=self.GetCategoryData, args=(info, proxy,))  # 异步
+                    else:
+                        out = pool.apply(func=self.GetCategoryData, args=(info, proxy,))  # 同步
+                    thread_list.append(out)
+                    # break
 
-        # 文件： 4477
-        # 下载详细的数据 起始日期：20190101   结束日期：至今   本地下载一份excel   proxy：True/False（使用代理/不使用代理）  history:True(获取历史数据)  False(获取一周数据)
-        day_data_list = [i for i in self.categoryData_coll.find({"Type": "日报价", 'status': None})]
-        for info in day_data_list:
+            # 获取 周数据  共：4334
+            categoryData_coll_list = [i for i in self.categoryData_coll.find({"Type": "周均价", 'status': None})]
+            for info in categoryData_coll_list:
+                if Async:
+                    out = pool.apply_async(func=self.DownloadHistoryData, args=(info, proxy, history,))  # 异步
+                else:
+                    out = pool.apply(func=self.DownloadHistoryData, args=(info, proxy, history,))  # 同步
+                thread_list.append(out)
+                # break
+
+        """ 每一天 """
+        # 获取 天数据  共：4334
+        categoryData_coll_list = [i for i in self.categoryData_coll.find({"Type": "日报价", 'status': None})]
+        for info in categoryData_coll_list:
             if Async:
                 out = pool.apply_async(func=self.DownloadHistoryData, args=(info, proxy, history,))  # 异步
             else:
@@ -862,36 +863,19 @@ class JinLianChuang:
         pool.close()
         pool.join()
 
-        # 获取输出结果
-        com_list = []
-        if Async:
-            for p in thread_list:
-                com = p.get()  # get会阻塞
-                com_list.append(com)
-        else:
-            com_list = thread_list
-        if remove_bad:
-            com_list = [i for i in com_list if i is not None]
-        return com_list
-
 
 def jlcrun():
-    if str(time.strftime("%H", time.localtime(time.time()))) == '10':
-        run()
-
-    start_time = time.time()
     jlc = JinLianChuang()
 
-    # 清除标记
-    jlc.removeStatus(jlc.category_coll, 'link')
-    jlc.removeStatus(jlc.categoryData_coll, 'hashKey')
-    # 多进程获取数据  params: proxy  history
-    jlc.CommandThread(proxy=False, history=False)
+    if str(time.strftime("%H", time.localtime(time.time()))) == '17':
+        # 清除标记
+        jlc.removeStatus(jlc.category_coll, 'link')
+        jlc.removeStatus(jlc.categoryData_coll, 'hashKey')
 
-    print('jlc 获取历史数据--完成')
+        # 多进程获取数据  params: proxy  history
+        jlc.CommandThread(proxy=False, history=False)
 
-    end_time = time.time()
-    logger.warning(end_time - start_time)
+        logger.info('jlc 获取历史数据--完成')
 
 
 if __name__ == '__main__':

@@ -10,7 +10,7 @@ do
         now=`expr $h + $m`
         if [ 599 -lt $now -a $now -lt 601 ] || [ 689 -lt $now -a $now -lt 691 ] || [ 779 -lt $now -a $now -lt 781 ] || [ 869 -lt $now -a $now -lt 871 ] || [ 959 -lt $now -a $now -lt 961 ]
         then
-                for name in jinlianchuang_xh.py longzhong_sj.py zhuochuang_sj.py
+                for name in jinlianchuang_xh.py
                 do
                         count=`ps -ef|grep $name|grep -v grep|wc -l`
 

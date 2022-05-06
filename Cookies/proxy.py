@@ -195,11 +195,8 @@ class HandleProxy:
                 'status': 404,
                 'update_time': time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())),
             }}, upsert=True)
-        except:
-            self.proxy_coll.update_one({'pro': pro}, {'$set': {
-                'status': resp.status_code,
-                'update_time': time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())),
-            }}, upsert=True)
+        except Exception as error:
+            print(error)
 
 
 if __name__ == '__main__':
