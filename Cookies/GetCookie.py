@@ -96,6 +96,7 @@ class Cookie:
         # cmd = r'mitmdump -p 65534 -q -s D:\Projects\NewsSearch\get_mitmproxy_response.py'
         cmd = r'mitmdump -p 65534 -q -s /home/zyl/NewsSearch/get_mitmproxy_response.py'
         subprocess.Popen(cmd, shell=True)
+        time.sleep(10)
 
     # @staticmethod
     # def Account(platform):
@@ -567,17 +568,16 @@ class CookieSearch:
             logger.warning(error)
 
 
-
 def kill_chrome_mitmproxy():
     for key in ['chrome', 'mitmproxy']:
-        cmd = f"ps -ef|grep {key} " + "|awk '{print $2}'|xargs kill -9"
+        cmd = f"ps -ef|grep {key}" + "|awk '{print $2}'|xargs kill -9"
         subprocess.Popen(cmd, shell=True)
         time.sleep(1)
 
 
 def cookies_run():
     accounts = [
-        {'platform':'jlc', 'account': 'jinyang8', 'pwd': 'jinyang168'},
+        # {'platform':'jlc', 'account': 'jinyang8', 'pwd': 'jinyang168'},
         #{'platform': 'jlc_second', 'account': '18918096272', 'pwd': '123456'},
         #{'platform': 'jlc_third', 'account': 'hshizhi', 'pwd': 'ZYLzyl@123@'},
         {'platform': 'lz', 'account': 'zhq111', 'pwd': 'a123456'},

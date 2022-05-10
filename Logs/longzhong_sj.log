@@ -5068,3 +5068,13 @@
 2022-05-09 22:39:33,281 - longzhong_sj.py[line:1222] - WARNING: 该链接数据报错 https://dc.oilchem.net/price_search/doExportZip.htm?startDate=20190101&endDate=20220509&indexType=0&businessInformation=%5B%7B%22businessType%22%3A%222%22%2C%22varietiesId%22%3A%22317%22%2C%22businessIdList%22%3A%5B27675%5D%7D%5D&fileName=36836e69e50288515abbebd0cde6f6c5.xlsx  Missing optional dependency 'openpyxl'.  Use pip or conda to install openpyxl.
 2022-05-09 22:39:33,958 - longzhong_sj.py[line:1222] - WARNING: 该链接数据报错 https://dc.oilchem.net/price_search/doExportZip.htm?startDate=20190101&endDate=20220509&indexType=0&businessInformation=%5B%7B%22businessType%22%3A%222%22%2C%22varietiesId%22%3A%22317%22%2C%22businessIdList%22%3A%5B27676%5D%7D%5D&fileName=51986bba1b8eaab6103b1b7eb7a51cd7.xlsx  Missing optional dependency 'openpyxl'.  Use pip or conda to install openpyxl.
 2022-05-09 22:39:35,102 - longzhong_sj.py[line:1898] - WARNING: 6368.138404130936
+2022-05-10 15:38:34,341 - longzhong_sj.py[line:1898] - WARNING: 133.17770981788635
+2022-05-10 15:42:02,709 - longzhong_sj.py[line:1898] - WARNING: 0.3553781509399414
+2022-05-10 15:43:11,684 - longzhong_sj.py[line:1898] - WARNING: 44.45766234397888
+2022-05-10 16:44:27,492 - longzhong_sj.py[line:1898] - WARNING: 0.37790822982788086
+2022-05-10 16:44:40,146 - longzhong_sj.py[line:1898] - WARNING: 3.4242615699768066
+2022-05-10 16:46:26,597 - longzhong_sj.py[line:1223] - WARNING: 该链接数据报错 https://dc.oilchem.net/price_search/doExportZip.htm?startDate=20190101&endDate=20220510&indexType=0&businessInformation=%5B%7B%22businessType%22%3A%222%22%2C%22varietiesId%22%3A%22313%22%2C%22businessIdList%22%3A%5B23235%5D%7D%5D&fileName=f285b2b180a56f025b7a431ca873121f.xlsx  Missing optional dependency 'openpyxl'.  Use pip or conda to install openpyxl.
+2022-05-10 16:46:28,034 - longzhong_sj.py[line:1899] - WARNING: 24.92153286933899
+2022-05-10 16:48:59,857 - longzhong_sj.py[line:1899] - WARNING: 16.64699912071228
+2022-05-10 16:52:11,121 - longzhong_sj.py[line:1900] - WARNING: 3.9632580280303955
+2022-05-10 16:52:25,934 - longzhong_sj.py[line:1900] - WARNING: 4.319492816925049

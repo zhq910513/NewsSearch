@@ -24,7 +24,8 @@ from fake_useragent import UserAgent
 from pymongo import MongoClient
 import pymysql
 from pymysql.err import IntegrityError
-
+import warnings
+warnings.filterwarnings('ignore')
 requests.packages.urllib3.disable_warnings()
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -1145,7 +1146,7 @@ class LongZhong:
                 'Accept-Encoding': 'gzip, deflate, br',
                 'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
                 'Connection': 'keep-alive',
-                'Cookie': '_member_user_tonken_=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzZWMiOiIkMmEkMTAkM291Q2g4TDR5SjB3ZVU2UjBpSUJ2dXR0UlNWUGpyWndrMnJpaGxWeTBuWVBManpTU216M1ciLCJuaWNrTmFtZSI6IiIsInBpYyI6IiIsImV4cCI6MTY1MzIyMjAxMSwidXNlcklkIjoxMTc1Mzc0LCJpYXQiOjE2NTA2MzAwMTEsImp0aSI6ImM2MWI2OTdlLTc0ZDgtNDBiNC05NDM5LWUyYWQyNDk5ZWQ4MCIsInVzZXJuYW1lIjoiemhxMTExIn0.ElxwgmMUVcEeep-rWjg8mqiMDFMLP0fXj_7PvTPrDn4; refcheck=ok; refpay=0; refsite=; oilchem_refer_url=; oilchem_land_url=https://dc.oilchem.net/price_search/list.htm?businessType=2&varietiesName=PP%E7%B2%92&varietiesId=319&templateType=6&flagAndTemplate=2-7; Hm_lvt_e91cc445fdd1ff22a6e5c7ea9e9d5406=1650629967,1650717411,1650818325; Hm_lpvt_e91cc445fdd1ff22a6e5c7ea9e9d5406=1650818325; Hm_lvt_47f485baba18aaaa71d17def87b5f7ec=1650629967,1650717411,1650818325; Hm_lpvt_47f485baba18aaaa71d17def87b5f7ec=1650818325',
+                'Cookie': self.cookie_coll.find_one({'name': 'lz_sj_downloadDetail'}).get('cookie'),
                 'Host': 'dc.oilchem.net',
                 'Referer': 'https://dc.oilchem.net/price_search/detail.htm?channelId=1777&varietiesId=317&id=8287&timeType=0&flag=0&businessType=3&indexPriceType=2',
                 'sec-ch-ua': '" Not A;Brand";v="99", "Chromium";v="100", "Microsoft Edge";v="100"',
@@ -1181,7 +1182,7 @@ class LongZhong:
                 self.GetDataFromExcel(Type, productFormat, url, fp, hash_key, history)
                 self.categoryData_coll.update_one({'hashKey': info['hashKey']}, {'$set': {'status': 1}}, upsert=True)
             else:
-                print('404')
+                print(f'--- Cookie过期或者页面失效 hash_key: {info["hashKey"]}---')
                 self.categoryData_coll.update_one({'hashKey': info['hashKey']}, {'$set': {'status': 404}}, upsert=True)
         except requests.exceptions.ConnectionError:
             threading.Thread(target=self.DisProxy, args=(self.pro,)).start()
@@ -1214,7 +1215,7 @@ class LongZhong:
                     for value in list(json.loads(dumpsData).values())[1:]:
                         self.FormatData(conn, businessType, productFormat, sourceLink, hash_key, keyList, value)
                 else:
-                    for value in list(json.loads(dumpsData).values())[1:4]:
+                    for value in list(json.loads(dumpsData).values())[1:8]:
                         self.FormatData(conn, businessType, productFormat, sourceLink, hash_key, keyList, value)
             else:
                 pass
@@ -1732,7 +1733,7 @@ class LongZhong:
     # 还原状态
     @staticmethod
     def removeStatus(coll, hashkey):
-        for num, info in enumerate(coll.find({'$nor': [{'status': None}, {'status': 404}]})):
+        for num, info in enumerate(coll.find({'$nor': [{'status': None}]})):
             print(num)
             coll.update_one({hashkey: info[hashkey]}, {'$unset': {'status': ''}}, upsert=True)
 
