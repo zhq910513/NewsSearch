@@ -5078,3 +5078,5 @@
 2022-05-10 16:48:59,857 - longzhong_sj.py[line:1899] - WARNING: 16.64699912071228
 2022-05-10 16:52:11,121 - longzhong_sj.py[line:1900] - WARNING: 3.9632580280303955
 2022-05-10 16:52:25,934 - longzhong_sj.py[line:1900] - WARNING: 4.319492816925049
+2022-05-10 17:01:06,252 - longzhong_sj.py[line:1195] - WARNING: HTTPSConnectionPool(host='dc.oilchem.net', port=443): Read timed out. (read timeout=5)
+2022-05-10 17:06:55,155 - longzhong_sj.py[line:1195] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
