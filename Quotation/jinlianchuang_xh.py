@@ -809,24 +809,22 @@ class JinLianChuang:
         pool = ThreadPool(processes=3)
 
         """ 每月第一天 """
-        if (dtime.today() + datetime.timedelta(days=-dtime.today().day + 1)).replace(hour=0, minute=0, second=0,
-                                                                                     microsecond=0).day == dtime.today().day:
-            # 每月更新总目录
+        if (dtime.today() + datetime.timedelta(days=-dtime.today().day + 1)).replace(hour=0, minute=0, second=0, microsecond=0).day == dtime.today().day:
+             # 每月更新总目录
             self.GetCategory()
 
-            # 获取 月数据  共：4334
-            categoryData_coll_list = [i for i in self.categoryData_coll.find({"Type": "月均价", 'status': None})]
-            for info in categoryData_coll_list:
-                if Async:
-                    out = pool.apply_async(func=self.DownloadHistoryData, args=(info, proxy, history,))  # 异步
-                else:
-                    out = pool.apply(func=self.DownloadHistoryData, args=(info, proxy, history,))  # 同步
-                thread_list.append(out)
+        # 获取 月数据  共：4334
+        categoryData_coll_list = [i for i in self.categoryData_coll.find({"Type": "月均价", 'status': None})]
+        for info in categoryData_coll_list:
+            if Async:
+                out = pool.apply_async(func=self.DownloadHistoryData, args=(info, proxy, history,))  # 异步
+            else:
+                out = pool.apply(func=self.DownloadHistoryData, args=(info, proxy, history,))  # 同步
+            thread_list.append(out)
                 # break
 
         """ 每周第一天 """
-        if (pd.to_datetime(str(time.strftime("%Y-%m-%d", time.localtime(time.time())))) - pd.to_datetime(
-                '20160103')).days % 7 == 1:
+        if (pd.to_datetime(str(time.strftime("%Y-%m-%d", time.localtime(time.time())))) - pd.to_datetime('20160103')).days % 7 == 1:
             # 每周更新所有分类下详细产品数据
             for _times in range(3):
                 category_coll_list = [i for i in self.category_coll.find(
@@ -837,17 +835,17 @@ class JinLianChuang:
                     else:
                         out = pool.apply(func=self.GetCategoryData, args=(info, proxy,))  # 同步
                     thread_list.append(out)
-                    # break
+            #         # break
 
-            # 获取 周数据  共：4334
-            categoryData_coll_list = [i for i in self.categoryData_coll.find({"Type": "周均价", 'status': None})]
-            for info in categoryData_coll_list:
-                if Async:
-                    out = pool.apply_async(func=self.DownloadHistoryData, args=(info, proxy, history,))  # 异步
-                else:
-                    out = pool.apply(func=self.DownloadHistoryData, args=(info, proxy, history,))  # 同步
-                thread_list.append(out)
-                # break
+        # 获取 周数据  共：4334
+        categoryData_coll_list = [i for i in self.categoryData_coll.find({"Type": "周均价", 'status': None})]
+        for info in categoryData_coll_list:
+            if Async:
+                out = pool.apply_async(func=self.DownloadHistoryData, args=(info, proxy, history,))  # 异步
+            else:
+                out = pool.apply(func=self.DownloadHistoryData, args=(info, proxy, history,))  # 同步
+            thread_list.append(out)
+            # break
 
         """ 每一天 """
         # 获取 天数据  共：4334
@@ -867,15 +865,15 @@ class JinLianChuang:
 def jlcrun():
     jlc = JinLianChuang()
 
-    if str(time.strftime("%H", time.localtime(time.time()))) == '17':
+    if str(time.strftime("%H", time.localtime(time.time()))) == '10':
         # 清除标记
         jlc.removeStatus(jlc.category_coll, 'link')
         jlc.removeStatus(jlc.categoryData_coll, 'hashKey')
 
-        # 多进程获取数据  params: proxy  history
-        jlc.CommandThread(proxy=False, history=False)
+    # 多进程获取数据  params: proxy  history
+    jlc.CommandThread(proxy=False, history=True)
 
-        logger.info('jlc 获取历史数据--完成')
+    logger.info('jlc 获取历史数据--完成')
 
 
 if __name__ == '__main__':
