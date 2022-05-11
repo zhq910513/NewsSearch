@@ -14,7 +14,7 @@ import re
 import time
 import hashlib
 from os import path
-from urllib.parse import unquote, urlencode
+from urllib.parse import urlencode, unquote, quote
 
 import pandas as pd
 import requests
@@ -25,6 +25,7 @@ from pymongo import MongoClient
 import pymysql
 from pymysql.err import IntegrityError
 import warnings
+
 warnings.filterwarnings('ignore')
 requests.packages.urllib3.disable_warnings()
 pp = pprint.PrettyPrinter(indent=4)
@@ -159,23 +160,66 @@ class LongZhong:
         获取主类目
     """
 
-    # 获取所有类目
-    def GetCategory(self, category):
-        print(category)
-        for businessType in [2, 3, 4]:
-            link = category.format(businessType)
-            data = {
-                'link': link,
-                'baseUrl': category.split('?')[0] + '?'
-            }
-
-            for i in category.format(businessType).split('?')[1].split('&'):
-                data.update({
-                    i.split('=')[0]: unquote(i.split('=')[1])
-                })
-
+    # 获取所有主类目
+    def GetMainCategory(self):
+        headers = {
+            'Accept': '*/*',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+            'Cache-Control': 'no-cache',
+            'Connection': 'keep-alive',
+            'Content-Length': '14',
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+            'Cookie': self.cookie_coll.find_one({'name': 'lz_sj_category'}).get('cookie'),
+            'Host': 'dc.oilchem.net',
+            'Origin': 'https://dc.oilchem.net',
+            'Pragma': 'no-cache',
+            'sec-ch-ua': '" Not A;Brand";v="99", "Chromium";v="101", "Google Chrome";v="101"',
+            'sec-ch-ua-mobile': '?0',
+            'sec-ch-ua-platform': '"Windows"',
+            'Sec-Fetch-Dest': 'empty',
+            'Sec-Fetch-Mode': 'cors',
+            'Sec-Fetch-Site': 'same-origin',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36',
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+        for channel in [
+            {'templateType': 'templateType=6&flagAndTemplate=1-6;2-7;3-4;6-null', 'channelId': 1775, 'oneName':'塑料', 'twoName':'通用塑料'},
+            {'templateType': 'templateType=2&flagAndTemplate=1-2;2-2', 'channelId': 1785, 'oneName':'塑料', 'twoName':'工程塑料'},
+            {'templateType': 'templateType=1&flagAndTemplate=1-1', 'channelId': 4706, 'oneName':'塑料', 'twoName':'改性塑料'},
+            {'templateType': 'templateType=2&flagAndTemplate=1-2;2-2', 'channelId': 1792, 'oneName':'塑料', 'twoName':'塑料制品'},
+            {'templateType': 'templateType=6&flagAndTemplate=1-6;2-2;3-4', 'channelId': 1801, 'oneName':'塑料', 'twoName':'塑料管材'},
+            {'templateType': 'templateType=5&flagAndTemplate=2-5', 'channelId': 1804, 'oneName':'塑料', 'twoName':'再生塑料'},
+            {'templateType': 'templateType=2&flagAndTemplate=1-2;2-7', 'channelId': 4164, 'oneName':'塑料', 'twoName':'可降解材料'}
+        ]:
             try:
-                self.category_coll.update_one({'link': data['link']}, {'$set': data}, upsert=True)
+                resp = requests.post(
+                    url='https://dc.oilchem.net/priceCompany/channellist.htm',
+                    headers=headers,
+                    data=urlencode({'channelId': channel['channelId']}),
+                    timeout=5, verify=False)
+                if resp.status_code == 200:
+                    if resp.json().get('message') == '查询成功' and isinstance(resp.json().get('dtos'), list):
+                        for info in resp.json().get('dtos'):
+                            channel.update(info)
+                            for businessType in [
+                                {'businessType': 2, 'Type': '企业出厂价'},
+                                {'businessType': 3, 'Type': '国内市场价'},
+                                {'businessType': 4, 'Type': '国际市场价'},
+                            ]:
+                                channel.update(businessType)
+                                varietiesName = quote(channel['varietiesName'])
+                                varietiesId = channel['varietiesId']
+                                channelId = channel['channelId']
+                                oneName = quote(channel['oneName'])
+                                twoName = quote(channel['twoName'])
+                                templateType = channel['templateType']
+                                link = f'https://dc.oilchem.net/price_search/list.htm?businessType={businessType["businessType"]}&varietiesName={varietiesName}&varietiesId={varietiesId}&{templateType}&channelId={channelId}&oneName={oneName}&twoName={twoName}'
+                                channel.update({'link': link})
+                                self.category_coll.update_one({'link': channel['link']}, {'$set': channel}, upsert=True)
+                                print(channel)
+                else:
+                    logger.warning(resp.text)
             except Exception as error:
                 logger.warning(error)
 
@@ -186,17 +230,8 @@ class LongZhong:
     """
 
     # 加载详细产品数据
-    def GetDetailCategory(self, info, proxy=False):
+    def GetDetailCategory(self, info):
         Link = info.get('link')
-
-        if 'businessType=2' in Link:
-            Type = '企业出厂价'
-        elif 'businessType=3' in Link:
-            Type = '国内市场价'
-        elif 'businessType=4' in Link:
-            Type = '国际市场价'
-        else:
-            Type = None
 
         print(Link)
         self.categoryDataHeaders.update({
@@ -207,17 +242,11 @@ class LongZhong:
         conn = self.MySql()
 
         try:
-            if proxy:
-                self.pro = self.GetProxy()
-                if self.pro:
-                    resp = requests.get(url=Link, headers=self.categoryDataHeaders, proxies=self.pro, timeout=5,
-                                        verify=False)
-                else:
-                    resp = requests.get(url=Link, headers=self.categoryDataHeaders, timeout=5, verify=False)
-            else:
-                resp = requests.get(url=Link, headers=self.categoryDataHeaders, timeout=5, verify=False)
+            resp = requests.get(url=Link, headers=self.categoryDataHeaders, timeout=5, verify=False)
             if resp.status_code == 200:
-                data = self.ParseHtml(resp.text)
+                resp.encoding = 'utf-8'
+
+                data = self.ParseDetailCategory(resp.text)
                 if data:
                     # 判断数据 如果 请登录 超过10个 启用登陆程序
                     wrongInfo = len(re.findall("请登录", str(data), re.S))
@@ -236,7 +265,6 @@ class LongZhong:
                                         insert_data = {
                                             "hashKey": hashKey,
                                             "link": Link,
-                                            "Type": Type,
                                             "oneName": info.get('oneName'),
                                             "twoName": info.get('twoName'),
                                             "varietiesName": info.get('varietiesName'),
@@ -252,33 +280,26 @@ class LongZhong:
                         self.category_coll.update_one({'link': info['link']}, {'$set': {'status': 1}}, upsert=True)
 
                         # 解析类目
-                        self.ParserCategory(conn, Link, Type)
+                        self.ParserCategory(conn, Link, info['Type'])
                 else:
                     print('没有数据 %s ' % str(resp.status_code))
                     self.category_coll.update_one({'link': info['link']}, {'$set': {'status': 400}}, upsert=True)
             else:
                 logger.warning(resp.text)
-        except requests.exceptions.ConnectionError:
-            threading.Thread(target=self.DisProxy, args=(self.pro,)).start()
-            print('网络问题，重试中...')
-            return self.GetDetailCategory(info, proxy)
         except TimeoutError:
             logger.warning(Link)
         except Exception as error:
-            # print(Link)
             logger.warning(error)
         finally:
             # 关闭MySQL连接
             conn.cursor().close()
-
-        # break
 
         # 随机休眠
         time.sleep(random.uniform(1, 5))
 
     # 解析详细产品分类数据
     @staticmethod
-    def ParseHtml(html):
+    def ParseDetailCategory(html):
         soup = BeautifulSoup(html, 'lxml')
         info = {}
         for style in soup.find('div', {'class': 'containerList line-height22'}).find_all('div', {
@@ -1081,7 +1102,8 @@ class LongZhong:
                 hashKey = hashlib.md5((str(Type + channelId + templateType + varietiesId + str(prod_name))).encode(
                     "utf8")).hexdigest()  # 数据唯一索引
 
-            else:return
+            else:
+                return
 
             insertData = (
                 hashKey,
@@ -1126,12 +1148,13 @@ class LongZhong:
     # 下载历史数据
     def DownloadHistoryData(self, info, proxy=False, history=False):
         print(info)
-        Type = info.get('Type')
         hash_key = info.get('hashKey')
+        TypeInfo = {'2': '企业出厂价', '3': '国内市场价', '4': '国际市场价'}
 
         try:
             downloadTime = str(time.strftime("%Y-%m-%d", time.localtime(time.time()))).replace('-', '')
             businessType = info.get('data').get('input').get('businessType')
+            Type = TypeInfo[businessType]
             varietiesId = info.get('data').get('input').get('varietiesId')
             businessIdList = info.get('data').get('input').get('businessIdList')
             productFormat = info.get('data').get('标准')
@@ -1158,15 +1181,7 @@ class LongZhong:
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36 Edg/100.0.1185.44'
             })
 
-            if proxy:
-                # 获取代理
-                pro = self.GetProxy()
-                if pro:
-                    resp = requests.get(url, headers=self.downloadDetailHeaders, proxies=pro, timeout=5, verify=False)
-                else:
-                    resp = requests.get(url, headers=self.downloadDetailHeaders, timeout=5, verify=False)
-            else:
-                resp = requests.get(url, headers=self.downloadDetailHeaders, timeout=5, verify=False)
+            resp = requests.get(url, headers=self.downloadDetailHeaders, timeout=5, verify=False)
 
             if resp.content:
                 _fh = self.downloadPath + r'/lz/{}'.format(businessType)
@@ -1209,7 +1224,6 @@ class LongZhong:
             if detailData:
                 dumpsData = json.dumps(detailData)
                 keyList = list(list(json.loads(dumpsData).values())[0].values())
-                # print(keyList)
 
                 if history:
                     for value in list(json.loads(dumpsData).values())[1:]:
@@ -1237,7 +1251,7 @@ class LongZhong:
                                                                                 '')  # 数据日期(每日报价格式人如20201209，周均价使用区间如20201105-20201112，月均价格式为202011，年均价格式为2020)
             except ValueError:
                 dt = ''
-            except Exception as  error:
+            except Exception as error:
                 logger.warning(error)
                 dt = ''
             dt_type = 1  # 报价类型(1-每日报价，2-周均价，3-月均价，4-季均价，5-年均价）
@@ -1251,7 +1265,7 @@ class LongZhong:
                     'None', '').replace('none', '').replace('Null', '').replace('null', '')  # 产品名称
             except ValueError:
                 prod_name = ''
-            except Exception as  error:
+            except Exception as error:
                 prod_name = ''
                 logger.warning(error)
 
@@ -1261,7 +1275,7 @@ class LongZhong:
                     '-', '').replace('None', '').replace('none', '').replace('Null', '').replace('null', '')  # 产品规格
             except ValueError:
                 prod_specifications = ''
-            except Exception as  error:
+            except Exception as error:
                 prod_specifications = ''
                 logger.warning(error)
 
@@ -1271,7 +1285,7 @@ class LongZhong:
                     'None', '').replace('none', '').replace('Null', '').replace('null', '')  # 产品区域
             except ValueError:
                 prod_area = ''
-            except Exception as  error:
+            except Exception as error:
                 prod_area = ''
                 logger.warning(error)
 
@@ -1280,7 +1294,7 @@ class LongZhong:
                     '-', '').replace('None', '').replace('none', '').replace('Null', '').replace('null', '')  # 生产企业
             except ValueError:
                 prod_factory = ''
-            except Exception as  error:
+            except Exception as error:
                 prod_factory = ''
                 logger.warning(error)
 
@@ -1291,7 +1305,7 @@ class LongZhong:
                     'None', '').replace('none', '').replace('Null', '').replace('null', '')  # 销售公司(默认为空,隆众有这字段)
             except ValueError:
                 prod_sales_company = ''
-            except Exception as  error:
+            except Exception as error:
                 prod_sales_company = ''
                 logger.warning(error)
 
@@ -1307,7 +1321,7 @@ class LongZhong:
                     prod_average_price = round(float(prod_average_price), 2)
             except ValueError:
                 prod_average_price = 0.00
-            except Exception as  error:
+            except Exception as error:
                 prod_average_price = 0.00
                 logger.warning(error)
 
@@ -1317,7 +1331,7 @@ class LongZhong:
                     'None', '').replace('none', '').replace('Null', '').replace('null', '')  # 单位
             except ValueError:
                 prod_unit = ''
-            except Exception as  error:
+            except Exception as error:
                 prod_unit = ''
                 logger.warning(error)
 
@@ -1335,7 +1349,7 @@ class LongZhong:
                     prod_change_amount = 0.00
             except ValueError:
                 prod_change_amount = ''
-            except Exception as  error:
+            except Exception as error:
                 prod_change_amount = ''
                 logger.warning(error)
 
@@ -1351,7 +1365,7 @@ class LongZhong:
                     prod_change_rate = 0.00
             except ValueError:
                 prod_change_rate = ''
-            except Exception as  error:
+            except Exception as error:
                 prod_change_rate = ''
                 logger.warning(error)
 
@@ -1363,7 +1377,7 @@ class LongZhong:
                     'None', '').replace('none', '').replace('Null', '').replace('null', '')  # 备注
             except ValueError:
                 prod_remark = ''
-            except Exception as  error:
+            except Exception as error:
                 prod_remark = ''
                 logger.warning(error)
 
@@ -1447,7 +1461,7 @@ class LongZhong:
                                                                      '')  # 数据日期(每日报价格式人如20201209，周均价使用区间如20201105-20201112，月均价格式为202011，年均价格式为2020)
             except ValueError:
                 dt = ''
-            except Exception as  error:
+            except Exception as error:
                 dt = ''
                 logger.warning(error)
             dt_type = 1  # 报价类型(1-每日报价，2-周均价，3-月均价，4-季均价，5-年均价）
@@ -1579,7 +1593,7 @@ class LongZhong:
                                                                      '')  # 数据日期(每日报价格式人如20201209，周均价使用区间如20201105-20201112，月均价格式为202011，年均价格式为2020)
             except ValueError:
                 dt = ''
-            except Exception as  error:
+            except Exception as error:
                 dt = ''
                 logger.warning(error)
             dt_type = 1  # 报价类型(1-每日报价，2-周均价，3-月均价，4-季均价，5-年均价）
@@ -1733,128 +1747,30 @@ class LongZhong:
     # 还原状态
     @staticmethod
     def removeStatus(coll, hashkey):
-        for num, info in enumerate(coll.find({'$nor': [{'status': None}]})):
+        for num, info in enumerate(coll.find({'$nor': [{'status': None}, {'status': 400}, {'status': 404}]})):
             print(num)
             coll.update_one({hashkey: info[hashkey]}, {'$unset': {'status': ''}}, upsert=True)
 
     # 多线程获取数据
-    def CommandThread(self, proxy=False, history=False, remove_bad=False, Async=True):
+    def CommandThread(self, proxy=False, history=False, Async=True):
         thread_list = []
 
         # 设置进程数
         pool = ThreadPool(processes=2)
 
-        # 每周一更新详细类目
-        # if (pd.to_datetime(str(time.strftime("%Y-%m-%d", time.localtime(time.time())))) - pd.to_datetime(
-        #         '20160103')).days % 7 == 1:
-        #     """
-        #         主类目：111   有数据：74   无数据：37
-        #     """
-        # categoryList = [
-        #     # 通用塑料
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=HDPE&varietiesId=313&templateType=6&flagAndTemplate=2-7;1-6;3-4&channelId=1776&oneName=%E5%A1%91%E6%96%99&twoName=%E9%80%9A%E7%94%A8%E5%A1%91%E6%96%99',
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=LDPE&varietiesId=315&templateType=6&flagAndTemplate=2-7;1-6;3-4&channelId=1776&oneName=%E5%A1%91%E6%96%99&twoName=%E9%80%9A%E7%94%A8%E5%A1%91%E6%96%99',
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=LLDPE&varietiesId=316&templateType=6&flagAndTemplate=1-6;3-4;2-7&channelId=1776&oneName=%E5%A1%91%E6%96%99&twoName=%E9%80%9A%E7%94%A8%E5%A1%91%E6%96%99',
-        #     #
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=PP%E7%B2%92&varietiesId=319&templateType=6&flagAndTemplate=2-7;3-4;1-6;6-null&channelId=1777&oneName=%E5%A1%91%E6%96%99&twoName=%E9%80%9A%E7%94%A8%E5%A1%91%E6%96%99',
-        #     #
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=PP%E7%B2%89%E6%96%99&varietiesId=318&templateType=4&flagAndTemplate=1-4;2-2;6-null&channelId=1778&oneName=%E5%A1%91%E6%96%99&twoName=%E9%80%9A%E7%94%A8%E5%A1%91%E6%96%99',
-        #     #
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=PVC&varietiesId=251&templateType=2&flagAndTemplate=1-2;3-2;2-6;6-null&channelId=1779&oneName=%E5%A1%91%E6%96%99&twoName=%E9%80%9A%E7%94%A8%E5%A1%91%E6%96%99',
-        #     #
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=GPPS&varietiesId=3082&templateType=4&flagAndTemplate=2-6;3-2;1-4&channelId=1780&oneName=%E5%A1%91%E6%96%99&twoName=%E9%80%9A%E7%94%A8%E5%A1%91%E6%96%99',
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=HIPS&varietiesId=3083&templateType=4&flagAndTemplate=1-4;2-6;3-2&channelId=1780&oneName=%E5%A1%91%E6%96%99&twoName=%E9%80%9A%E7%94%A8%E5%A1%91%E6%96%99',
-        #     #
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=EPS&varietiesId=321&templateType=2&flagAndTemplate=1-2;3-2;2-2&channelId=1781&oneName=%E5%A1%91%E6%96%99&twoName=%E9%80%9A%E7%94%A8%E5%A1%91%E6%96%99',
-        #     #
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=ABS%E8%81%9A%E5%90%88%E7%89%A9&varietiesId=322&templateType=6&flagAndTemplate=3-4;2-7;1-6&channelId=1782&oneName=%E5%A1%91%E6%96%99&twoName=%E9%80%9A%E7%94%A8%E5%A1%91%E6%96%99',
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=%E8%8B%AF%E4%B9%99%E7%83%AF-%E4%B8%99%E7%83%AF%E8%85%88%E5%85%B1%E8%81%9A%E7%89%A9&varietiesId=3081&templateType=2&flagAndTemplate=2-2;1-2&channelId=1782&oneName=%E5%A1%91%E6%96%99&twoName=%E9%80%9A%E7%94%A8%E5%A1%91%E6%96%99',
-        #     #
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=EVA&varietiesId=323&templateType=2&flagAndTemplate=2-6;1-2&channelId=1783&oneName=%E5%A1%91%E6%96%99&twoName=%E9%80%9A%E7%94%A8%E5%A1%91%E6%96%99',
-        #     #
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=PVC%E7%B3%8A%E6%A0%91%E8%84%82&varietiesId=4307&templateType=2&flagAndTemplate=2-1;1-2&channelId=1784&oneName=%E5%A1%91%E6%96%99&twoName=%E9%80%9A%E7%94%A8%E5%A1%91%E6%96%99',
-        #     #
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=%E8%8B%AF%E4%B9%99%E7%83%AF-%E4%B8%99%E7%83%AF%E8%85%88%E5%85%B1%E8%81%9A%E7%89%A9&varietiesId=3081&templateType=2&flagAndTemplate=2-2;1-2&channelId=2165&oneName=%E5%A1%91%E6%96%99&twoName=%E9%80%9A%E7%94%A8%E5%A1%91%E6%96%99',
-        #     #
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=%E8%8C%82%E9%87%91%E5%B1%9E&varietiesId=4638&templateType=7&flagAndTemplate=2-7&channelId=3710&oneName=%E5%A1%91%E6%96%99&twoName=%E9%80%9A%E7%94%A8%E5%A1%91%E6%96%99',
-        #     #
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=POE&varietiesId=4726&templateType=5&flagAndTemplate=2-5&channelId=3775&oneName=%E5%A1%91%E6%96%99&twoName=%E9%80%9A%E7%94%A8%E5%A1%91%E6%96%99',
-        #     #
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=PP&varietiesId=317&templateType=7&flagAndTemplate=1-6;2-7;3-4;6-null&channelId=1777&oneName=%E5%A1%91%E6%96%99&twoName=%E9%80%9A%E7%94%A8%E5%A1%91%E6%96%99'
-        #
-        #     # 工程塑料
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=%E8%81%9A%E9%85%B0%E8%83%BA6&varietiesId=3084&templateType=2&flagAndTemplate=1-2;2-5&channelId=1786&oneName=%E5%A1%91%E6%96%99&twoName=%E5%B7%A5%E7%A8%8B%E5%A1%91%E6%96%99',
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=%E8%81%9A%E9%85%B0%E8%83%BA66&varietiesId=3085&templateType=2&flagAndTemplate=2-2;1-2&channelId=1786&oneName=%E5%A1%91%E6%96%99&twoName=%E5%B7%A5%E7%A8%8B%E5%A1%91%E6%96%99',
-        #     #
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=PC&varietiesId=412&templateType=2&flagAndTemplate=1-2;3-2;2-6&channelId=1787&oneName=%E5%A1%91%E6%96%99&twoName=%E5%B7%A5%E7%A8%8B%E5%A1%91%E6%96%99',
-        #     #
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=%E8%81%9A%E9%85%AF%E7%93%B6%E7%89%87&varietiesId=3151&templateType=2&flagAndTemplate=1-2;2-1&channelId=1788&oneName=%E5%A1%91%E6%96%99&twoName=%E5%B7%A5%E7%A8%8B%E5%A1%91%E6%96%99',
-        #     #
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=PMMA&varietiesId=414&templateType=2&flagAndTemplate=1-2&channelId=1789&oneName=%E5%A1%91%E6%96%99&twoName=%E5%B7%A5%E7%A8%8B%E5%A1%91%E6%96%99',
-        #     #
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=POM&varietiesId=415&templateType=2&flagAndTemplate=1-2;2-6&channelId=1790&oneName=%E5%A1%91%E6%96%99&twoName=%E5%B7%A5%E7%A8%8B%E5%A1%91%E6%96%99',
-        #     #
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=%E8%81%9A%E5%AF%B9%E8%8B%AF%E4%BA%8C%E7%94%B2%E9%85%B8%E4%B8%81%E4%BA%8C%E9%86%87%E9%85%AF&varietiesId=462&templateType=2&flagAndTemplate=1-2&channelId=1791&oneName=%E5%A1%91%E6%96%99&twoName=%E5%B7%A5%E7%A8%8B%E5%A1%91%E6%96%99',
-        #
-        #     # 塑料制品
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=BOPP&varietiesId=2957&templateType=2&flagAndTemplate=2-2;1-2&channelId=1793&oneName=%E5%A1%91%E6%96%99&twoName=%E5%A1%91%E6%96%99%E5%88%B6%E5%93%81',
-        #     #
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=BOPET&varietiesId=2958&templateType=5&flagAndTemplate=1-5&channelId=1794&oneName=%E5%A1%91%E6%96%99&twoName=%E5%A1%91%E6%96%99%E5%88%B6%E5%93%81',
-        #     #
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=cpe&varietiesId=4495&templateType=2&flagAndTemplate=1-2&channelId=1795&oneName=%E5%A1%91%E6%96%99&twoName=%E5%A1%91%E6%96%99%E5%88%B6%E5%93%81',
-        #     #
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=%E6%B5%81%E5%BB%B6%E8%81%9A%E4%B8%99%E7%83%AF%E8%96%84%E8%86%9C%E6%96%99&varietiesId=2960&templateType=2&flagAndTemplate=1-2&channelId=1796&oneName=%E5%A1%91%E6%96%99&twoName=%E5%A1%91%E6%96%99%E5%88%B6%E5%93%81',
-        #     #
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=%E5%86%9C%E8%86%9C&varietiesId=3775&templateType=2&flagAndTemplate=2-2&channelId=1798&oneName=%E5%A1%91%E6%96%99&twoName=%E5%A1%91%E6%96%99%E5%88%B6%E5%93%81',
-        #     #
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=%E8%83%B6%E5%B8%A6%E6%AF%8D%E5%8D%B7&varietiesId=4610&templateType=2&flagAndTemplate=1-2&channelId=3531&oneName=%E5%A1%91%E6%96%99&twoName=%E5%A1%91%E6%96%99%E5%88%B6%E5%93%81',
-        #
-        #     # 塑料管材
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=PE%E7%AE%A1%E6%9D%90&varietiesId=428&templateType=6&flagAndTemplate=2-2;1-6;3-4&channelId=1802&oneName=%E5%A1%91%E6%96%99&twoName=%E5%A1%91%E6%96%99%E7%AE%A1%E6%9D%90',
-        #     #
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=PP%E7%AE%A1%E6%9D%90&varietiesId=429&templateType=5&flagAndTemplate=2-2;1-5;3-4&channelId=1803&oneName=%E5%A1%91%E6%96%99&twoName=%E5%A1%91%E6%96%99%E7%AE%A1%E6%9D%90',
-        #
-        #     # 再生塑料
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=PE%E5%86%8D%E7%94%9F%E6%96%99&varietiesId=418&templateType=5&flagAndTemplate=2-5;2-1&channelId=1805&oneName=%E5%A1%91%E6%96%99&twoName=%E5%86%8D%E7%94%9F%E5%A1%91%E6%96%99',
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=PP%E5%86%8D%E7%94%9F%E6%96%99&varietiesId=419&templateType=5&flagAndTemplate=2-5&channelId=1806&oneName=%E5%A1%91%E6%96%99&twoName=%E5%86%8D%E7%94%9F%E5%A1%91%E6%96%99',
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=PET%E5%86%8D%E7%94%9F%E6%96%99&varietiesId=420&templateType=2&flagAndTemplate=2-2;1-2&channelId=1807&oneName=%E5%A1%91%E6%96%99&twoName=%E5%86%8D%E7%94%9F%E5%A1%91%E6%96%99',
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=ABS%E5%86%8D%E7%94%9F%E6%96%99&varietiesId=421&templateType=5&flagAndTemplate=2-5&channelId=1808&oneName=%E5%A1%91%E6%96%99&twoName=%E5%86%8D%E7%94%9F%E5%A1%91%E6%96%99',
-        #
-        #     # 烯烃
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=%E4%B9%99%E7%83%AF&varietiesId=196&templateType=1&flagAndTemplate=3-1&channelId=3547&oneName=%E5%A1%91%E6%96%99&twoName=%E7%83%AF%E7%83%83',
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=%E4%B8%99%E7%83%AF&varietiesId=116&templateType=1&flagAndTemplate=6-null;2-1;3-1;1-1&channelId=3548&oneName=%E5%A1%91%E6%96%99&twoName=%E7%83%AF%E7%83%83',
-        #
-        #     # 可降解材料
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=PBAT&varietiesId=4781&templateType=2&flagAndTemplate=2-1;1-2&channelId=4172&oneName=%E5%A1%91%E6%96%99&twoName=%E5%8F%AF%E9%99%8D%E8%A7%A3%E6%9D%90%E6%96%99',
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=PLA&varietiesId=4782&templateType=2&flagAndTemplate=1-2&channelId=4173&oneName=%E5%A1%91%E6%96%99&twoName=%E5%8F%AF%E9%99%8D%E8%A7%A3%E6%9D%90%E6%96%99',
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=PBS&varietiesId=4822&templateType=2&flagAndTemplate=1-2&channelId=4324&oneName=%E5%A1%91%E6%96%99&twoName=%E5%8F%AF%E9%99%8D%E8%A7%A3%E6%9D%90%E6%96%99',
-        #
-        #     # 改性塑料
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=PC/ABS&varietiesId=4614&templateType=7&flagAndTemplate=2-7&channelId=4013&oneName=%E5%A1%91%E6%96%99&twoName=%E6%94%B9%E6%80%A7%E5%A1%91%E6%96%99',
-        #     # 'https://dc.oilchem.net/price_search/list.htm?businessType={}&varietiesName=%E6%94%B9%E6%80%A7PP&varietiesId=4947&templateType=1&flagAndTemplate=1-1&channelId=4850&oneName=%E5%A1%91%E6%96%99&twoName=%E6%94%B9%E6%80%A7%E5%A1%91%E6%96%99'
-        # ]
-        # for category in categoryList:
-        #     if Async:
-        #         out = pool.apply_async(func=self.GetCategory, args=(category,))  # 异步
-        #     else:
-        #         out = pool.apply(func=self.GetCategory, args=(category,))  # 同步
-        #     thread_list.append(out)
+        # 每周一更新详细类目  主类目：108  详细数据：3750
+        if (pd.to_datetime(str(time.strftime("%Y-%m-%d", time.localtime(time.time())))) - pd.to_datetime('20160103')).days % 7 == 1:
+            # 获取主类目
+            self.GetMainCategory()
+            # 获取主类目下详细数据
+            for category in [i for i in self.category_coll.find({'status': 400})]:
+                if Async:
+                    out = pool.apply_async(func=self.GetDetailCategory, args=(category,))  # 异步
+                else:
+                    out = pool.apply(func=self.GetDetailCategory, args=(category,))  # 同步
+                thread_list.append(out)
 
-        """
-            详细分类：3190  有数据：   无数据：
-        """
-        # for info in self.category_coll.find({'status': None}).batch_size(3):
-        #     if Async:
-        #         out = pool.apply_async(func=self.GetDetailCategory, args=(info, proxy,))  # 异步
-        #     else:
-        #         out = pool.apply(func=self.GetDetailCategory, args=(info, proxy,))  # 同步
-        #     thread_list.append(out)
-        #     # break
-        #
-        """
-            详细分类： 3190   有效文件：   无效文件：
-        """
-        # 下载详细的数据 起始日期：20190101   结束日期：至今   本地下载一份excel   proxy：True/False（使用代理/不使用代理）  history:True(获取历史数据)  False(获取一周数据)
+        # 下载详细分类： 3750
         for info in self.categoryData_coll.find({'status': None}):
             if Async:
                 out = pool.apply_async(func=self.DownloadHistoryData, args=(info, proxy, history,))  # 异步
@@ -1866,37 +1782,18 @@ class LongZhong:
         pool.close()
         pool.join()
 
-        # 获取输出结果
-        com_list = []
-        if Async:
-            for p in thread_list:
-                com = p.get()  # get会阻塞
-                com_list.append(com)
-        else:
-            com_list = thread_list
-        if remove_bad:
-            com_list = [i for i in com_list if i is not None]
-        return com_list
-
 
 def lzrun():
-    if str(time.strftime("%H", time.localtime(time.time()))) == '10':
-        time.sleep(300)
-
-    start_time = time.time()
     lz = LongZhong()
-
-    # 清除标记
-    lz.removeStatus(lz.category_coll, 'link')
-    lz.removeStatus(lz.categoryData_coll, 'hashKey')
+    if str(time.strftime("%H", time.localtime(time.time()))) == '10':
+        # 清除标记
+        lz.removeStatus(lz.category_coll, 'link')
+        lz.removeStatus(lz.categoryData_coll, 'hashKey')
 
     # 多进程获取数据  params: proxy  history
     lz.CommandThread(history=False)
 
     print('lz_sj 获取历史数据--完成')
-
-    end_time = time.time()
-    logger.warning(end_time - start_time)
 
 
 if __name__ == '__main__':
