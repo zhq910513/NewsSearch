@@ -14,8 +14,6 @@ import pprint
 import time
 import re
 
-from Cookies.proxy import HandleProxy
-
 import os
 from os import path
 
@@ -57,19 +55,13 @@ class PE:
         # 实例化 Mongo
         datadb = conf.get("Mongo", "QUOTATIONDB")
         cookiedb = conf.get("Mongo", "COOKIE")
-        proxydb = conf.get("Mongo", "PROXY")
 
-        # client = MongoClient('mongodb://127.0.0.1:27017/{db}'.format(db=datadb))
-        client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=datadb))
+        client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=datadb))
+        # client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=datadb))
 
-        # cookieclient = MongoClient('mongodb://127.0.0.1:27017/{db}'.format(db=cookiedb))
-        cookieclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=cookiedb))
+        cookieclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=cookiedb))
+        # cookieclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=cookiedb))
         self.cookie_coll = cookieclient[cookiedb]['cookies']
-
-        # proxyclient = MongoClient('mongodb://127.0.0.1:27017/{db}'.format(db=proxydb))
-        proxyclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=proxydb))
-        self.proxy_coll = proxyclient[proxydb]['proxies']
-        self.pros = [pro.get('pro') for pro in self.proxy_coll.find({'status': 1})]
 
         self.message_coll = client[datadb]['pe_wangye_messages']
         self.articleData_coll = client[datadb]['pe_wangye_articleData']
@@ -172,41 +164,6 @@ class PE:
         self.titleTwo = ''
         self.titleThree = ''
 
-    def GetProxy(self):
-        try:
-            if self.pros:
-                usePro = self.pros.pop()
-            else:
-                # 计算代理池总数
-                if self.proxy_coll.find({'status': 1}).count() < 10:
-                    HandleProxy().InsertProxy(1)
-                else:
-                    self.pros = [pro.get('pro') for pro in self.proxy_coll.find({'status': 1})]
-                return self.GetProxy()
-
-            if usePro:
-                return {
-                    'http': 'http://{}'.format(usePro),
-                    'https': 'http://{}'.format(usePro),
-                }
-            else:
-                return
-        except:
-            return
-
-    def DisProxy(self, pro):
-        if isinstance(pro, dict):
-            pro = pro.get('http').split('//')[1]
-
-        # 改写数据库IP
-        try:
-            self.proxy_coll.update_one({'pro': pro}, {'$set': {
-                'status': 0,
-                'update_time': time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())),
-            }}, upsert=True)
-        except:
-            pass
-
     """
         国内PE装置动态汇总 / 国际装置投产及检修计划汇总 / 聚乙烯企业开工率跟踪报道 / 石化库存PE+PP / PE包装膜
     """
@@ -245,17 +202,7 @@ class PE:
                 'orderby': 'true'
             }
             try:
-                if proxy:
-                    # 获取代理
-                    pro = self.GetProxy()
-                    if pro:
-                        resp = requests.post(url=zc_api, headers=headers, proxies=pro, data=urlencode(jsonData),
-                                             timeout=5, verify=False)
-                    else:
-                        resp = requests.post(url=zc_api, headers=headers, data=urlencode(jsonData), timeout=5,
-                                             verify=False)
-                else:
-                    resp = requests.post(url=zc_api, headers=headers, data=urlencode(jsonData), timeout=5, verify=False)
+                resp = requests.post(url=zc_api, headers=headers, data=urlencode(jsonData), timeout=5, verify=False)
 
                 resp.encoding = 'utf-8'
                 if resp.status_code == 200:
@@ -292,10 +239,6 @@ class PE:
                             pass
                 else:
                     print(resp.status_code)
-            except requests.exceptions.ConnectionError:
-                # threading.Thread(target=self.DisProxy, args=(pro,)).start()
-                print('网络问题，重试中...')
-                return self.GetAllMessages(info, proxy, history, pageNum)
             except TimeoutError:
                 logger.warning(link)
             except Exception as error:
@@ -308,15 +251,7 @@ class PE:
                 headers = self.JLCHeaders
 
             try:
-                if proxy:
-                    # 获取代理
-                    pro = self.GetProxy()
-                    if pro:
-                        resp = requests.get(url=link, headers=headers, proxies=pro, timeout=5, verify=False)
-                    else:
-                        resp = requests.get(url=link, headers=headers, timeout=5, verify=False)
-                else:
-                    resp = requests.get(url=link, headers=headers, timeout=5, verify=False)
+                resp = requests.get(url=link, headers=headers, timeout=5, verify=False)
                 resp.encoding = 'utf-8'
                 if resp.status_code == 200:
                     data = self.ParseMessages(info, resp.text)
@@ -357,10 +292,6 @@ class PE:
                         pass
                 else:
                     print(resp.status_code)
-            except requests.exceptions.ConnectionError:
-                # threading.Thread(target=self.DisProxy, args=(pro,)).start()
-                print('网络问题，重试中...')
-                return self.GetAllMessages(info, proxy, history, pageNum)
             except TimeoutError:
                 logger.warning(link)
             except Exception as error:
@@ -944,8 +875,8 @@ class PE:
                                         })
                                 else:
                                     logger.warning('表头对不上！  {}'.format(info.get('link')))
-                            except:
-                                pass
+                            except Exception as error:
+                                logger.warning(error)
                             if data:
                                 dataList.append(data)
                         if dataList:
@@ -2084,8 +2015,8 @@ class PE:
                     info['publishTime'] = time.strftime("%Y-%m-%d %H:%M",
                                                         time.localtime(int(info.get('publishTime') / 1000)))
                     info['title'] = info.get('title') + info.get('publishTime')
-                except:
-                    pass
+                except Exception as error:
+                    logger.warning(error)
             return jsonHtml.get('dataList')
         else:
             return None

@@ -865,10 +865,10 @@ class JinLianChuang:
 def jlcrun():
     jlc = JinLianChuang()
 
-    if str(time.strftime("%H", time.localtime(time.time()))) == '10':
-        # 清除标记
-        jlc.removeStatus(jlc.category_coll, 'link')
-        jlc.removeStatus(jlc.categoryData_coll, 'hashKey')
+    # if str(time.strftime("%H", time.localtime(time.time()))) == '10':
+    # 清除标记
+    jlc.removeStatus(jlc.category_coll, 'link')
+    jlc.removeStatus(jlc.categoryData_coll, 'hashKey')
 
     # 多进程获取数据  params: proxy  history
     jlc.CommandThread(proxy=False, history=True)

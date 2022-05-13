@@ -18,7 +18,7 @@ import time
 import subprocess
 from os import path
 from pymongo import MongoClient
-
+from bs4 import BeautifulSoup
 import pytesseract
 import requests
 from PIL import Image
@@ -238,19 +238,20 @@ class Cookie:
 
                 try:
                     time.sleep(3)
-                    if '会员中心' in self.driver.find_element_by_xpath('//*[@id="header_menu_top_login"]/span/span/a[2]').text:
+                    if BeautifulSoup(self.driver.page_source,'lxml').find('div',{'class': 'plj'}):
                         print(f'隆众 {self.account} 登录成功！')
                         time.sleep(1)
                         # 获取 cookie
                         for Type in [
                             ('lz_sj_category', 'https://dc.oilchem.net/price_search/list.htm?businessType=2&varietiesName=HDPE&varietiesId=313&templateType=6&flagAndTemplate=2-7;1-6;3-4&channelId=1776&oneName=%E5%A1%91%E6%96%99&twoName=%E9%80%9A%E7%94%A8%E5%A1%91%E6%96%99'),
                             ('lz_sj_downloadDetail', 'https://dc.oilchem.net/price_search/list.htm?businessType=2&varietiesName=HDPE&varietiesId=313&templateType=6&flagAndTemplate=2-7;1-6;3-4&channelId=1776&oneName=%E5%A1%91%E6%96%99&twoName=%E9%80%9A%E7%94%A8%E5%A1%91%E6%96%99'),
+
                             ('lz_pe_国际装置_article', 'https://news.oilchem.net/21-0114-15-8e42d0c67a2fd9fa.html'),
-                            ('lz_pe_聚乙烯开工率_article', 'https://news.oilchem.net/21-0114-15-9af679cea3892e8d.html'),
+                            ('lz_pe_聚乙烯开工率_article', 'https://www.oilchem.net/22-0310-17-a535003cb78800da.html'),
                             ('lz_pe_企业库存_article', 'https://news.oilchem.net/21-0122-08-25a8c8cb7531f3bd.html'),
-                            ('lz_pe_港口库存_article', 'https://news.oilchem.net/21-0118-08-6cceb48bb4e3b2f7.html'),
+                            ('lz_pe_港口库存_article', 'https://www.oilchem.net/22-0512-17-21dced5e5ffdc7bc.html'),
                             ('lz_pe_包装膜开工率_article', 'https://news.oilchem.net/21-0108-10-58c32bcd6821beb8.html'),
-                            ('lz_pp_qita', 'https://news.oilchem.net/20/1119/16/fa1793bbd1344ed7.html'),
+                            ('lz_pp_qita', 'https://www.oilchem.net/21-0122-16-a83c07bceee96550.html'),
                             ('lz_pe_qiye_article', 'https://news.oilchem.net/21-0416-11-2988086f0219d38f.html'),
                             ('lz_pp_gn_article', 'https://news.oilchem.net/21-0419-14-916425169ad531d9.html'),
                             ('lz_search', 'https://news.oilchem.net/21-0621-16-57057bf2f9acdcd8.html'),
@@ -262,11 +263,10 @@ class Cookie:
                             self.driver.get(Type[1])
                             print('访问 -- %s' % Type[0])
 
-                            time.sleep(5)
-                            if '会员中心' in self.driver.find_element(By.XPATH, '//*[@id="header_menu_top_login"]/span/span/a[2]').text:
-                                if 'lz_pe' in Type[0] or 'lz_pe_qiye_article' in Type[0] or 'lz_pp_gn_article' in Type[
-                                    0]:
-                                    time.sleep(1)
+                            time.sleep(10)
+                            if BeautifulSoup(self.driver.page_source, 'lxml').find('div',{'class': 'plj'}):
+                                if 'lz_pe' in Type[0] or 'lz_pe_qiye_article' in Type[0] or 'lz_pp_gn_article' in Type[0]:
+                                    time.sleep(10)
                                     self.driver.refresh()
                                     time.sleep(5)
                                 else:
@@ -284,14 +284,16 @@ class Cookie:
                                                                               time.localtime(time.time()))}},
                                                                 upsert=True)
                             else:
-                                logger.warning(f'隆众 {self.account} 登录失败！ --- {self.driver.current_url}')
+                                print(f'隆众 {self.account} 登录失败！ --- {self.driver.current_url}')
+                                self.driver.refresh()
+                                time.sleep(5)
+                                continue
                         logger.warning(f'隆众 {self.account} cookie 获取成功！')
                     else:
                         self.captchaApi.DrawBack(self.request_id)
                         logger.warning(f'隆众 {self.account} 登录失败！-- {self.driver.current_url}')
-                        return self.ChoicePlatform()
-                except:
-                    return self.ChoicePlatform()
+                except Exception as error:
+                    logger.warning(error)
             else:
                 logger.warning('获取验证码失败')
         except Exception as error:
@@ -586,7 +588,7 @@ def cookies_run():
     for account in accounts:
         kill_chrome_mitmproxy()
 
-        # Cookie(account)
+        Cookie(account)
 
     # CookieSearch()
 

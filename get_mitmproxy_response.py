@@ -124,6 +124,19 @@ def response(flow):
             except:
                 pass
 
+    if "https://plas.chem99.com/news/38097594.html" in flow.request.url:
+        print('准备捕获 -- zc_pe_农膜日评_article')
+        headers = flow.request.headers
+        if headers:
+            try:
+                if headers.get('cookie'):
+                    print('zc_pe_农膜日评_article', headers.get('cookie'))
+                    SaveJosnData('zc_pe_农膜日评_article', headers.get('cookie'))
+                else:
+                    pass
+            except:
+                pass
+
 
     # jlc-pe
     if "http://plas.315i.com/infodetail/i14377737_p004001001_c005010.html" in flow.request.url:
@@ -154,7 +167,7 @@ def response(flow):
             except:
                 pass
 
-    if "https://news.oilchem.net/21-0114-15-9af679cea3892e8d.html" in flow.request.url:
+    if "https://www.oilchem.net/22-0310-17-a535003cb78800da.html" in flow.request.url:
         print('准备捕获 -- lz_pe_聚乙烯开工率_article')
         headers = flow.request.headers
         if headers:
@@ -180,7 +193,7 @@ def response(flow):
             except:
                 pass
 
-    if "https://news.oilchem.net/21-0118-08-6cceb48bb4e3b2f7.html" in flow.request.url:
+    if "https://www.oilchem.net/22-0512-17-21dced5e5ffdc7bc.html" in flow.request.url:
         print('准备捕获 -- lz_pe_港口库存_article')
         headers = flow.request.headers
         if headers:
@@ -232,21 +245,9 @@ def response(flow):
             except:
                 pass
 
-    if "https://plas.chem99.com/news/38097594.html" in flow.request.url:
-        print('准备捕获 -- zc_pe_农膜日评_article')
-        headers = flow.request.headers
-        if headers:
-            try:
-                if headers.get('cookie'):
-                    print('zc_pe_农膜日评_article', headers.get('cookie'))
-                    SaveJosnData('zc_pe_农膜日评_article', headers.get('cookie'))
-                else:
-                    pass
-            except:
-                pass
 
 def SaveJosnData(name, data):
-    client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/cookie')
+    client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/cookie')
     coll = client['cookie']['cookies']
 
     # 更新对应账户

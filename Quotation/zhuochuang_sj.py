@@ -1,7 +1,6 @@
 #!/usr/local/python3/bin/python3
 # -*- coding:utf-8 -*-
 import sys
-import threading
 
 sys.path.append("../")
 import configparser
@@ -23,7 +22,6 @@ from fake_useragent import UserAgent
 from pymongo import MongoClient
 import pymysql
 from pymysql.err import IntegrityError
-from Cookies.proxy import HandleProxy
 
 requests.packages.urllib3.disable_warnings()
 pp = pprint.PrettyPrinter(indent=4)
@@ -55,19 +53,13 @@ class ZhuoChuang:
         # 实例化 Mongo
         datadb = conf.get("Mongo", "QUOTATIONDB")
         cookiedb = conf.get("Mongo", "COOKIE")
-        proxydb = conf.get("Mongo", "PROXY")
 
-        # client = MongoClient('mongodb://127.0.0.1:27017/{db}'.format(db=datadb))
-        client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=datadb))
+        client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=datadb))
+        # client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=datadb))
 
-        # cookieclient = MongoClient('mongodb://127.0.0.1:27017/{db}'.format(db=cookiedb))
-        cookieclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=cookiedb))
+        cookieclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=cookiedb))
+        # cookieclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=cookiedb))
         self.cookie_coll = cookieclient[cookiedb]['cookies']
-
-        # proxyclient = MongoClient('mongodb://127.0.0.1:27017/{db}'.format(db=proxydb))
-        proxyclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=proxydb))
-        self.proxy_coll = proxyclient[proxydb]['proxies']
-        self.pros = [pro.get('pro') for pro in self.proxy_coll.find({'status': 1})]
 
         self.category_coll = client[datadb]['zc_sj_category']
         self.categoryData_coll = client[datadb]['zc_sj_categoryData']
@@ -140,57 +132,13 @@ class ZhuoChuang:
         )
         return conn
 
-    def GetProxy(self):
-        try:
-            if self.pros:
-                usePro = self.pros.pop()
-            else:
-                # 计算代理池总数
-                if self.proxy_coll.find({'status': 1}).count() < 10:
-                    HandleProxy().InsertProxy(1)
-                else:
-                    self.pros = [pro.get('pro') for pro in self.proxy_coll.find({'status': 1})]
-                return self.GetProxy()
-
-            if usePro:
-                return {
-                    'http': 'http://{}'.format(usePro),
-                    'https': 'http://{}'.format(usePro),
-                }
-            else:
-                return
-        except:
-            return
-
-    def DisProxy(self, pro):
-        if isinstance(pro, dict):
-            pro = pro.get('http').split('//')[1]
-
-        # 改写数据库IP
-        try:
-            self.proxy_coll.update_one({'pro': pro}, {'$set': {
-                'status': 0,
-                'update_time': time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())),
-            }}, upsert=True)
-        except:
-            pass
-
-    """
-        获取主类目
-    """
-
     # 获取分类列表
-    def GetCategory(self, proxy=False):
+    def GetCategory(self):
         self.categoryHeaders.update({
             'Cookie': self.cookie_coll.find_one({'name': 'zc_sj_category'}).get('cookie')
         })
         try:
-            if proxy:
-                pro = self.GetProxy()
-                resp = requests.get(self.categoryUrl, headers=self.categoryHeaders, proxies=pro, timeout=5,
-                                    verify=False)
-            else:
-                resp = requests.get(self.categoryUrl, headers=self.categoryHeaders, timeout=5, verify=False)
+            resp = requests.get(self.categoryUrl, headers=self.categoryHeaders, timeout=5, verify=False)
             if resp.status_code == 200:
                 respData = [s for s in resp.json().get('data') if s.get('Name') == '塑料'][0]
                 for children in respData.get('Children'):
@@ -215,10 +163,6 @@ class ZhuoChuang:
                 print('zc_sj 获取分类列表--完成')
             else:
                 logger.warning(resp.status_code)
-        except requests.exceptions.ConnectionError:
-            threading.Thread(target=self.DisProxy, args=(pro,)).start()
-            print('网络问题，重试中...')
-            return self.GetCategory(proxy)
         except TimeoutError:
             pass
         except Exception as error:
@@ -231,7 +175,7 @@ class ZhuoChuang:
     """
 
     # 获取当周数据/详细产品分类
-    def GetDetailCategory(self, info, proxy=False):
+    def GetDetailCategory(self, info):
         try:
             link = info.get('link')
             if info.get('categoryFour'):
@@ -289,13 +233,8 @@ class ZhuoChuang:
                         self.categoryDataHeaders.update({
                             'Cookie': self.cookie_coll.find_one({'name': 'zc_sj_category'}).get('cookie')
                         })
-                    if proxy:
-                        pro = self.GetProxy()
-                        resp = requests.post(url=self.categoryDataUrl, headers=self.categoryDataHeaders, proxies=pro,
-                                             json=jsonData, timeout=5, verify=False)
-                    else:
-                        resp = requests.post(url=self.categoryDataUrl, headers=self.categoryDataHeaders, json=jsonData,
-                                             timeout=5, verify=False)
+                    resp = requests.post(url=self.categoryDataUrl, headers=self.categoryDataHeaders, json=jsonData,
+                                         timeout=5, verify=False)
                     if resp.status_code == 200:
                         dataJson = resp.json().get('data')
                         headers = dataJson.get('headers')
@@ -324,8 +263,6 @@ class ZhuoChuang:
                         self.ParserCategory(conn, name, link, Type)
                     else:
                         pp.pprint(resp.text)
-                except requests.exceptions.ConnectionError:
-                    return self.GetDetailCategory(info, proxy)
                 except Exception as error:
                     logger.warning(error)
                     return None
@@ -335,10 +272,6 @@ class ZhuoChuang:
 
             # 关闭MySQL连接
             conn.cursor().close()
-        except requests.exceptions.ConnectionError:
-            threading.Thread(target=self.DisProxy, args=(pro,)).start()
-            print('网络问题，重试中...')
-            return self.GetCategory(proxy)
         except TimeoutError:
             logger.warning(info.get('link'))
         except Exception as error:
@@ -479,7 +412,7 @@ class ZhuoChuang:
 
             hashKey = hashlib.md5((str(Type + prod_name + source_url)).encode("utf8")).hexdigest()  # 数据唯一索引
 
-        if Type == '企业报价':
+        elif Type == '企业报价':
             pricetypeid = 34319
             try:
                 headers = {
@@ -597,7 +530,7 @@ class ZhuoChuang:
 
             hashKey = hashlib.md5((str(Type + source_url)).encode("utf8")).hexdigest()  # 数据唯一索引
 
-        if Type == '国际价格':
+        elif Type == '国际价格':
             pricetypeid = 34318
             try:
                 headers = {
@@ -715,6 +648,9 @@ class ZhuoChuang:
 
             hashKey = hashlib.md5((str(Type + source_url)).encode("utf8")).hexdigest()  # 数据唯一索引
 
+        else:
+            hashKey = None
+
         insertData = (
             hashKey,
             prod_name,
@@ -754,8 +690,7 @@ class ZhuoChuang:
     """
 
     # 获取历史数据
-    def DownloadHistoryData(self, info, proxy=False, history=False):
-        pro = None
+    def DownloadHistoryData(self, info, history=False):
         HashKey = info.get('hashKey')
         Type = info.get('type')
         DIID = info.get('data').get('DIID')
@@ -788,17 +723,8 @@ class ZhuoChuang:
         }
 
         try:
-            if proxy:
-                pro = self.GetProxy()
-                if pro:
-                    resp = requests.post(url=self.defaultDownloadUrl, headers=self.defaultDownloadHeaders, proxies=pro,
-                                         json=jsonData, timeout=5, verify=False)
-                else:
-                    resp = requests.post(url=self.defaultDownloadUrl, headers=self.defaultDownloadHeaders,
-                                         json=jsonData, timeout=5, verify=False)
-            else:
-                resp = requests.post(url=self.defaultDownloadUrl, headers=self.defaultDownloadHeaders, json=jsonData,
-                                     timeout=5, verify=False)
+            resp = requests.post(url=self.defaultDownloadUrl, headers=self.defaultDownloadHeaders, json=jsonData,
+                                 timeout=5, verify=False)
 
             if resp.status_code == 200:
                 if resp.json().get('data') and resp.json().get('data').get('List'):
@@ -820,26 +746,14 @@ class ZhuoChuang:
                 self.categoryData_coll.update_one({'hashKey': info['hashKey']},
                                                   {'$set': {'status': resp.status_code}},
                                                   upsert=True)
-                # 标记失效代理
-                if pro:
-                    threading.Thread(target=self.DisProxy, args=(pro,)).start()
                 print('网络问题，重试中...')
-                return self.DownloadHistoryData(info, True, history)
+                return self.DownloadHistoryData(info, history)
             else:
                 self.categoryData_coll.update_one({'hashKey': info['hashKey']}, {'$set': {'status': 404}},
                                                   upsert=True)
-        except requests.exceptions.ConnectionError:
-            # 标记失效代理
-            if pro:
-                threading.Thread(target=self.DisProxy, args=(pro,)).start()
-            print('网络问题，重试中...')
-            return self.DownloadHistoryData(info, True, history)
         except TimeoutError:
-            # 标记失效代理
-            if pro:
-                threading.Thread(target=self.DisProxy, args=(pro,)).start()
             print('网络问题，重试中...')
-            return self.DownloadHistoryData(info, True, history)
+            return self.DownloadHistoryData(info, history)
         except Exception as error:
             logger.warning(error)
             return
@@ -1233,13 +1147,13 @@ class ZhuoChuang:
             # print(updateData)
 
         else:
-            insertData = None
-            updateData = None
+            insertData, updateData, insertSql, updateSql = None, None, None, None
             print('businessType 错误')
 
         # 存储数据
         if insertData and updateData:
-            if str(time.strftime("%d", time.localtime(time.time()))) in str(insertData[1][-2:]) or str(time.strftime("%d", time.localtime(time.time()))) in str(updateData[0][-2:]):
+            if str(time.strftime("%d", time.localtime(time.time()))) in str(insertData[1][-2:]) or str(
+                    time.strftime("%d", time.localtime(time.time()))) in str(updateData[0][-2:]):
                 self.categoryData_coll.update_one({'hashKey': HashKey}, {'$set': {'status': 1}}, upsert=True)
             self.UpdateToMysql(conn, insertSql, insertData, updateSql, updateData)
 
@@ -1266,11 +1180,12 @@ class ZhuoChuang:
     # 还原状态
     @staticmethod
     def removeStatus(coll, hashkey):
-        for info in coll.find({'$nor': [{'status': 400}]}):
+        for num, info in enumerate(coll.find({'$nor': [{'status': 400}]})):
+            print(num)
             coll.update_one({hashkey: info[hashkey]}, {'$unset': {'status': ''}}, upsert=True)
 
     # 多线程获取数据
-    def CommandThread(self, proxy=False, history=False, remove_bad=False, Async=True):
+    def CommandThread(self, history=False, Async=True):
         thread_list = []
 
         # 设置进程数
@@ -1280,7 +1195,6 @@ class ZhuoChuang:
         if (pd.to_datetime(str(time.strftime("%Y-%m-%d", time.localtime(time.time())))) - pd.to_datetime('20160103')).days % 7 == 1:
             """
                 主类目：68   有数据：68   无数据：0
-
             """
             self.GetCategory()
 
@@ -1288,60 +1202,42 @@ class ZhuoChuang:
                 详细分类：3115   有数据：   无数据：
                 zc.GetDetailCategory()
             """
-            for info in self.category_coll.find({}):
+            category_list = [i for i in self.category_coll.find({})]
+            for info in category_list:
                 if Async:
-                    out = pool.apply_async(func=self.GetDetailCategory, args=(info, proxy,))  # 异步
+                    out = pool.apply_async(func=self.GetDetailCategory, args=(info,))  # 异步
                 else:
-                    out = pool.apply(func=self.GetDetailCategory, args=(info, proxy,))  # 同步
+                    out = pool.apply(func=self.GetDetailCategory, args=(info,))  # 同步
                 thread_list.append(out)
 
         """
             传入下载日期  xxxx-xx-xx 默认为当天, 有效：2829  不重复: 2604  无权限: 272
         """
-        logger.warning(self.categoryData_coll.find({'status': None}).count())
-        for info in self.categoryData_coll.find({'status': None}, no_cursor_timeout=True):
+        categoryData_list = [i for i in self.categoryData_coll.find({'status': None})]
+        for info in categoryData_list:
             if Async:
-                out = pool.apply_async(func=self.DownloadHistoryData, args=(info, proxy, history,))  # 异步
+                out = pool.apply_async(func=self.DownloadHistoryData, args=(info, history,))  # 异步
             else:
-                out = pool.apply(func=self.DownloadHistoryData, args=(info, proxy, history,))  # 同步
+                out = pool.apply(func=self.DownloadHistoryData, args=(info, history,))  # 同步
             thread_list.append(out)
 
         pool.close()
         pool.join()
 
-        # 获取输出结果
-        com_list = []
-        if Async:
-            for p in thread_list:
-                com = p.get()  # get会阻塞
-                com_list.append(com)
-        else:
-            com_list = thread_list
-        if remove_bad:
-            com_list = [i for i in com_list if i is not None]
-        return com_list
-
 
 def zcsjrun():
-    start_time = time.time()
     zc = ZhuoChuang()
 
-    if str(time.strftime("%H", time.localtime(time.time()))) == '10':
-        # 清除标记
-        zc.removeStatus(zc.category_coll, 'link')
-        zc.removeStatus(zc.categoryData_coll, 'hashKey')
-        time.sleep(300)
-
+    # if str(time.strftime("%H", time.localtime(time.time()))) == '10':
+    # 清除标记
+    zc.removeStatus(zc.category_coll, 'link')
+    zc.removeStatus(zc.categoryData_coll, 'hashKey')
 
     # 多进程获取数据   params: proxy history
     if (pd.to_datetime(str(time.strftime("%Y-%m-%d", time.localtime(time.time())))) - pd.to_datetime('20160103')).days % 7 not in [6, 7]:
-        zc.CommandThread(proxy=False, history=False)
-
+        zc.CommandThread(history=False)
 
     print('zc 获取历史数据--完成')
-
-    end_time = time.time()
-    logger.warning(end_time - start_time)
 
 
 if __name__ == '__main__':
