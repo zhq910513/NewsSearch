@@ -12,3 +12,14 @@
 2022-05-11 19:10:50,695 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
 2022-05-11 20:19:58,690 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
 2022-05-11 22:20:18,963 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
+2022-05-13 14:20:22,277 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
+2022-05-13 14:20:46,381 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+2022-05-13 14:28:15,583 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
+2022-05-13 14:36:37,177 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
+2022-05-13 14:40:16,272 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
+2022-05-13 15:01:13,678 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+2022-05-13 15:01:28,428 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+2022-05-13 15:22:41,711 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
+2022-05-13 16:02:14,475 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
+2022-05-13 16:02:43,147 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-05-13 16:26:51,108 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
