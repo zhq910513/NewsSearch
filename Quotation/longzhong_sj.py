@@ -62,15 +62,15 @@ class LongZhong:
         cookiedb = conf.get("Mongo", "COOKIE")
         proxydb = conf.get("Mongo", "PROXY")
 
-        client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=datadb))
-        # client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=datadb))
+        # client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=datadb))
+        client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=datadb))
 
-        cookieclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=cookiedb))
-        # cookieclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=cookiedb))
+        # cookieclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=cookiedb))
+        cookieclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=cookiedb))
         self.cookie_coll = cookieclient[cookiedb]['cookies']
 
-        proxyclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=proxydb))
-        # proxyclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=proxydb))
+        # proxyclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=proxydb))
+        proxyclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=proxydb))
         self.proxy_coll = proxyclient[proxydb]['proxies']
         self.pros = [pro.get('pro') for pro in self.proxy_coll.find({'status': 1})]
         self.pro = None
@@ -1785,7 +1785,7 @@ class LongZhong:
 
 def lzrun():
     lz = LongZhong()
-    if str(time.strftime("%H", time.localtime(time.time()))) == '10':
+    if str(time.strftime("%H", time.localtime(time.time()))) == '16':
         # 清除标记
         lz.removeStatus(lz.category_coll, 'link')
         lz.removeStatus(lz.categoryData_coll, 'hashKey')
