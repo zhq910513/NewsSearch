@@ -1228,10 +1228,10 @@ class ZhuoChuang:
 def zcsjrun():
     zc = ZhuoChuang()
 
-    # if str(time.strftime("%H", time.localtime(time.time()))) == '10':
-    # 清除标记
-    zc.removeStatus(zc.category_coll, 'link')
-    zc.removeStatus(zc.categoryData_coll, 'hashKey')
+    if str(time.strftime("%H", time.localtime(time.time()))) == '10':
+        # 清除标记
+        zc.removeStatus(zc.category_coll, 'link')
+        zc.removeStatus(zc.categoryData_coll, 'hashKey')
 
     # 多进程获取数据   params: proxy history
     if (pd.to_datetime(str(time.strftime("%Y-%m-%d", time.localtime(time.time())))) - pd.to_datetime('20160103')).days % 7 not in [6, 7]:

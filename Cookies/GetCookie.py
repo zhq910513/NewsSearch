@@ -583,14 +583,14 @@ def cookies_run():
         #{'platform': 'jlc_second', 'account': '18918096272', 'pwd': '123456'},
         #{'platform': 'jlc_third', 'account': 'hshizhi', 'pwd': 'ZYLzyl@123@'},
         {'platform': 'lz', 'account': 'zhq111', 'pwd': 'a123456'},
-        # {'platform': 'zc', 'account': 'changsu', 'pwd': 'cs123456'}
+        {'platform': 'zc', 'account': 'changsu', 'pwd': 'cs123456'}
     ]
     for account in accounts:
         kill_chrome_mitmproxy()
 
         Cookie(account)
 
-    # CookieSearch()
+    CookieSearch()
 
 
 if __name__ == '__main__':
