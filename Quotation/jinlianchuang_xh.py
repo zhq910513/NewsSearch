@@ -837,15 +837,15 @@ class JinLianChuang:
                     thread_list.append(out)
             #         # break
 
-        # 获取 周数据  共：4334
-        categoryData_coll_list = [i for i in self.categoryData_coll.find({"Type": "周均价", 'status': None})]
-        for info in categoryData_coll_list:
-            if Async:
-                out = pool.apply_async(func=self.DownloadHistoryData, args=(info, proxy, history,))  # 异步
-            else:
-                out = pool.apply(func=self.DownloadHistoryData, args=(info, proxy, history,))  # 同步
-            thread_list.append(out)
-            # break
+            # 获取 周数据  共：4334
+            categoryData_coll_list = [i for i in self.categoryData_coll.find({"Type": "周均价", 'status': None})]
+            for info in categoryData_coll_list:
+                if Async:
+                    out = pool.apply_async(func=self.DownloadHistoryData, args=(info, proxy, history,))  # 异步
+                else:
+                    out = pool.apply(func=self.DownloadHistoryData, args=(info, proxy, history,))  # 同步
+                thread_list.append(out)
+                # break
 
         """ 每一天 """
         # 获取 天数据  共：4334
@@ -867,8 +867,8 @@ def jlcrun():
 
     # if str(time.strftime("%H", time.localtime(time.time()))) == '10':
     # 清除标记
-    # jlc.removeStatus(jlc.category_coll, 'link')
-    # jlc.removeStatus(jlc.categoryData_coll, 'hashKey')
+    jlc.removeStatus(jlc.category_coll, 'link')
+    jlc.removeStatus(jlc.categoryData_coll, 'hashKey')
 
     # 多进程获取数据  params: proxy  history
     jlc.CommandThread(proxy=False, history=True)

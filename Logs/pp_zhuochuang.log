@@ -22,3 +22,16 @@
 2022-05-13 17:28:40,134 - pp_zhuochuang.py[line:867] - WARNING: 数据表头不匹配   https://plas.chem99.com/news/41435687.html
 2022-05-13 17:28:40,134 - pp_zhuochuang.py[line:867] - WARNING: 数据表头不匹配   https://plas.chem99.com/news/41435687.html
 2022-05-13 17:28:40,134 - pp_zhuochuang.py[line:867] - WARNING: 数据表头不匹配   https://plas.chem99.com/news/41435687.html
+2022-05-17 16:37:03,755 - pp_zhuochuang.py[line:229] - WARNING: [Errno Expecting value] : 0
+2022-05-17 16:37:34,651 - pp_zhuochuang.py[line:928] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-05-17 16:37:35,158 - pp_zhuochuang.py[line:928] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-05-17 16:37:59,068 - pp_zhuochuang.py[line:928] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-05-17 16:38:00,490 - pp_zhuochuang.py[line:928] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-05-17 16:38:03,510 - pp_zhuochuang.py[line:928] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-05-17 16:38:03,595 - pp_zhuochuang.py[line:928] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-05-17 16:38:04,037 - pp_zhuochuang.py[line:928] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-05-17 16:38:26,006 - pp_zhuochuang.py[line:928] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-05-17 16:38:28,846 - pp_zhuochuang.py[line:928] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-05-17 16:38:31,590 - pp_zhuochuang.py[line:928] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-05-17 16:38:31,628 - pp_zhuochuang.py[line:928] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-05-17 16:38:33,695 - pp_zhuochuang.py[line:928] - WARNING: 'NoneType' object has no attribute 'find_all'
