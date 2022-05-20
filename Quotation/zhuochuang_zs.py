@@ -1,8 +1,7 @@
 #!/usr/local/python3/bin/python3
 # -*- coding:utf-8 -*-
-
+import json
 import sys
-import threading
 
 sys.path.append("../")
 import configparser
@@ -22,7 +21,7 @@ from pymongo import MongoClient
 import pymysql
 from pymysql.err import IntegrityError
 
-from Cookies.GetCookie import Cookie
+from Cookies.GetCookie import cookies_run
 
 requests.packages.urllib3.disable_warnings()
 pp = pprint.PrettyPrinter(indent=4)
@@ -54,19 +53,13 @@ class ZhuoChuang:
         # 实例化 Mongo
         datadb = conf.get("Mongo", "QUOTATIONDB")
         cookiedb = conf.get("Mongo", "COOKIE")
-        proxydb = conf.get("Mongo", "PROXY")
 
-        # client = MongoClient('mongodb://127.0.0.1:27017/{db}'.format(db=datadb))
+        # client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=datadb))
         client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=datadb))
 
-        # cookieclient = MongoClient('mongodb://127.0.0.1:27017/{db}'.format(db=cookiedb))
+        # cookieclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=cookiedb))
         cookieclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=cookiedb))
         self.cookie_coll = cookieclient[cookiedb]['cookies']
-
-        # proxyclient = MongoClient('mongodb://127.0.0.1:27017/{db}'.format(db=proxydb))
-        proxyclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=proxydb))
-        self.proxy_coll = proxyclient[proxydb]['proxies']
-        self.pros = [pro.get('pro') for pro in self.proxy_coll.find({'status': 1})]
 
         self.category_coll = client[datadb]['zc_zs_category']
 
@@ -125,43 +118,12 @@ class ZhuoChuang:
         )
         self.cursor = self.conn.cursor()
 
-    def GetProxy(self):
-        try:
-            if self.pros:
-                usePro = self.pros.pop()
-            else:
-                self.pros = [pro.get('pro') for pro in self.proxy_coll.find({'status': 1})]
-                return self.GetProxy()
-
-            if usePro:
-                return {
-                    'http': 'http://{}'.format(usePro),
-                    'https': 'http://{}'.format(usePro),
-                }
-            else:
-                return
-        except:
-            return
-
-    def DisProxy(self, pro):
-        if isinstance(pro, dict):
-            pro = pro.get('http').split('//')[1]
-
-        # 改写数据库IP
-        try:
-            self.proxy_coll.update_one({'pro': pro}, {'$set': {
-                'status': 0,
-                'update_time': time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())),
-            }}, upsert=True)
-        except:
-            pass
-
     """
         获取主类目
     """
 
     # 获取类目
-    def GetCategory(self, proxy=False):
+    def GetCategory(self):
         currentTime = int(round(time.time() * 1000))
         link = self.categoryUrl.format(currentTime)
         self.categoryHeaders.update({'path': '/api/nav/zh-cn/2?_={}'.format(currentTime)})
@@ -169,27 +131,22 @@ class ZhuoChuang:
             self.categoryHeaders.update({
                 'Cookie': self.cookie_coll.find_one({'name': 'zc_zs_category'}).get('cookie')
             })
-            if proxy:
-                pro = self.GetProxy()
-                if pro:
-                    resp = requests.get(link, headers=self.categoryHeaders, proxies=pro, timeout=5, verify=False)
-                else:
-                    resp = requests.get(link, headers=self.categoryHeaders, timeout=5, verify=False)
-            else:
-                resp = requests.get(link, headers=self.categoryHeaders, timeout=5, verify=False)
+            resp = requests.get(link, headers=self.categoryHeaders, timeout=5, verify=False)
             if resp.status_code == 200:
                 if resp.json() and isinstance(resp.json(), list):
-                    for item in resp.json()[98:120]:
-                        try:
-                            self.category_coll.update_one({'Name': item['Name']}, {'$set': item}, upsert=True)
-                        except Exception as error:
-                            logger.warning(error)
+                    hy_index = [num for num, i in enumerate(resp.json()) if i.get('Hy')=='塑料' or i.get('Hy')=='橡胶']
+                    if hy_index:
+                        for _index in hy_index:
+                            for num, item in enumerate(resp.json()[_index:]):
+                                try:
+                                    if num==0 or not item.get('Hy'):
+                                        self.category_coll.update_one({'Name': item['Name']}, {'$set': item}, upsert=True)
+                                    else:
+                                        break
+                                except Exception as error:
+                                    logger.warning(error)
             else:
                 logger.warning(resp.status_code)
-        except requests.exceptions.ConnectionError:
-            threading.Thread(target=self.DisProxy, args=(pro,)).start()
-            print('网络问题，重试中...')
-            return self.GetCategory(proxy)
         except TimeoutError:
             logger.warning(link)
         except Exception as error:
@@ -201,8 +158,9 @@ class ZhuoChuang:
     """
 
     # 获取类目下的数据 默认一年
-    def DownloadCategoryData(self, proxy=False, history=False):
-        for info in self.category_coll.find({'status': None}).batch_size(3):
+    def DownloadCategoryData(self, history=False):
+        category_coll_list = [i for i in self.category_coll.find({'status': None})]
+        for info in category_coll_list:
             # 主类目
             if info.get('Hy'):
                 Referer = 'https://index.sci99.com/channel/product/hy/{}/3.html'.format(quote(info.get('Hy')))
@@ -266,17 +224,8 @@ class ZhuoChuang:
             }
 
             try:
-                if proxy:
-                    pro = self.GetProxy()
-                    if pro:
-                        resp = requests.post(url=self.categoryDataUrl, headers=self.categoryDataHeaders, proxies=pro,
-                                             json=jsonData, timeout=5, verify=False)
-                    else:
-                        resp = requests.post(url=self.categoryDataUrl, headers=self.categoryDataHeaders, json=jsonData,
-                                             timeout=5, verify=False)
-                else:
-                    resp = requests.post(url=self.categoryDataUrl, headers=self.categoryDataHeaders, json=jsonData,
-                                         timeout=5, verify=False)
+                resp = requests.post(url=self.categoryDataUrl, headers=self.categoryDataHeaders, json=jsonData,
+                                     timeout=5, verify=False)
                 if resp.status_code == 200:
                     if resp.json().get('List') and isinstance(resp.json().get('List'), list):
                         if history:
@@ -292,10 +241,6 @@ class ZhuoChuang:
                         logger.warning('没有数据， 请更换cookie')
                 else:
                     pp.pprint(resp.text)
-            except requests.exceptions.ConnectionError:
-                threading.Thread(target=self.DisProxy, args=(pro,)).start()
-                print('网络问题，重试中...')
-                return self.DownloadCategoryData(proxy)
             except TimeoutError:
                 logger.warning(Referer)
             except Exception as error:
@@ -303,8 +248,6 @@ class ZhuoChuang:
 
             # 随机休眠
             time.sleep(random.uniform(5, 10))
-
-            # break
 
         print('zc_zs 获取历史数据--完成')
 
@@ -392,19 +335,15 @@ class ZhuoChuang:
 
 
 def zczsrun():
-    Cookie().ChoicePlatform()
-
-    start_time = time.time()
+    cookies_run()
     zc = ZhuoChuang()
 
     # 主类目：22   有数据：22   无数据：0    每周天更新
     if (pd.to_datetime(str(time.strftime("%Y-%m-%d", time.localtime(time.time())))) - pd.to_datetime('20160103')).days % 7 == 0:
-        zc.GetCategory(proxy=False)
+        zc.GetCategory()
 
     # 详细分类：22   有数据：22   无数据：0
-    zc.DownloadCategoryData(proxy=True, history=False)
-    end_time = time.time()
-    logger.warning(end_time - start_time)
+    zc.DownloadCategoryData(history=False)
 
 
 if __name__ == '__main__':
