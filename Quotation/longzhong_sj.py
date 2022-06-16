@@ -2,7 +2,6 @@
 # -*- coding:utf-8 -*-
 import random
 import sys
-import threading
 
 sys.path.append("../")
 import configparser
@@ -60,20 +59,13 @@ class LongZhong:
         # 实例化 Mongo
         datadb = conf.get("Mongo", "QUOTATIONDB")
         cookiedb = conf.get("Mongo", "COOKIE")
-        proxydb = conf.get("Mongo", "PROXY")
 
-        # client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=datadb))
-        client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=datadb))
+        client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=datadb))
+        # client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=datadb))
 
-        # cookieclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=cookiedb))
-        cookieclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=cookiedb))
+        cookieclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=cookiedb))
+        # cookieclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=cookiedb))
         self.cookie_coll = cookieclient[cookiedb]['cookies']
-
-        # proxyclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=proxydb))
-        proxyclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=proxydb))
-        self.proxy_coll = proxyclient[proxydb]['proxies']
-        self.pros = [pro.get('pro') for pro in self.proxy_coll.find({'status': 1})]
-        self.pro = None
 
         self.category_coll = client[datadb]['lz_sj_category']
         self.categoryData_coll = client[datadb]['lz_sj_categoryData']
@@ -125,37 +117,6 @@ class LongZhong:
         )
         return conn
 
-    def GetProxy(self):
-        try:
-            if self.pros:
-                usePro = self.pros.pop()
-            else:
-                self.pros = [pro.get('pro') for pro in self.proxy_coll.find({'status': 1})]
-                return self.GetProxy()
-
-            if usePro:
-                return {
-                    'http': 'http://{}'.format(usePro),
-                    'https': 'http://{}'.format(usePro),
-                }
-            else:
-                return
-        except:
-            return
-
-    def DisProxy(self, pro):
-        if isinstance(pro, dict):
-            pro = pro.get('http').split('//')[1]
-
-        # 改写数据库IP
-        try:
-            self.proxy_coll.update_one({'pro': pro}, {'$set': {
-                'status': 0,
-                'update_time': time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())),
-            }}, upsert=True)
-        except:
-            pass
-
     """
         获取主类目
     """
@@ -184,13 +145,20 @@ class LongZhong:
             'X-Requested-With': 'XMLHttpRequest'
         }
         for channel in [
-            {'templateType': 'templateType=6&flagAndTemplate=1-6;2-7;3-4;6-null', 'channelId': 1775, 'oneName':'塑料', 'twoName':'通用塑料'},
-            {'templateType': 'templateType=2&flagAndTemplate=1-2;2-2', 'channelId': 1785, 'oneName':'塑料', 'twoName':'工程塑料'},
-            {'templateType': 'templateType=1&flagAndTemplate=1-1', 'channelId': 4706, 'oneName':'塑料', 'twoName':'改性塑料'},
-            {'templateType': 'templateType=2&flagAndTemplate=1-2;2-2', 'channelId': 1792, 'oneName':'塑料', 'twoName':'塑料制品'},
-            {'templateType': 'templateType=6&flagAndTemplate=1-6;2-2;3-4', 'channelId': 1801, 'oneName':'塑料', 'twoName':'塑料管材'},
-            {'templateType': 'templateType=5&flagAndTemplate=2-5', 'channelId': 1804, 'oneName':'塑料', 'twoName':'再生塑料'},
-            {'templateType': 'templateType=2&flagAndTemplate=1-2;2-7', 'channelId': 4164, 'oneName':'塑料', 'twoName':'可降解材料'}
+            {'templateType': 'templateType=6&flagAndTemplate=1-6;2-7;3-4;6-null', 'channelId': 1775, 'oneName': '塑料',
+             'twoName': '通用塑料'},
+            {'templateType': 'templateType=2&flagAndTemplate=1-2;2-2', 'channelId': 1785, 'oneName': '塑料',
+             'twoName': '工程塑料'},
+            {'templateType': 'templateType=1&flagAndTemplate=1-1', 'channelId': 4706, 'oneName': '塑料',
+             'twoName': '改性塑料'},
+            {'templateType': 'templateType=2&flagAndTemplate=1-2;2-2', 'channelId': 1792, 'oneName': '塑料',
+             'twoName': '塑料制品'},
+            {'templateType': 'templateType=6&flagAndTemplate=1-6;2-2;3-4', 'channelId': 1801, 'oneName': '塑料',
+             'twoName': '塑料管材'},
+            {'templateType': 'templateType=5&flagAndTemplate=2-5', 'channelId': 1804, 'oneName': '塑料',
+             'twoName': '再生塑料'},
+            {'templateType': 'templateType=2&flagAndTemplate=1-2;2-7', 'channelId': 4164, 'oneName': '塑料',
+             'twoName': '可降解材料'}
         ]:
             try:
                 resp = requests.post(
@@ -1200,8 +1168,6 @@ class LongZhong:
                 print(f'--- Cookie过期或者页面失效 hash_key: {info["hashKey"]}---')
                 self.categoryData_coll.update_one({'hashKey': info['hashKey']}, {'$set': {'status': 404}}, upsert=True)
         except requests.exceptions.ConnectionError:
-            threading.Thread(target=self.DisProxy, args=(self.pro,)).start()
-            print('网络问题，重试中...')
             return self.DownloadHistoryData(info, proxy, history)
         except TimeoutError:
             logger.warning(info)
@@ -1221,7 +1187,9 @@ class LongZhong:
             dataFrame = pd.read_excel(fp, header=None)
             detailData = dataFrame.to_dict(orient='index')
 
-            if detailData:
+            if not detailData:
+                return
+            else:
                 dumpsData = json.dumps(detailData)
                 keyList = list(list(json.loads(dumpsData).values())[0].values())
 
@@ -1231,8 +1199,6 @@ class LongZhong:
                 else:
                     for value in list(json.loads(dumpsData).values())[1:8]:
                         self.FormatData(conn, businessType, productFormat, sourceLink, hash_key, keyList, value)
-            else:
-                pass
         except Exception as error:
             logger.warning('该链接数据报错 {0}  {1}'.format(sourceLink, error))
             pass
@@ -1272,7 +1238,8 @@ class LongZhong:
             try:
                 prod_specifications = str(data.get(str(keyList.index('规格型号')))).replace('/', '').replace('nan',
                                                                                                          '').replace(
-                    '-', '').replace('None', '').replace('none', '').replace('Null', '').replace('null', '')  # 产品规格
+                    '-', '').replace('None', '').replace('none', '').replace('Null', '').replace('null', '').replace(
+                    '.0', '')  # 产品规格
             except ValueError:
                 prod_specifications = ''
             except Exception as error:
@@ -1481,7 +1448,7 @@ class LongZhong:
                                                                                                                '').replace(
                 'Null', '').replace('null', '')  # 产品标准
             prod_specifications = str(data.get('2')).replace('nan', '').replace('-', '').replace('None', '').replace(
-                'none', '').replace('Null', '').replace('null', '')  # 产品规格
+                'none', '').replace('Null', '').replace('null', '').replace('.0', '')  # 产品规格
             price_conditions = ''  # 价格条件(默认为空)
             prod_lowest_price = str(data.get('7')).replace('nan', '').replace('-', '').replace('None', '').replace(
                 'none', '').replace('Null', '').replace('null', '')  # 最低价
@@ -1609,7 +1576,7 @@ class LongZhong:
                                                                                                                  '').replace(
                 'Null', '').replace('null', '')  # 价格类型
             prod_specifications = str(data.get('2')).replace('nan', '').replace('-', '').replace('None', '').replace(
-                'none', '').replace('Null', '').replace('null', '')  # 产品规格
+                'none', '').replace('Null', '').replace('null', '').replace('.0', '')  # 产品规格
             prod_lowest_price = str(data.get('5')).replace('nan', '').replace('-', '').replace('None', '').replace(
                 'none', '').replace('Null', '').replace('null', '')  # 最低价
             if prod_lowest_price:
@@ -1759,7 +1726,8 @@ class LongZhong:
         pool = ThreadPool(processes=2)
 
         # 每周一更新详细类目  主类目：108  详细数据：3750
-        if (pd.to_datetime(str(time.strftime("%Y-%m-%d", time.localtime(time.time())))) - pd.to_datetime('20160103')).days % 7 == 1:
+        if (pd.to_datetime(str(time.strftime("%Y-%m-%d", time.localtime(time.time())))) - pd.to_datetime(
+                '20160103')).days % 7 == 1:
             # 获取主类目
             self.GetMainCategory()
             # 获取主类目下详细数据
@@ -1791,7 +1759,7 @@ def lzrun():
         lz.removeStatus(lz.categoryData_coll, 'hashKey')
 
     # 多进程获取数据  params: proxy  history
-    lz.CommandThread(history=False)
+    lz.CommandThread()
 
     print('lz_sj 获取历史数据--完成')
 

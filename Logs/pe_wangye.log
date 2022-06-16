@@ -1,23 +1,39 @@
-2022-05-13 17:33:21,154 - pe_wangye.py[line:2178] - WARNING: 508.4358093738556
-2022-05-17 16:36:52,210 - pe_wangye.py[line:245] - WARNING: Authentication failed., full error: {'ok': 0.0, 'errmsg': 'Authentication failed.', 'code': 18, 'codeName': 'AuthenticationFailed'}
-2022-05-17 16:36:52,488 - pe_wangye.py[line:245] - WARNING: Authentication failed., full error: {'ok': 0.0, 'errmsg': 'Authentication failed.', 'code': 18, 'codeName': 'AuthenticationFailed'}
-2022-05-17 16:36:52,762 - pe_wangye.py[line:245] - WARNING: Authentication failed., full error: {'ok': 0.0, 'errmsg': 'Authentication failed.', 'code': 18, 'codeName': 'AuthenticationFailed'}
-2022-05-17 16:36:53,024 - pe_wangye.py[line:245] - WARNING: Authentication failed., full error: {'ok': 0.0, 'errmsg': 'Authentication failed.', 'code': 18, 'codeName': 'AuthenticationFailed'}
-2022-05-17 16:36:53,397 - pe_wangye.py[line:245] - WARNING: Authentication failed., full error: {'ok': 0.0, 'errmsg': 'Authentication failed.', 'code': 18, 'codeName': 'AuthenticationFailed'}
-2022-05-17 16:36:54,599 - pe_wangye.py[line:298] - WARNING: Authentication failed., full error: {'ok': 0.0, 'errmsg': 'Authentication failed.', 'code': 18, 'codeName': 'AuthenticationFailed'}
-2022-05-17 16:36:57,698 - pe_wangye.py[line:298] - WARNING: Authentication failed., full error: {'ok': 0.0, 'errmsg': 'Authentication failed.', 'code': 18, 'codeName': 'AuthenticationFailed'}
-2022-05-17 16:37:09,923 - pe_wangye.py[line:245] - WARNING: Authentication failed., full error: {'ok': 0.0, 'errmsg': 'Authentication failed.', 'code': 18, 'codeName': 'AuthenticationFailed'}
-2022-05-17 16:37:10,221 - pe_wangye.py[line:245] - WARNING: Authentication failed., full error: {'ok': 0.0, 'errmsg': 'Authentication failed.', 'code': 18, 'codeName': 'AuthenticationFailed'}
-2022-05-17 16:37:10,515 - pe_wangye.py[line:245] - WARNING: Authentication failed., full error: {'ok': 0.0, 'errmsg': 'Authentication failed.', 'code': 18, 'codeName': 'AuthenticationFailed'}
-2022-05-17 16:37:10,891 - pe_wangye.py[line:245] - WARNING: Authentication failed., full error: {'ok': 0.0, 'errmsg': 'Authentication failed.', 'code': 18, 'codeName': 'AuthenticationFailed'}
-2022-05-17 16:37:11,326 - pe_wangye.py[line:245] - WARNING: Authentication failed., full error: {'ok': 0.0, 'errmsg': 'Authentication failed.', 'code': 18, 'codeName': 'AuthenticationFailed'}
-2022-05-17 16:37:11,773 - pe_wangye.py[line:298] - WARNING: Authentication failed., full error: {'ok': 0.0, 'errmsg': 'Authentication failed.', 'code': 18, 'codeName': 'AuthenticationFailed'}
-2022-05-17 16:37:13,527 - pe_wangye.py[line:298] - WARNING: Authentication failed., full error: {'ok': 0.0, 'errmsg': 'Authentication failed.', 'code': 18, 'codeName': 'AuthenticationFailed'}
-2022-05-17 16:38:23,178 - pe_wangye.py[line:245] - WARNING: Authentication failed., full error: {'ok': 0.0, 'errmsg': 'Authentication failed.', 'code': 18, 'codeName': 'AuthenticationFailed'}
-2022-05-17 16:38:23,481 - pe_wangye.py[line:245] - WARNING: Authentication failed., full error: {'ok': 0.0, 'errmsg': 'Authentication failed.', 'code': 18, 'codeName': 'AuthenticationFailed'}
-2022-05-17 16:38:23,885 - pe_wangye.py[line:245] - WARNING: Authentication failed., full error: {'ok': 0.0, 'errmsg': 'Authentication failed.', 'code': 18, 'codeName': 'AuthenticationFailed'}
-2022-05-17 16:38:24,271 - pe_wangye.py[line:245] - WARNING: Authentication failed., full error: {'ok': 0.0, 'errmsg': 'Authentication failed.', 'code': 18, 'codeName': 'AuthenticationFailed'}
-2022-05-17 16:38:24,561 - pe_wangye.py[line:245] - WARNING: Authentication failed., full error: {'ok': 0.0, 'errmsg': 'Authentication failed.', 'code': 18, 'codeName': 'AuthenticationFailed'}
-2022-05-17 16:38:25,151 - pe_wangye.py[line:298] - WARNING: Authentication failed., full error: {'ok': 0.0, 'errmsg': 'Authentication failed.', 'code': 18, 'codeName': 'AuthenticationFailed'}
-2022-05-17 16:38:27,324 - pe_wangye.py[line:298] - WARNING: Authentication failed., full error: {'ok': 0.0, 'errmsg': 'Authentication failed.', 'code': 18, 'codeName': 'AuthenticationFailed'}
-2022-05-17 16:41:15,178 - pe_wangye.py[line:1727] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-06-09 10:51:45,255 - pe_wangye.py[line:1727] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-06-09 10:51:54,152 - pe_wangye.py[line:1727] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-06-09 10:51:57,646 - pe_wangye.py[line:1727] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-06-09 10:52:04,719 - pe_wangye.py[line:1727] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-06-09 10:52:12,717 - pe_wangye.py[line:1727] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-06-09 10:52:16,621 - pe_wangye.py[line:1727] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-06-09 10:52:22,114 - pe_wangye.py[line:1727] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-06-09 10:52:29,025 - pe_wangye.py[line:1727] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-06-09 10:52:33,689 - pe_wangye.py[line:1727] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-06-09 10:52:42,447 - pe_wangye.py[line:1727] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-06-09 10:52:45,929 - pe_wangye.py[line:1727] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-06-09 10:52:53,795 - pe_wangye.py[line:1727] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-06-09 10:52:59,568 - pe_wangye.py[line:1727] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-06-09 10:56:22,954 - pe_wangye.py[line:1727] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-06-09 10:57:04,648 - pe_wangye.py[line:2109] - WARNING: 906.9889197349548
+2022-06-12 23:10:00,985 - pe_wangye.py[line:1714] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-06-12 23:16:32,925 - pe_wangye.py[line:1714] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-06-12 23:21:22,095 - pe_wangye.py[line:581] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-06-12 23:21:22,095 - pe_wangye.py[line:2084] - WARNING: 285.7122440338135
+2022-06-12 23:23:04,725 - pe_wangye.py[line:1714] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-06-12 23:24:56,884 - pe_wangye.py[line:1714] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-06-12 23:26:37,568 - pe_wangye.py[line:581] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-06-12 23:26:37,568 - pe_wangye.py[line:2084] - WARNING: 93.96783304214478
+2022-06-12 23:32:05,192 - pe_wangye.py[line:581] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-06-12 23:32:05,192 - pe_wangye.py[line:2084] - WARNING: 208.8888213634491
+2022-06-12 23:32:17,772 - pe_wangye.py[line:1714] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-06-12 23:32:17,807 - pe_wangye.py[line:1714] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-06-12 23:32:35,767 - pe_wangye.py[line:1714] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-06-12 23:32:37,644 - pe_wangye.py[line:1714] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-06-12 23:32:37,945 - pe_wangye.py[line:1714] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-06-12 23:36:35,519 - pe_wangye.py[line:581] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-06-12 23:36:35,520 - pe_wangye.py[line:2084] - WARNING: 95.61038160324097
+2022-06-12 23:39:44,417 - pe_wangye.py[line:581] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-06-12 23:39:44,417 - pe_wangye.py[line:2084] - WARNING: 103.61966919898987
+2022-06-12 23:40:17,351 - pe_wangye.py[line:581] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-06-12 23:40:17,352 - pe_wangye.py[line:2084] - WARNING: 0.5114271640777588
+2022-06-13 19:36:07,233 - pe_wangye.py[line:2084] - WARNING: 0.6760125160217285
+2022-06-13 19:39:05,100 - pe_wangye.py[line:1714] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-06-13 19:39:25,301 - pe_wangye.py[line:2084] - WARNING: 186.0296928882599

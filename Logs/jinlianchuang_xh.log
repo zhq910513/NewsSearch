@@ -1,434 +1,76 @@
-2022-05-11 16:57:28,399 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-11 17:08:03,287 - jinlianchuang_xh.py[line:546] - WARNING: (2013, 'Lost connection to MySQL server during query')
-2022-05-11 17:16:01,680 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
-2022-05-11 17:18:07,850 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-11 17:19:45,250 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-11 17:19:45,831 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-11 17:19:49,736 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-11 17:33:42,268 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-11 17:57:26,181 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-11 18:48:49,199 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-11 18:51:45,345 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-11 19:10:50,695 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-11 20:19:58,690 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-11 22:20:18,963 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-13 14:20:22,277 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-13 14:20:46,381 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
-2022-05-13 14:28:15,583 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-13 14:36:37,177 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-13 14:40:16,272 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-13 15:01:13,678 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
-2022-05-13 15:01:28,428 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
-2022-05-13 15:22:41,711 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-13 16:02:14,475 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-13 16:02:43,147 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-13 16:26:51,108 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-13 19:55:23,473 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-13 20:02:11,940 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-13 20:54:40,446 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-13 23:39:40,238 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-14 01:35:34,344 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-14 01:55:57,204 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-14 02:15:03,909 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-14 02:20:34,016 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 14:36:13,050 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-16 14:41:21,772 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-16 14:46:46,923 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-16 14:47:02,681 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-16 14:48:01,750 - jinlianchuang_xh.py[line:546] - WARNING: (2013, 'Lost connection to MySQL server during query')
-2022-05-16 14:56:04,662 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-16 14:58:49,366 - jinlianchuang_xh.py[line:546] - WARNING: (2013, 'Lost connection to MySQL server during query')
-2022-05-16 15:02:19,667 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-16 15:06:22,590 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-16 15:51:37,701 - jinlianchuang_xh.py[line:413] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
-2022-05-16 15:51:42,661 - jinlianchuang_xh.py[line:413] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
-2022-05-16 15:58:38,757 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-16 16:02:27,831 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 16:18:02,062 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:02,062 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:02,062 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:02,062 - jinlianchuang_xh.py[line:794] - WARNING: ('20220425-20220501', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '大中空', '5420', '', '', '', '', '元/吨', '定价', '', '', '', 0.0, 0.0, 9400.0, 0.0, 0.0, '2022-05-16 16:16:31', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec72d098e378988dcb6&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', 'edd28f35faa013518000239f4335072b')
-2022-05-16 16:18:02,062 - jinlianchuang_xh.py[line:794] - WARNING: ('20220314-20220320', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '63级管材', '4801EX', '', '', '', '', '元/吨', '挂牌', '', '', '', 0.0, 0.0, 0.0, 0.0, 0.0, '2022-05-16 16:16:31', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec72d098e378988dcb7&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', 'dcb82fdd1bd35aac0d7be9e61c29df10')
-2022-05-16 16:18:02,062 - jinlianchuang_xh.py[line:794] - WARNING: ('20210726-20210801', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '定价', '', '', '', 0.0, 0.0, 8440.0, 0.0, 0.0, '2022-05-16 16:16:31', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', 'ba54872ea3922c805c7ac736d3a76343')
-2022-05-16 16:18:02,143 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:02,143 - jinlianchuang_xh.py[line:794] - WARNING: ('20220321-20220327', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '63级管材', '4801EX', '', '', '', '', '元/吨', '挂牌', '', '', '', 0.0, 0.0, 0.0, 0.0, 0.0, '2022-05-16 16:18:02', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec72d098e378988dcb7&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '9dc635bd4b80ead356a437be87e5179a')
-2022-05-16 16:18:02,149 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:02,149 - jinlianchuang_xh.py[line:794] - WARNING: ('20210802-20210808', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '定价', '', '', '', 0.0, 0.0, 8380.0, 0.0, 0.0, '2022-05-16 16:18:02', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '81362e38d3f69fd3a3d7108a12ca93e1')
-2022-05-16 16:18:02,154 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:02,154 - jinlianchuang_xh.py[line:794] - WARNING: ('20220502-20220508', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '大中空', '5420', '', '', '', '', '元/吨', '挂牌', '', '', '', 0.0, 0.0, 9400.0, 0.0, 0.0, '2022-05-16 16:18:02', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec72d098e378988dcb6&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '4106a783902f513d5df3ae26595717b7')
-2022-05-16 16:18:02,225 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:02,225 - jinlianchuang_xh.py[line:794] - WARNING: ('20220328-20220403', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '63级管材', '4801EX', '', '', '', '', '元/吨', '挂牌', '', '', '', 0.0, 0.0, 0.0, 0.0, 0.0, '2022-05-16 16:18:02', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec72d098e378988dcb7&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', 'e586981b548cdc35f7f6c4c2b33c7156')
-2022-05-16 16:18:02,240 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:02,240 - jinlianchuang_xh.py[line:794] - WARNING: ('20210809-20210815', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '定价', '', '', '', 0.0, 0.0, 8350.0, 0.0, 0.0, '2022-05-16 16:18:02', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '70db8f1be7e0c3427238f490c7abecbd')
-2022-05-16 16:18:02,245 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:02,245 - jinlianchuang_xh.py[line:794] - WARNING: ('20220509-20220515', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '大中空', '5420', '', '', '', '', '元/吨', '挂牌', '', '', '', 0.0, 0.0, 9500.0, 0.0, 0.0, '2022-05-16 16:18:02', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec72d098e378988dcb6&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '42751698859bc1b7555b734177a88948')
-2022-05-16 16:18:02,306 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:02,306 - jinlianchuang_xh.py[line:794] - WARNING: ('20220404-20220410', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '63级管材', '4801EX', '', '', '', '', '元/吨', '挂牌', '', '', '', 0.0, 0.0, 0.0, 0.0, 0.0, '2022-05-16 16:18:02', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec72d098e378988dcb7&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '73b35d82fdbb699ae3e4c9ae190cd6a3')
-2022-05-16 16:18:02,312 - jinlianchuang_xh.py[line:775] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:02,312 - jinlianchuang_xh.py[line:776] - WARNING: {'0': '2022-05-16至2022-05-22', '1': 9500, '2': '挂牌'}
-2022-05-16 16:18:02,331 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:02,331 - jinlianchuang_xh.py[line:794] - WARNING: ('20210816-20210822', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '定价', '', '', '', 0.0, 0.0, 8350.0, 0.0, 0.0, '2022-05-16 16:18:02', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '4373bbf7f2d9e17e8ea0e3debe38403b')
-2022-05-16 16:18:02,463 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:02,463 - jinlianchuang_xh.py[line:794] - WARNING: ('20220411-20220417', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '63级管材', '4801EX', '', '', '', '', '元/吨', '挂牌', '', '', '', 0.0, 0.0, 0.0, 0.0, 0.0, '2022-05-16 16:18:02', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec72d098e378988dcb7&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '1cf15594345f4b85085cb010f40189b9')
-2022-05-16 16:18:02,497 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:02,498 - jinlianchuang_xh.py[line:794] - WARNING: ('20210823-20210829', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '定价', '', '', '', 0.0, 0.0, 8350.0, 0.0, 0.0, '2022-05-16 16:18:02', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '823f5204a30e64b2f8aed124b582f96a')
-2022-05-16 16:18:02,556 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:02,556 - jinlianchuang_xh.py[line:794] - WARNING: ('20220418-20220424', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '63级管材', '4801EX', '', '', '', '', '元/吨', '定价', '', '', '', 0.0, 0.0, 0.0, 0.0, 0.0, '2022-05-16 16:18:02', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec72d098e378988dcb7&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', 'dab7d0b4cf8a61008729f90ecd04e694')
-2022-05-16 16:18:02,592 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:02,593 - jinlianchuang_xh.py[line:794] - WARNING: ('20210830-20210905', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '定价', '', '', '', 0.0, 0.0, 8350.0, 0.0, 0.0, '2022-05-16 16:18:02', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '06c389aa6e2d4c7e83230d80b7d4e555')
-2022-05-16 16:18:02,637 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:02,637 - jinlianchuang_xh.py[line:794] - WARNING: ('20220425-20220501', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '63级管材', '4801EX', '', '', '', '', '元/吨', '定价', '', '', '', 0.0, 0.0, 0.0, 0.0, 0.0, '2022-05-16 16:18:02', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec72d098e378988dcb7&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '8a8c934de3b78dce6bb76f2d1f46479e')
-2022-05-16 16:18:02,683 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:02,684 - jinlianchuang_xh.py[line:794] - WARNING: ('20210906-20210912', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '定价', '', '', '', 0.0, 0.0, 8350.0, 0.0, 0.0, '2022-05-16 16:18:02', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '7205a9cc75b1bc935b74f99a13087438')
-2022-05-16 16:18:02,719 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:02,720 - jinlianchuang_xh.py[line:794] - WARNING: ('20220502-20220508', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '63级管材', '4801EX', '', '', '', '', '元/吨', '挂牌', '', '', '', 0.0, 0.0, 0.0, 0.0, 0.0, '2022-05-16 16:18:02', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec72d098e378988dcb7&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', 'bab96ced2f280bde5b7efba4df5ed5fb')
-2022-05-16 16:18:02,777 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:02,777 - jinlianchuang_xh.py[line:794] - WARNING: ('20210913-20210919', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '定价', '', '', '', 0.0, 0.0, 8500.0, 0.0, 0.0, '2022-05-16 16:18:02', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '725b0016e1fb565369e61f356fd5926e')
-2022-05-16 16:18:02,802 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:02,802 - jinlianchuang_xh.py[line:794] - WARNING: ('20220509-20220515', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '63级管材', '4801EX', '', '', '', '', '元/吨', '挂牌', '', '', '', 0.0, 0.0, 0.0, 0.0, 0.0, '2022-05-16 16:18:02', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec72d098e378988dcb7&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '28bdcfb10adb4cad0bd20d4af2c9e465')
-2022-05-16 16:18:02,863 - jinlianchuang_xh.py[line:775] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:02,863 - jinlianchuang_xh.py[line:776] - WARNING: {'0': '2022-05-16至2022-05-22', '1': '/', '2': '挂牌'}
-2022-05-16 16:18:02,867 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:02,867 - jinlianchuang_xh.py[line:794] - WARNING: ('20210920-20210926', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '定价', '', '', '', 0.0, 0.0, 8650.0, 0.0, 0.0, '2022-05-16 16:18:02', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '1d9ba70bb4b56fe10e4df85db0912abc')
-2022-05-16 16:18:02,957 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:02,957 - jinlianchuang_xh.py[line:794] - WARNING: ('20210927-20211003', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '定价', '', '', '', 0.0, 0.0, 8880.0, 0.0, 0.0, '2022-05-16 16:18:02', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '9b842de68026945e8a7f184e2215c27d')
-2022-05-16 16:18:03,048 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:03,048 - jinlianchuang_xh.py[line:794] - WARNING: ('20211004-20211010', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '定价', '', '', '', 0.0, 0.0, 9100.0, 0.0, 0.0, '2022-05-16 16:18:02', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '37b4f4252473b23a2fdac05eb049af85')
-2022-05-16 16:18:03,139 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:03,139 - jinlianchuang_xh.py[line:794] - WARNING: ('20211011-20211017', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '定价', '', '', '', 0.0, 0.0, 9860.0, 0.0, 0.0, '2022-05-16 16:18:03', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '4787c030b50602a748a6c390926d3396')
-2022-05-16 16:18:03,231 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:03,231 - jinlianchuang_xh.py[line:794] - WARNING: ('20211018-20211024', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '定价', '', '', '', 0.0, 0.0, 9760.0, 0.0, 0.0, '2022-05-16 16:18:03', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '5429f9a828c26398a0f963a47c08007a')
-2022-05-16 16:18:03,319 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:03,320 - jinlianchuang_xh.py[line:794] - WARNING: ('20211025-20211031', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '定价', '', '', '', 0.0, 0.0, 9080.0, 0.0, 0.0, '2022-05-16 16:18:03', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '4aa7dbeb6b1160e1e0b12c3199542922')
-2022-05-16 16:18:03,411 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:03,411 - jinlianchuang_xh.py[line:794] - WARNING: ('20211101-20211107', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '挂牌', '', '', '', 0.0, 0.0, 8790.0, 0.0, 0.0, '2022-05-16 16:18:03', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', 'e2facb6c4f2888aedde79e04d5e8610b')
-2022-05-16 16:18:03,511 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:03,511 - jinlianchuang_xh.py[line:794] - WARNING: ('20211108-20211114', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '挂牌', '', '', '', 0.0, 0.0, 8830.0, 0.0, 0.0, '2022-05-16 16:18:03', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '115616aec618738050485eade75e2db1')
-2022-05-16 16:18:03,603 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:03,603 - jinlianchuang_xh.py[line:794] - WARNING: ('20211115-20211121', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '挂牌', '', '', '', 0.0, 0.0, 8790.0, 0.0, 0.0, '2022-05-16 16:18:03', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '7f95a9333735e6f2cee0dacd5b0d1262')
-2022-05-16 16:18:03,704 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:03,705 - jinlianchuang_xh.py[line:794] - WARNING: ('20211122-20211128', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '定价', '', '', '', 0.0, 0.0, 8750.0, 0.0, 0.0, '2022-05-16 16:18:03', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '6af63a1fd977e8e499a7f428507205f3')
-2022-05-16 16:18:03,800 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:03,801 - jinlianchuang_xh.py[line:794] - WARNING: ('20211129-20211205', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '挂牌', '', '', '', 0.0, 0.0, 8750.0, 0.0, 0.0, '2022-05-16 16:18:03', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', 'cc594f1b91e3dce0bf16f9282f00662f')
-2022-05-16 16:18:03,895 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:03,896 - jinlianchuang_xh.py[line:794] - WARNING: ('20211206-20211212', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '挂牌', '', '', '', 0.0, 0.0, 8610.0, 0.0, 0.0, '2022-05-16 16:18:03', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', 'ec5d5d7f2c3210744eb86a55a3ccbbce')
-2022-05-16 16:18:03,990 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:03,990 - jinlianchuang_xh.py[line:794] - WARNING: ('20211213-20211219', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '挂牌', '', '', '', 0.0, 0.0, 8650.0, 0.0, 0.0, '2022-05-16 16:18:03', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '080d2495b99940fb38c5c806c661f4cc')
-2022-05-16 16:18:04,082 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:04,082 - jinlianchuang_xh.py[line:794] - WARNING: ('20211220-20211226', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '挂牌', '', '', '', 0.0, 0.0, 8550.0, 0.0, 0.0, '2022-05-16 16:18:04', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '1b6c71830e3dd1d5c588941edd54e613')
-2022-05-16 16:18:04,170 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:04,170 - jinlianchuang_xh.py[line:794] - WARNING: ('20211227-20220102', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '定价', '', '', '', 0.0, 0.0, 8550.0, 0.0, 0.0, '2022-05-16 16:18:04', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', 'f34836b8dc08fd4b061541d37ec6532c')
-2022-05-16 16:18:04,262 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:04,262 - jinlianchuang_xh.py[line:794] - WARNING: ('20220103-20220109', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '挂牌', '', '', '', 0.0, 0.0, 8550.0, 0.0, 0.0, '2022-05-16 16:18:04', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', 'b3e3e013685071feae7e8d98e8e262c5')
-2022-05-16 16:18:04,350 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:04,350 - jinlianchuang_xh.py[line:794] - WARNING: ('20220110-20220116', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '挂牌', '', '', '', 0.0, 0.0, 8650.0, 0.0, 0.0, '2022-05-16 16:18:04', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '7de33009ffc18cafae550476dd39796c')
-2022-05-16 16:18:04,440 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:04,440 - jinlianchuang_xh.py[line:794] - WARNING: ('20220117-20220123', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '挂牌', '', '', '', 0.0, 0.0, 8650.0, 0.0, 0.0, '2022-05-16 16:18:04', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '32d8424573f9393e2b2f7dbfce431574')
-2022-05-16 16:18:04,531 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:04,531 - jinlianchuang_xh.py[line:794] - WARNING: ('20220124-20220130', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '定价', '', '', '', 0.0, 0.0, 8716.67, 0.0, 0.0, '2022-05-16 16:18:04', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', 'b465c73453225b68bb1ffa818afc7898')
-2022-05-16 16:18:04,620 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:04,620 - jinlianchuang_xh.py[line:794] - WARNING: ('20220131-20220206', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '定价', '', '', '', 0.0, 0.0, 8750.0, 0.0, 0.0, '2022-05-16 16:18:04', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', 'b138e475503c217a5b70f6f7d8a71c9f')
-2022-05-16 16:18:04,714 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:04,714 - jinlianchuang_xh.py[line:794] - WARNING: ('20220207-20220213', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '挂牌', '', '', '', 0.0, 0.0, 9050.0, 0.0, 0.0, '2022-05-16 16:18:04', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '39065e1da1b479cdfe6afc43458d07b3')
-2022-05-16 16:18:04,818 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:04,819 - jinlianchuang_xh.py[line:794] - WARNING: ('20220214-20220220', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '挂牌', '', '', '', 0.0, 0.0, 8950.0, 0.0, 0.0, '2022-05-16 16:18:04', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', 'ce33b03aae8a7424979a72036ac1f360')
-2022-05-16 16:18:04,916 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:04,916 - jinlianchuang_xh.py[line:794] - WARNING: ('20220221-20220227', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '挂牌', '', '', '', 0.0, 0.0, 8950.0, 0.0, 0.0, '2022-05-16 16:18:04', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '8d6ef7e2dd65c640cbf528a69d91fb29')
-2022-05-16 16:18:05,005 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:05,005 - jinlianchuang_xh.py[line:794] - WARNING: ('20220228-20220306', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '挂牌', '', '', '', 0.0, 0.0, 8930.0, 0.0, 0.0, '2022-05-16 16:18:04', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', 'cac2719918e37ca4945642bc4faf421e')
-2022-05-16 16:18:05,097 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:05,097 - jinlianchuang_xh.py[line:794] - WARNING: ('20220307-20220313', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '挂牌', '', '', '', 0.0, 0.0, 9410.0, 0.0, 0.0, '2022-05-16 16:18:05', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '6bc7acb419729e03f88f61edb93faa0d')
-2022-05-16 16:18:05,188 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:05,188 - jinlianchuang_xh.py[line:794] - WARNING: ('20220314-20220320', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '挂牌', '', '', '', 0.0, 0.0, 9370.0, 0.0, 0.0, '2022-05-16 16:18:05', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '1dfa38c1d720cbc6b491990c7befb1d2')
-2022-05-16 16:18:05,281 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:05,281 - jinlianchuang_xh.py[line:794] - WARNING: ('20220321-20220327', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '挂牌', '', '', '', 0.0, 0.0, 9230.0, 0.0, 0.0, '2022-05-16 16:18:05', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', 'e5a03a4ec29fcc933352da2a69d13db9')
-2022-05-16 16:18:05,372 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:05,372 - jinlianchuang_xh.py[line:794] - WARNING: ('20220328-20220403', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '挂牌', '', '', '', 0.0, 0.0, 9250.0, 0.0, 0.0, '2022-05-16 16:18:05', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '005a811ce1ddcb749019d4e3d0b2d9e4')
-2022-05-16 16:18:05,474 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:05,474 - jinlianchuang_xh.py[line:794] - WARNING: ('20220404-20220410', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '挂牌', '', '', '', 0.0, 0.0, 9350.0, 0.0, 0.0, '2022-05-16 16:18:05', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '8ec26c9961a194d69fd43bb484e171a3')
-2022-05-16 16:18:05,563 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:05,563 - jinlianchuang_xh.py[line:794] - WARNING: ('20220411-20220417', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '挂牌', '', '', '', 0.0, 0.0, 9350.0, 0.0, 0.0, '2022-05-16 16:18:05', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '91f7ae5239c90154a605cac39c1d839d')
-2022-05-16 16:18:05,650 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:05,651 - jinlianchuang_xh.py[line:794] - WARNING: ('20220418-20220424', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '定价', '', '', '', 0.0, 0.0, 9333.33, 0.0, 0.0, '2022-05-16 16:18:05', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '7969c044dcf546f6d1bda22f4fbaa8b8')
-2022-05-16 16:18:05,741 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:05,741 - jinlianchuang_xh.py[line:794] - WARNING: ('20220425-20220501', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '定价', '', '', '', 0.0, 0.0, 9250.0, 0.0, 0.0, '2022-05-16 16:18:05', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '8f464346250c612110e802c4f3bd11fc')
-2022-05-16 16:18:05,829 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:05,829 - jinlianchuang_xh.py[line:794] - WARNING: ('20220502-20220508', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '挂牌', '', '', '', 0.0, 0.0, 9250.0, 0.0, 0.0, '2022-05-16 16:18:05', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '7bffd1a75413ce6a42a6db174157a252')
-2022-05-16 16:18:05,928 - jinlianchuang_xh.py[line:793] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:05,928 - jinlianchuang_xh.py[line:794] - WARNING: ('20220509-20220515', 2, '国内厂家报价', 'HDPE', '独山子石化', '', '中油华北', '', '100级管材', 'TUB121N3000', '', '', '', '', '元/吨', '挂牌', '', '', '', 0.0, 0.0, 9250.0, 0.0, 0.0, '2022-05-16 16:18:05', 3, '金联创现货', 'http://jiag.315i.com/price/historyData?itemIdStr=57691ec82d098e378988dcb8&startDate=2019-01-01&endDate=2022-05-16&columnid=57691ec42d098e378988dc9a&timeType=1', '3e7f8665e3798842e8e46d1926daffd9')
-2022-05-16 16:18:05,993 - jinlianchuang_xh.py[line:775] - WARNING: [Errno 22] Invalid argument
-2022-05-16 16:18:05,993 - jinlianchuang_xh.py[line:776] - WARNING: {'0': '2022-05-16至2022-05-22', '1': 9250, '2': '挂牌'}
-2022-05-16 16:26:32,730 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-16 16:27:59,339 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-16 16:38:32,301 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-16 16:43:30,570 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-16 16:45:48,164 - jinlianchuang_xh.py[line:546] - WARNING: (2013, 'Lost connection to MySQL server during query')
-2022-05-16 16:53:20,822 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-16 17:59:08,440 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-16 18:02:22,983 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 18:04:00,651 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-16 18:12:27,136 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-16 18:18:40,896 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-16 18:20:31,643 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-16 18:41:06,770 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
-2022-05-16 19:00:37,236 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-16 19:22:26,541 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:22:28,349 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:22:29,374 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:22:31,601 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:22:33,412 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:22:34,431 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:22:36,656 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:22:38,463 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:22:39,484 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:22:41,712 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:22:43,525 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:22:44,547 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:22:46,759 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:22:48,580 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:22:49,609 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:22:51,815 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:22:53,638 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:22:54,661 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:22:56,871 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:22:58,696 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:22:59,716 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:23:01,919 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:23:03,744 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:23:04,768 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:23:06,966 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:23:13,385 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:23:13,479 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:23:45,428 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:23:47,465 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:23:50,482 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:23:52,523 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:23:55,516 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:24:00,568 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:24:32,286 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:24:37,346 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:24:40,779 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:24:42,400 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:24:45,840 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:24:47,450 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:24:47,714 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:24:50,894 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:24:52,514 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:24:52,763 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:24:55,943 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:24:57,576 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:24:57,824 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:25:00,998 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:25:02,626 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:25:02,873 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:25:06,055 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:25:07,675 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:25:07,922 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:25:12,735 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:25:39,516 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:25:40,595 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:25:44,575 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:25:45,656 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:25:45,735 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:25:49,620 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:25:54,681 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:25:59,742 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:26:04,800 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:28:16,655 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:28:21,715 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:30:10,347 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:30:11,451 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:30:15,405 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:30:16,502 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:30:18,454 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:30:20,627 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:30:21,553 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:30:23,514 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:30:25,687 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:30:26,614 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:30:28,572 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:30:30,748 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:30:31,673 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:30:33,634 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:30:35,806 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:30:36,727 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:30:38,691 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:51:30,900 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-16 19:52:47,492 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-16 23:10:11,906 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-16 23:19:31,484 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-17 00:09:52,602 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-17 00:12:14,504 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-17 01:06:22,703 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-17 01:06:34,518 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-17 01:06:39,573 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-17 01:06:44,624 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-17 01:06:55,448 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-17 01:07:00,508 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-17 01:07:05,550 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-17 01:07:10,587 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-17 01:07:15,638 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-17 01:07:18,327 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-17 01:09:18,578 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-17 02:02:38,001 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-17 02:06:14,661 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-17 02:17:43,760 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-17 02:17:45,253 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-17 02:20:02,895 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-17 02:24:10,434 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-17 02:26:05,680 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-17 05:15:57,030 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-17 11:27:34,831 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-17 12:03:02,711 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-17 12:03:03,280 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-17 12:03:26,954 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-17 12:03:28,285 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-17 12:06:42,559 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-17 12:07:17,984 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-17 12:08:38,282 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-17 12:14:46,316 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-17 12:14:47,153 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-17 12:15:07,623 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
-2022-05-17 12:37:26,111 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-17 12:43:02,538 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-17 13:15:33,225 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
-2022-05-17 13:52:42,757 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-17 14:01:36,402 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-17 14:02:28,323 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-17 14:02:28,338 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-17 14:36:55,062 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-17 15:27:21,625 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
-2022-05-17 19:11:15,674 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-17 19:18:21,932 - jinlianchuang_xh.py[line:546] - WARNING: (2013, 'Lost connection to MySQL server during query')
-2022-05-17 19:46:29,656 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
-2022-05-17 22:20:22,383 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-17 22:25:41,090 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-18 11:47:16,716 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-18 11:49:56,396 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-18 11:51:43,063 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-18 11:51:43,762 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-18 11:51:44,118 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-18 11:58:29,928 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-18 11:59:02,555 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-18 11:59:28,429 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-18 11:59:48,431 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-18 12:01:59,275 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-18 12:01:59,738 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-18 12:02:24,160 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
-2022-05-18 12:02:27,875 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-18 12:02:28,818 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-18 12:02:29,190 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-18 12:02:51,609 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-18 12:15:57,756 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-18 12:16:56,049 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-18 12:17:33,245 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-18 12:19:42,050 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-18 12:19:47,262 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-18 12:20:06,892 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
-2022-05-18 12:20:07,423 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
-2022-05-18 12:23:25,741 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-18 12:53:26,412 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: timed out
-2022-05-18 12:58:32,927 - jinlianchuang_xh.py[line:546] - WARNING: (2013, 'Lost connection to MySQL server during query')
-2022-05-18 12:58:33,190 - jinlianchuang_xh.py[line:546] - WARNING: (2013, 'Lost connection to MySQL server during query')
-2022-05-18 12:58:35,459 - jinlianchuang_xh.py[line:546] - WARNING: (2013, 'Lost connection to MySQL server during query')
-2022-05-18 12:58:35,909 - jinlianchuang_xh.py[line:546] - WARNING: (2013, 'Lost connection to MySQL server during query')
-2022-05-18 12:58:37,959 - jinlianchuang_xh.py[line:546] - WARNING: (2013, 'Lost connection to MySQL server during query')
-2022-05-18 12:58:38,362 - jinlianchuang_xh.py[line:546] - WARNING: (2013, 'Lost connection to MySQL server during query')
-2022-05-18 12:58:38,483 - jinlianchuang_xh.py[line:546] - WARNING: (2013, 'Lost connection to MySQL server during query')
-2022-05-18 12:58:40,536 - jinlianchuang_xh.py[line:546] - WARNING: (2013, 'Lost connection to MySQL server during query')
-2022-05-18 12:58:40,919 - jinlianchuang_xh.py[line:546] - WARNING: (2013, 'Lost connection to MySQL server during query')
-2022-05-18 12:58:41,090 - jinlianchuang_xh.py[line:546] - WARNING: (2013, 'Lost connection to MySQL server during query')
-2022-05-18 12:58:43,237 - jinlianchuang_xh.py[line:546] - WARNING: (2013, 'Lost connection to MySQL server during query')
-2022-05-18 15:15:57,905 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-18 15:39:44,520 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
-2022-05-18 16:15:28,032 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-18 17:13:48,881 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-18 18:09:39,050 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-18 19:04:27,025 - jinlianchuang_xh.py[line:546] - WARNING: (2013, 'Lost connection to MySQL server during query')
-2022-05-18 20:02:11,624 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-18 21:36:23,976 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-18 22:06:15,957 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-18 22:35:53,751 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-18 23:57:10,983 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-19 00:04:54,838 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-19 00:18:46,681 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-19 11:48:33,317 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-19 11:50:59,609 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-19 11:51:26,654 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-19 11:53:44,285 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
-2022-05-19 12:01:32,144 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-19 12:02:24,012 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-19 12:02:24,844 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-19 12:21:49,418 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-19 12:22:19,351 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-19 12:22:55,261 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-19 12:22:57,474 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-19 12:23:15,175 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
-2022-05-19 12:23:25,939 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-19 12:30:11,968 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-19 12:30:57,102 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-19 12:39:28,161 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-19 12:56:12,417 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-19 12:56:26,196 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-19 13:01:58,181 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-19 13:07:30,611 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-19 13:09:46,347 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-19 13:09:47,512 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-19 13:10:09,545 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
-2022-05-19 13:21:59,800 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-19 13:24:12,798 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-19 13:25:07,190 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-19 13:27:06,783 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-19 13:32:14,965 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-20 14:09:35,531 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-20 14:16:27,823 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-20 14:23:50,091 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-20 14:29:01,758 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-20 14:31:57,368 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-20 14:44:27,102 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-20 14:44:58,269 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-20 14:51:19,404 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: timed out
-2022-05-20 14:54:19,107 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-20 15:11:21,780 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-20 15:12:20,803 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-20 15:13:48,528 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
-2022-05-20 15:16:49,428 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-20 15:28:25,443 - jinlianchuang_xh.py[line:546] - WARNING: (2013, 'Lost connection to MySQL server during query')
-2022-05-20 15:37:32,077 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
-2022-05-20 15:38:29,054 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-20 15:52:51,349 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-20 15:52:53,729 - jinlianchuang_xh.py[line:546] - WARNING: (2013, 'Lost connection to MySQL server during query')
-2022-05-20 15:54:48,301 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-20 15:57:09,536 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: timed out
-2022-05-20 15:58:10,075 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-25 20:47:22,134 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-25 20:54:47,219 - jinlianchuang_xh.py[line:546] - WARNING: (2013, 'Lost connection to MySQL server during query')
-2022-05-25 21:01:47,075 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
-2022-05-25 21:03:49,901 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-25 21:06:36,018 - jinlianchuang_xh.py[line:546] - WARNING: (2013, 'Lost connection to MySQL server during query')
-2022-05-25 21:17:36,073 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-25 21:24:46,737 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-25 21:24:47,077 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-25 21:31:56,900 - jinlianchuang_xh.py[line:546] - WARNING: (2013, 'Lost connection to MySQL server during query')
-2022-05-25 21:47:55,658 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-25 21:47:55,763 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-25 21:47:56,491 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-25 21:50:41,329 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-25 21:58:00,434 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-25 22:02:23,884 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-25 22:11:27,800 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
-2022-05-26 14:26:34,342 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-26 14:40:00,655 - jinlianchuang_xh.py[line:546] - WARNING: (2013, 'Lost connection to MySQL server during query')
-2022-05-26 14:40:12,581 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-26 14:51:48,565 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-26 14:52:04,098 - jinlianchuang_xh.py[line:546] - WARNING: (2013, 'Lost connection to MySQL server during query')
-2022-05-26 14:54:55,628 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-26 15:20:05,047 - jinlianchuang_xh.py[line:546] - WARNING: (2013, 'Lost connection to MySQL server during query')
-2022-05-26 15:25:11,540 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-26 15:27:24,028 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-26 15:27:46,090 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-26 15:40:33,009 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-26 15:53:21,805 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
-2022-05-26 15:53:44,062 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
-2022-05-26 16:02:36,152 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
-2022-05-26 16:02:36,897 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-06-08 19:33:14,372 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-06-08 19:33:14,672 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-06-08 20:02:12,862 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-06-09 15:08:45,802 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-06-09 15:21:29,941 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-06-09 15:21:32,943 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-06-09 16:00:13,947 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-06-09 16:00:52,773 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-06-09 16:01:07,064 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-06-09 16:02:37,576 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-06-09 16:02:39,607 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-06-09 16:03:08,766 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-06-13 19:57:22,225 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
+2022-06-13 20:10:04,490 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
+2022-06-13 22:02:15,386 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-06-13 22:09:22,323 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-06-14 16:02:35,892 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-06-14 16:02:36,577 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-06-14 16:02:37,996 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-06-15 18:55:18,194 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
+2022-06-15 18:56:24,953 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+2022-06-15 19:04:13,095 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+2022-06-15 19:04:15,698 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+2022-06-15 19:10:51,664 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
+2022-06-15 19:11:43,206 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
+2022-06-15 19:11:47,581 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
+2022-06-15 19:12:03,070 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+2022-06-15 19:15:20,397 - jinlianchuang_xh.py[line:546] - WARNING: (2013, 'Lost connection to MySQL server during query')
+2022-06-15 19:19:37,673 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
+2022-06-15 19:19:45,160 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
+2022-06-15 19:20:12,972 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+2022-06-15 19:23:28,951 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-06-15 19:27:04,282 - jinlianchuang_xh.py[line:546] - WARNING: (2013, 'Lost connection to MySQL server during query')
+2022-06-15 19:29:12,348 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+2022-06-15 19:29:29,687 - jinlianchuang_xh.py[line:546] - WARNING: (2013, 'Lost connection to MySQL server during query')
+2022-06-15 19:31:51,999 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-06-15 19:31:53,730 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-06-15 19:31:53,744 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-06-15 19:33:21,939 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-06-15 19:33:22,406 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-06-15 19:33:30,106 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-06-15 19:37:20,739 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
+2022-06-15 19:38:11,490 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+2022-06-15 19:38:16,317 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+2022-06-15 19:42:31,705 - jinlianchuang_xh.py[line:546] - WARNING: (2013, 'Lost connection to MySQL server during query')
+2022-06-15 19:45:22,361 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
+2022-06-15 19:45:55,674 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
+2022-06-15 19:46:55,507 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
+2022-06-15 19:53:50,520 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
+2022-06-15 19:54:02,347 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+2022-06-15 19:56:09,283 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+2022-06-15 19:57:18,569 - jinlianchuang_xh.py[line:546] - WARNING: (2013, 'Lost connection to MySQL server during query')
+2022-06-15 20:02:09,427 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
+2022-06-15 20:02:13,620 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
+2022-06-15 20:02:15,960 - jinlianchuang_xh.py[line:546] - WARNING: HTTPConnectionPool(host='jiag.315i.com', port=80): Read timed out. (read timeout=5)
+2022-06-15 20:02:51,886 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+2022-06-15 20:10:15,896 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
+2022-06-15 20:10:48,336 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+2022-06-15 20:11:42,904 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
+2022-06-15 20:18:41,791 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+2022-06-15 20:18:46,906 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+2022-06-15 20:20:07,865 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
+2022-06-15 20:26:02,466 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
+2022-06-15 20:26:32,046 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
+2022-06-15 20:26:34,149 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+2022-06-15 20:28:50,306 - jinlianchuang_xh.py[line:546] - WARNING: (2013, 'Lost connection to MySQL server during query')
+2022-06-15 20:29:50,829 - jinlianchuang_xh.py[line:546] - WARNING: (2013, 'Lost connection to MySQL server during query')
+2022-06-15 20:34:47,040 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+2022-06-15 20:34:48,889 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+2022-06-15 20:35:23,162 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
+2022-06-15 20:43:01,585 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+2022-06-15 20:43:01,586 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+2022-06-15 20:43:04,702 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: timed out
+2022-06-15 20:45:49,078 - jinlianchuang_xh.py[line:546] - WARNING: (2003, "Can't connect to MySQL server on '27.150.182.135' (timed out)")
+2022-06-15 20:51:06,008 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+2022-06-15 20:51:06,784 - jinlianchuang_xh.py[line:546] - WARNING: 27.150.182.135:27017: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。

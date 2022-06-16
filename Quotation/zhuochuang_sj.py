@@ -390,7 +390,7 @@ class ZhuoChuang:
                         for item in resp.json().get('data').get('5'):
                             prod_specifications.append(item.get('Name'))
                         if prod_specifications:
-                            prod_specifications = str(prod_specifications).replace("'", '"')
+                            prod_specifications = str(prod_specifications).replace("'", '"').replace(".0", '')
                         else:
                             prod_specifications = ''
                     else:
@@ -508,7 +508,7 @@ class ZhuoChuang:
                         for item in resp.json().get('data').get('5'):
                             prod_specifications.append(item.get('Name'))
                         if prod_specifications:
-                            prod_specifications = str(prod_specifications).replace("'", '"')
+                            prod_specifications = str(prod_specifications).replace("'", '"').replace(".0", '')
                         else:
                             prod_specifications = ''
                     else:
@@ -626,7 +626,7 @@ class ZhuoChuang:
                         for item in resp.json().get('data').get('5'):
                             prod_specifications.append(item.get('Name'))
                         if prod_specifications:
-                            prod_specifications = str(prod_specifications).replace("'", '"')
+                            prod_specifications = str(prod_specifications).replace("'", '"').replace(".0", '')
                         else:
                             prod_specifications = ''
                     else:
@@ -818,7 +818,7 @@ class ZhuoChuang:
             prod_market = data.get('市场')  # 产品市场
             prod_standard = data.get('用途')  # 产品标准(卓创用途分类)
             prod_price_type = data.get('数据类型')  # 价格类型
-            prod_specifications = data.get('规格型号')  # 产品规格
+            prod_specifications = str(data.get('规格型号')).replace(".0", '"')  # 产品规格
             prod_lowest_price = data.get('最低价')  # 最低价
             if prod_lowest_price:
                 prod_lowest_price = round(float(prod_lowest_price), 2)
@@ -933,7 +933,7 @@ class ZhuoChuang:
             prod_market = data.get('市场')  # 产品市场
             prod_factory = data.get('生产企业')  # 生产企业
             prod_sales_company = ''  # 销售公司(默认为空)
-            prod_specifications = data.get('规格型号')  # 产品规格
+            prod_specifications = str(data.get('规格型号')).replace(".0", "")  # 产品规格
             prod_standard = data.get('用途')  # 产品标准(卓创用途分类)
             price_conditions = data.get('价格条件')  # 价格条件
             prod_lowest_price = data.get('最低价')  # 最低价
@@ -1046,7 +1046,7 @@ class ZhuoChuang:
             prod_factory = data.get('生产企业')  # 生产企业
             prod_market = data.get('市场')  # 产品市场
             prod_standard = data.get('用途')  # 产品标准(卓创用途分类)
-            prod_specifications = data.get('规格型号')  # 产品规格
+            prod_specifications = str(data.get('规格型号')).replace(".0", '')  # 产品规格
             price_conditions = data.get('价格条件')  # 价格条件
             prod_lowest_price = data.get('最低价')  # 最低价
             if prod_lowest_price:

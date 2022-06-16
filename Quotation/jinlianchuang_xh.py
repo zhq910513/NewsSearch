@@ -608,7 +608,7 @@ class JinLianChuang:
             prod_level = info.get('级别')  # 级别
             prod_process = info.get('工艺')  # 工艺
             prod_unit = info.get('单位')  # 单位
-            prod_specifications = info.get('产品规格')  # 产品规格
+            prod_specifications = str(info.get('产品规格')).replace(".0", "")  # 产品规格
             prod_warehouse = info.get('仓库名称')  # 仓库名称
             prod_price_type = info.get('价格类型')  # 价格类型
             try:

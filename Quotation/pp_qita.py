@@ -51,19 +51,13 @@ class PPQita:
         # 实例化 Mongo
         datadb = conf.get("Mongo", "QUOTATIONDB")
         cookiedb = conf.get("Mongo", "COOKIE")
-        proxydb = conf.get("Mongo", "PROXY")
 
-        # client = MongoClient('mongodb://127.0.0.1:27017/{db}'.format(db=datadb))
-        client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=datadb))
+        # client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=datadb))
+        client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=datadb))
 
-        # cookieclient = MongoClient('mongodb://127.0.0.1:27017/{db}'.format(db=cookiedb))
-        cookieclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=cookiedb))
+        # cookieclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=cookiedb))
+        cookieclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=cookiedb))
         self.cookie_coll = cookieclient[cookiedb]['cookies']
-
-        # proxyclient = MongoClient('mongodb://127.0.0.1:27017/{db}'.format(db=proxydb))
-        proxyclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=proxydb))
-        self.proxy_coll = proxyclient[proxydb]['proxies']
-        self.pros = [pro.get('pro') for pro in self.proxy_coll.find({'status': 1})]
 
         self.message_coll = client[datadb]['pp_qita_messages']
         self.articleData_coll = client[datadb]['pp_qita_articleData']
@@ -136,43 +130,9 @@ class PPQita:
         )
         return conn
 
-    def GetProxy(self):
-        try:
-            if self.pros:
-                usePro = self.pros.pop()
-            else:
-                # 计算代理池总数
-                if self.proxy_coll.find({'status': 1}).count() < 10:
-                    HandleProxy().InsertProxy(1)
-                else:
-                    self.pros = [pro.get('pro') for pro in self.proxy_coll.find({'status': 1})]
-                return self.GetProxy()
-
-            if usePro:
-                return {
-                    'http': 'http://{}'.format(usePro),
-                    'https': 'http://{}'.format(usePro),
-                }
-            else:
-                return
-        except:
-            return
-
-    def DisProxy(self, pro):
-        if isinstance(pro, dict):
-            pro = pro.get('http').split('//')[1]
-
-        # 改写数据库IP
-        try:
-            self.proxy_coll.update_one({'pro': pro}, {'$set': {
-                'status': 0,
-                'update_time': time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())),
-            }}, upsert=True)
-        except:
-            pass
 
     # 获取最新文章
-    def GetAllMessages(self, info, proxy=False, history=False, pageNum=1):
+    def GetAllMessages(self, info, history=False, pageNum=1):
         print('第 {} 页'.format(pageNum))
         try:
             jsonData = {
@@ -184,16 +144,7 @@ class PPQita:
                 'startPublishTime': ""
             }
 
-            if proxy:
-                # 获取代理
-                pro = self.GetProxy()
-                if pro:
-                    resp = requests.post(url=self.pageApiUrl, headers=self.pageApiHeaders, proxies=pro, json=jsonData,
-                                         verify=False)
-                else:
-                    resp = requests.post(url=self.pageApiUrl, headers=self.pageApiHeaders, json=jsonData, verify=False)
-            else:
-                resp = requests.post(url=self.pageApiUrl, headers=self.pageApiHeaders, json=jsonData, verify=False)
+            resp = requests.post(url=self.pageApiUrl, headers=self.pageApiHeaders, json=jsonData, verify=False)
             resp.encoding = 'utf-8'
             if resp.status_code == 200:
                 data = self.ParseMessages(resp.json())
@@ -215,7 +166,7 @@ class PPQita:
 
                         if pageNum <= data.get('maxPage'):
                             time.sleep(3)
-                            return self.GetAllMessages(info, proxy, history, pageNum + 1)
+                            return self.GetAllMessages(info, history, pageNum + 1)
                         else:
                             pass
                     else:
@@ -244,7 +195,7 @@ class PPQita:
             else:
                 print(resp.status_code)
         except requests.exceptions.ConnectionError:
-            return self.GetAllMessages(info, proxy, history, pageNum + 1)
+            return self.GetAllMessages(info, history, pageNum + 1)
         except Exception as error:
             logger.warning(error)
 
@@ -280,22 +231,14 @@ class PPQita:
         return data
 
     # 获取文章内容
-    def GetUrlFromMongo(self, info, proxy=False):
+    def GetUrlFromMongo(self, info):
         url = info['url']
         print(url)
 
         self.articleHeaders.update({'cookie': self.cookie_coll.find_one({'name': 'lz_pp_qita'}).get('cookie')})
 
         try:
-            if proxy:
-                # 获取代理
-                pro = self.GetProxy()
-                if pro:
-                    resp = requests.get(url=url, headers=self.articleHeaders, proxies=pro, verify=False)
-                else:
-                    resp = requests.get(url=url, headers=self.articleHeaders, verify=False)
-            else:
-                resp = requests.get(url=url, headers=self.articleHeaders, verify=False)
+            resp = requests.get(url=url, headers=self.articleHeaders, verify=False)
             resp.encoding = 'utf-8'
             if resp.status_code == 200:
                 data = self.ParseArticle(info['Type'], resp.text)
@@ -317,17 +260,11 @@ class PPQita:
                     except Exception as error:
                         logger.warning(error)
         except requests.exceptions.ConnectionError:
-            # 标记失效代理
-            if pro:
-                threading.Thread(target=self.DisProxy, args=(pro,)).start()
             print('网络问题，重试中...')
-            return self.GetUrlFromMongo(info, True)
+            return self.GetUrlFromMongo(info)
         except TimeoutError:
-            # 标记失效代理
-            if pro:
-                threading.Thread(target=self.DisProxy, args=(pro,)).start()
             print('网络问题，重试中...')
-            return self.GetUrlFromMongo(info, True)
+            return self.GetUrlFromMongo(info)
         except Exception as error:
             logger.warning(error)
             return
@@ -618,12 +555,12 @@ if __name__ == '__main__':
         {'keyword': 'BOPP成品库存分析', 'Type': 'BOPP成品库存分析'}
     ]:
         print(info)
-        ppqt.GetAllMessages(info, proxy=False, history=False, pageNum=1)
+        ppqt.GetAllMessages(info, history=True)
 
     # 多进程获取数据
-    ppqt.CommandThread(proxy=False)
+    ppqt.CommandThread()
     print('pp-qita 获取历史数据--完成')
 
     # 聚丙烯数据
     # 传入查询日期 默认为昨天日期  True加载一个月历史数据  False不加载历史数据
-    ppqt.GetSelectDate(history=False)
+    ppqt.GetSelectDate(history=True)

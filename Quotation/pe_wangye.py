@@ -587,7 +587,7 @@ class PE:
         获取详细文章内容
     """
 
-    def GetUrlFromMongo(self, info, proxy):
+    def GetUrlFromMongo(self, info):
         print(info)
         link = info['link']
         print(link)
@@ -690,16 +690,7 @@ class PE:
             print('新增平台 -- {}'.format(link.split('/')[2]))
 
         try:
-            if proxy:
-                # 获取代理
-                # pro = self.GetProxy()
-                pro = False
-                if pro:
-                    resp = requests.get(url=link, headers=headers, proxies=pro, timeout=5, verify=False)
-                else:
-                    resp = requests.get(url=link, headers=headers, timeout=5, verify=False)
-            else:
-                resp = requests.get(url=link, headers=headers, timeout=5, verify=False)
+            resp = requests.get(url=link, headers=headers, timeout=5, verify=False)
 
             resp.encoding = 'utf-8'
             if resp.status_code == 200:
@@ -729,15 +720,11 @@ class PE:
                 self.message_coll.delete_one({'link': link})
                 print('{} -- 服务器访问太频繁'.format(resp.status_code))
         except requests.exceptions.ConnectionError:
-            # 标记失效代理
-            # threading.Thread(target=self.DisProxy, args=(pro,)).start()
             print('网络问题，重试中...')
-            return self.GetUrlFromMongo(info, True)
+            return self.GetUrlFromMongo(info)
         except TimeoutError:
-            # 标记失效代理
-            # threading.Thread(target=self.DisProxy, args=(pro,)).start()
             print('网络问题，重试中...')
-            return self.GetUrlFromMongo(info, True)
+            return self.GetUrlFromMongo(info)
         except Exception as error:
             logger.warning(error)
             return
@@ -2032,7 +2019,7 @@ class PE:
     """
 
     # 多进程获取数据
-    def CommandThread(self, proxy=False, remove_bad=False, Async=True):
+    def CommandThread(self, Async=True):
         thread_list = []
 
         # 设置进程数
@@ -2040,26 +2027,14 @@ class PE:
 
         for info in self.message_coll.find({'$nor': [{'status': 1}]}).sort('_id', -1):
             if Async:
-                out = pool.apply_async(func=self.GetUrlFromMongo, args=(info, proxy,))  # 异步
+                out = pool.apply_async(func=self.GetUrlFromMongo, args=(info,))  # 异步
             else:
-                out = pool.apply(func=self.GetUrlFromMongo, args=(info, proxy,))  # 同步
+                out = pool.apply(func=self.GetUrlFromMongo, args=(info,))  # 同步
             thread_list.append(out)
             # break
 
         pool.close()
         pool.join()
-
-        # 获取输出结果
-        com_list = []
-        if Async:
-            for p in thread_list:
-                com = p.get()  # get会阻塞
-                com_list.append(com)
-        else:
-            com_list = thread_list
-        if remove_bad:
-            com_list = [i for i in com_list if i is not None]
-        return com_list
 
 
 def perun():
@@ -2087,7 +2062,7 @@ def perun():
     ]:
         # pass
         print(info['Type'])
-        pe.GetAllMessages(info, proxy=False, history=False, pageNum=1)
+        pe.GetAllMessages(info)
 
     for info in [
         {'url': 'https://search.oilchem.net/oilsearch/newsearch/oilchem/search/searchArticle', 'Type': 'PE国内企业装置检修'},
