@@ -37,3 +37,9 @@
 2022-06-13 19:36:07,233 - pe_wangye.py[line:2084] - WARNING: 0.6760125160217285
 2022-06-13 19:39:05,100 - pe_wangye.py[line:1714] - WARNING: 'NoneType' object has no attribute 'find_all'
 2022-06-13 19:39:25,301 - pe_wangye.py[line:2084] - WARNING: 186.0296928882599
+2022-06-19 16:41:39,930 - pe_wangye.py[line:729] - WARNING: HTTPSConnectionPool(host='plas.chem99.com', port=443): Read timed out. (read timeout=5)
+2022-06-19 16:42:14,209 - pe_wangye.py[line:1714] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-06-19 16:46:42,192 - pe_wangye.py[line:581] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-06-19 16:46:42,192 - pe_wangye.py[line:2084] - WARNING: 169.38190507888794
+2022-06-19 17:02:52,801 - pe_wangye.py[line:581] - WARNING: 'NoneType' object has no attribute 'find_all'
+2022-06-19 17:02:52,802 - pe_wangye.py[line:2084] - WARNING: 1.140693187713623

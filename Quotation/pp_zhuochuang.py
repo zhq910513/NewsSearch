@@ -103,43 +103,8 @@ class PPZhuoChuang:
         self.titleTwo = ''
         self.titleThree = ''
 
-    def GetProxy(self):
-        try:
-            if self.pros:
-                usePro = self.pros.pop()
-            else:
-                # 计算代理池总数
-                if self.proxy_coll.find({'status': 1}).count() < 10:
-                    HandleProxy().InsertProxy(1)
-                else:
-                    self.pros = [pro.get('pro') for pro in self.proxy_coll.find({'status': 1})]
-                return self.GetProxy()
-
-            if usePro:
-                return {
-                    'http': 'http://{}'.format(usePro),
-                    'https': 'http://{}'.format(usePro),
-                }
-            else:
-                return
-        except:
-            return
-
-    def DisProxy(self, pro):
-        if isinstance(pro, dict):
-            pro = pro.get('http').split('//')[1]
-
-        # 改写数据库IP
-        try:
-            self.proxy_coll.update_one({'pro': pro}, {'$set': {
-                'status': 0,
-                'update_time': time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())),
-            }}, upsert=True)
-        except:
-            pass
-
     # 获取最新数据或者历史数据
-    def GetAllMessages(self, Type, pageNum=1, proxy=False, history=False):
+    def GetAllMessages(self, Type, pageNum=1, history=False):
         print('{}    第 {} 页'.format(Type, pageNum))
         try:
             jsonData = {
@@ -154,17 +119,7 @@ class PPZhuoChuang:
             self.pageApiHeaders.update({
                 'cookie': self.cookie_coll.find_one({'name': 'zc_pp_messages'}).get('cookie'),
             })
-            if proxy:
-                # 获取代理
-                pro = self.GetProxy()
-                if pro:
-                    resp = requests.post(url=self.pageApiUrl, headers=self.pageApiHeaders, proxies=pro,
-                                         data=urlencode(jsonData), timeout=5, verify=False)
-                else:
-                    resp = requests.post(url=self.pageApiUrl, headers=self.pageApiHeaders, data=urlencode(jsonData),
-                                         timeout=5, verify=False)
-            else:
-                resp = requests.post(url=self.pageApiUrl, headers=self.pageApiHeaders, data=urlencode(jsonData),
+            resp = requests.post(url=self.pageApiUrl, headers=self.pageApiHeaders, data=urlencode(jsonData),
                                      timeout=5, verify=False)
 
             resp.encoding = 'utf-8'
@@ -197,7 +152,7 @@ class PPZhuoChuang:
                         if pageNum < int(data.get('maxPage')):
                             # 随机休眠
                             time.sleep(random.uniform(3, 5))
-                            return self.GetAllMessages(Type, pageNum + 1, proxy, history)
+                            return self.GetAllMessages(Type, pageNum + 1, history)
                     else:
                         for info in data.get('dataList'):
                             info.update({'Type': Type})
@@ -216,15 +171,11 @@ class PPZhuoChuang:
                                 if not info.get("ClassName") == "管材管件":
                                     self.message_coll.update_one({'link': info['link']}, {'$set': info}, upsert=True)
         except requests.exceptions.ConnectionError:
-            # 标记失效代理
-            # threading.Thread(target=self.DisProxy, args=(pro,)).start()
             print('网络问题，重试中...')
-            return self.GetAllMessages(Type, pageNum, True, history)
+            return self.GetAllMessages(Type, pageNum, history)
         except TimeoutError:
-            # 标记失效代理
-            # threading.Thread(target=self.DisProxy, args=(pro,)).start()
             print('网络问题，重试中...')
-            return self.GetAllMessages(Type, pageNum, True, history)
+            return self.GetAllMessages(Type, pageNum, history)
         except Exception as error:
             logger.warning(error)
             return
@@ -255,7 +206,7 @@ class PPZhuoChuang:
             logger.warning(error)
 
     # 获取每一篇文章的内容
-    def GetUrlFromMongo(self, info, proxy=False):
+    def GetUrlFromMongo(self, info):
         Type = info['Type']
         link = info['link']
         print(link)
@@ -271,17 +222,7 @@ class PPZhuoChuang:
                     'cookie': self.cookie_coll.find_one({'name': 'zc_pp_article'}).get('cookie'),
                 })
 
-            if proxy:
-                # 获取代理
-                pro = self.GetProxy()
-                if pro:
-                    resp = requests.get(url=link.replace('http://', 'https://'), headers=self.articleHeaders,
-                                        proxies=pro, timeout=5, verify=False)
-                else:
-                    resp = requests.get(url=link.replace('http://', 'https://'), headers=self.articleHeaders, timeout=5,
-                                        verify=False)
-            else:
-                resp = requests.get(url=link.replace('http://', 'https://'), headers=self.articleHeaders, timeout=5,
+            resp = requests.get(url=link.replace('http://', 'https://'), headers=self.articleHeaders, timeout=5,
                                     verify=False)
             resp.encoding = 'utf-8'
             if resp.status_code == 200:
@@ -310,15 +251,11 @@ class PPZhuoChuang:
                 self.message_coll.update_one({'link': info['link']}, {'$set': {'status': resp.status_code}},
                                              upsert=True)
         except requests.exceptions.ConnectionError:
-            # 标记失效代理
-            # threading.Thread(target=self.DisProxy, args=(pro,)).start()
             print('网络问题，重试中...')
-            return self.GetUrlFromMongo(info, proxy)
+            return self.GetUrlFromMongo(info)
         except TimeoutError:
-            # 标记失效代理
-            # threading.Thread(target=self.DisProxy, args=(pro,)).start()
             print('网络问题，重试中...')
-            return self.GetUrlFromMongo(info, True)
+            return self.GetUrlFromMongo(info)
         except Exception as error:
             logger.warning(error)
             return
@@ -936,17 +873,18 @@ class PPZhuoChuang:
             return None, None
 
     # 多进程获取数据
-    def CommandThread(self, proxy=False, remove_bad=False, Async=True):
+    def CommandThread(self, remove_bad=False, Async=True):
         thread_list = []
 
         # 设置进程数
         pool = ThreadPool(processes=5)
 
         for info in self.message_coll.find({'status': None, '$nor': [{"ClassName": "管材管件"}]}):
+            print(info)
             if Async:
-                out = pool.apply_async(func=self.GetUrlFromMongo, args=(info, proxy,))  # 异步
+                out = pool.apply_async(func=self.GetUrlFromMongo, args=(info,))  # 异步
             else:
-                out = pool.apply(func=self.GetUrlFromMongo, args=(info, proxy,))  # 同步
+                out = pool.apply(func=self.GetUrlFromMongo, args=(info,))  # 同步
             thread_list.append(out)
             # break
 
@@ -981,10 +919,10 @@ def run():
         '塑膜收盘价格表'
     ]:
         # pass
-        pp.GetAllMessages(word, 1, proxy=False, history=False)
+        pp.GetAllMessages(word, history=True)
 
     # 获取文章数据
-    pp.CommandThread(proxy=False)
+    pp.CommandThread()
 
 
 if __name__ == '__main__':
