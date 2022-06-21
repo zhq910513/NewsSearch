@@ -60,8 +60,8 @@ class Cookie:
         self.get_pid()
         self.StartCMD()
         db = conf.get("Mongo", "COOKIE")
-        # client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/cookie')
-        client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/cookie')
+        client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/cookie')
+        # client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/cookie')
         self.cookie_coll = client[db]['cookies']
         print("开始登录...")
 
@@ -579,11 +579,11 @@ def kill_chrome_mitmproxy():
 
 def cookies_run():
     accounts = [
-        #{'platform':'jlc', 'account': 'jinyang8', 'pwd': 'jinyang168'},
-        #{'platform': 'jlc_second', 'account': '18918096272', 'pwd': '123456'},
-        #{'platform': 'jlc_third', 'account': 'hshizhi', 'pwd': 'ZYLzyl@123@'},
-        {'platform': 'lz', 'account': 'zhq111', 'pwd': 'a123456'},
-        {'platform': 'zc', 'account': 'changsu', 'pwd': 'cs123456'}
+        {'platform':'jlc', 'account': 'jinyang8', 'pwd': 'jinyang168'},
+        {'platform': 'jlc_second', 'account': '18918096272', 'pwd': '123456'},
+        {'platform': 'jlc_third', 'account': 'hshizhi', 'pwd': 'ZYLzyl@123@'},
+        # {'platform': 'lz', 'account': 'zhq111', 'pwd': 'a123456'},
+        # {'platform': 'zc', 'account': 'changsu', 'pwd': 'cs123456'}
     ]
     for account in accounts:
         kill_chrome_mitmproxy()

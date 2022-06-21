@@ -1,3 +1,0 @@
-2022-06-07 19:43:16,687 - longzhong_sj.py[line:1209] - WARNING: HTTPSConnectionPool(host='dc.oilchem.net', port=443): Read timed out. (read timeout=5)
-2022-06-07 19:43:18,085 - longzhong_sj.py[line:1209] - WARNING: HTTPSConnectionPool(host='dc.oilchem.net', port=443): Read timed out. (read timeout=5)
-2022-06-07 19:43:22,862 - longzhong_sj.py[line:1209] - WARNING: HTTPSConnectionPool(host='dc.oilchem.net', port=443): Read timed out. (read timeout=5)

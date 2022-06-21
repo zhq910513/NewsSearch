@@ -1,16 +1,44 @@
 #!/usr/local/python3/bin/python3
 # -*- coding:utf-8 -*-
 
+import base64
+import json
 # 主函数加入这两行，将项目的根目录(webapp)的上级路径加入到系统PATH中
 import os
 import sys
 
-try:
-    from .captchaApi import ParseCaptcha
-except Exception as error:
-    from captchaApi import ParseCaptcha
+# 一、图片文字类型(默认 3 数英混合)：
+# 1 : 纯数字
+# 1001：纯数字2
+# 2 : 纯英文
+# 1002：纯英文2
+# 3 : 数英混合
+# 1003：数英混合2
+#  4 : 闪动GIF
+# 7 : 无感学习(独家)
+# 11 : 计算题
+# 1005:  快速计算题
+# 16 : 汉字
+# 32 : 通用文字识别(证件、单据)
+# 66:  问答题
+# 49 :recaptcha图片识别
+# 二、图片旋转角度类型：
+# 29 :  旋转类型
+#
+# 三、图片坐标点选类型：
+# 19 :  1个坐标
+# 20 :  3个坐标
+# 21 :  3 ~ 5个坐标
+# 22 :  5 ~ 8个坐标
+# 27 :  1 ~ 4个坐标
+# 48 : 轨迹类型
+#
+# 四、缺口识别
+# 18 : 缺口识别（需要2张图 一张目标图一张缺口图）
+# 33 : 单缺口识别（返回X轴坐标 只需要1张图）
+# 五、拼图识别
+# 53：拼图识别
 
-    print(error)
 
 sys.path.append("../")
 import configparser
@@ -54,6 +82,24 @@ conf = configparser.ConfigParser()
 conf.read(settingPath, encoding="utf-8")
 
 cmd = 'chrome.exe --remote-debugging-port=9222 --user-data-dir="C:\selenium\AutomationProfile"'
+# cmd = 'google-chrome --remote-debugging-port=9222 --user-data-dir="/home/zyl/selenium/AutomationProfile"'
+
+
+def base64_api(uname, pwd, img, typeid):
+    with open(img, 'rb') as f:
+        base64_data = base64.b64encode(f.read())
+        b64 = base64_data.decode()
+    data = {"username": uname, "password": pwd, "typeid": typeid, "image": b64}
+    result = json.loads(requests.post("http://api.ttshitu.com/predict", json=data).text)
+    if result['success']:
+        return result["data"]["result"]
+    else:
+        return result["message"]
+
+
+def captcha_result(img_path, typeid):
+    result = base64_api(uname='zhq996', pwd='Zhq951357', img=img_path, typeid=typeid)
+    return result
 
 
 class location_login:
@@ -67,18 +113,18 @@ class location_login:
 
         client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/cookie')
         self.cookie_coll = client['cookie']['cookies']
-        self.StartCMD()
+        self.start_cmd()
 
         options = webdriver.ChromeOptions()
         options.debugger_address = "127.0.0.1:9222"
         self.driver = webdriver.Chrome(options=options)
 
-        self.JinLianChuangUrl = 'http://member.315i.com/logreg/toIndex?gotourl=http%3A%2F%2Fwww.315i.cn%2F'
-        self.ZhuoChuangUrl = 'https://prices.sci99.com/cn/'
-        self.LongZhongUrl = 'https://dc.oilchem.net/'
+        self.jlc_check_url = 'http://member.315i.com/logreg/toIndex?gotourl=http%3A%2F%2Fwww.315i.cn%2F'
+        self.zc_check_url = 'https://prices.sci99.com/cn/'
+        self.lz_check_url = 'https://dc.oilchem.net/'
 
     @staticmethod
-    def StartCMD():
+    def start_cmd():
         subprocess.Popen(cmd, shell=True)
         time.sleep(10)
 
@@ -97,12 +143,15 @@ class location_login:
             time.sleep(1)
 
             # 获取验证码
-            captchaNum = self.ParseCaptcha()
+            captchaNum = self.parse_captcha()
             print('验证码： %s' % captchaNum)
 
             if captchaNum:
                 # 填入验证码
                 self.driver.find_element(By.ID, 'dialogImgCodeStr').send_keys(captchaNum)
+
+                time.sleep(1)
+                self.driver.find_element(By.XPATH, '//*[@id="dialogRemberId"]').click()
 
                 # 登录
                 time.sleep(3)
@@ -192,15 +241,15 @@ class location_login:
     def login(self):
         if 'lz' == self.platform:
             try:
-                self.driver.get(self.ZhuoChuangUrl)
+                self.driver.get(self.lz_check_url)
                 time.sleep(3)
 
                 if BeautifulSoup(self.driver.page_source, 'lxml').find('div', {'class': 'plj'}):
                     return True
                 else:
                     return self.lz_login()
-            except:
-                return self.lz_login()
+            except Exception as error:
+                logger.warning(error)
 
         elif 'zc' == self.platform:
             try:
@@ -214,36 +263,36 @@ class location_login:
                     return self.zc_sci99_login()
             except Exception as error:
                 logger.warning(error)
+
         else:
             print('暂时未添加该平台')
             return False
 
-    # 获取屏幕截图及验证码截图
-    def GetScreenshot(self):
+    def get_screen_shot(self):
         time.sleep(2)
         """
             获取验证码截图
         """
         # 获取对应的坐标
         if 'jlc' in self.platform:
-            url = self.JinLianChuangUrl
+            url = self.jlc_check_url
             # 无界面
             x2 = 1545
             y2 = 380
             x1 = 1450
             y1 = 334
         elif 'lz' in self.platform:
-            url = self.LongZhongUrl
+            url = self.lz_check_url
             # 无界面
-            x2 = 1118
-            y2 = 527
-            x1 = 1030
-            y1 = 497
+            # x2 = 1118
+            # y2 = 527
+            # x1 = 1030
+            # y1 = 497
             # 有界面
-            # x2 = 833
-            # y2 = 313
-            # x1 = 746
-            # y1 = 281
+            x1 = 528
+            y1 = 419
+            x2 = 610
+            y2 = 444
         else:
             url = None
             x2 = 0
@@ -261,10 +310,9 @@ class location_login:
         else:
             self.driver.refresh()
 
-    # 解析验证码图片
-    def ParseCaptcha(self):
+    def parse_captcha(self):
         # 获取验证码截图
-        self.GetScreenshot()
+        self.get_screen_shot()
 
         # 识别验证码
         time.sleep(3)
@@ -277,13 +325,11 @@ class location_login:
                 self.driver.refresh()
         elif 'lz' in self.platform:
             # 调用验证码API
-            self.captchaApi = ParseCaptcha(pictureCaptchaPath, '30400')
-            captcha = self.captchaApi.AnalysisImage_abspath()
+            captcha = captcha_result(pictureCaptchaPath, '3')
             if captcha:
-                self.request_id = captcha[0]
-                return captcha[1]
+                return captcha
             else:
-                return self.ParseCaptcha()
+                return self.parse_captcha()
         else:
             pass
 
@@ -316,15 +362,17 @@ class location_login:
                 time.sleep(3)
                 print(f'隆众登录成功 获取 {Type[0]}')
                 self.save_cookies(Type)
+
         # 卓创
         if 'zc' in self.platform:
             for Type in [
-                # ('zc_sj_category', 'https://prices.sci99.com/cn/product.aspx?ppid=12278&ppname=LDPE&navid=521'),
-                # ('zc_sj_downloadDetail', 'https://prices.sci99.com/cn/product_price.aspx?diid=39246&datatypeid=37&ppid=12278&ppname=LDPE&cycletype=day'),
-                # ('zc_zs_category', 'https://index.sci99.com/channel/product/hy/%E5%A1%91%E6%96%99/3.html'),
-                # ('zc_zs_downloadDetail', 'https://index.sci99.com/channel/product/hy/%E5%A1%91%E6%96%99/3.html'),
-                # ('zc_search', 'https://www.sci99.com/search/?key=LDPE&siteid=0'),
-                # ('zc_pp_messages', 'https://www.sci99.com/search/?key=PP%E8%A3%85%E7%BD%AE%E5%8A%A8%E6%80%81%E6%B1%87%E6%80%BB&siteid=0'),
+                ('zc_sj_category', 'https://prices.sci99.com/cn/product.aspx?ppid=12278&ppname=LDPE&navid=521'),
+                ('zc_sj_downloadDetail',
+                 'https://prices.sci99.com/cn/product_price.aspx?diid=39246&datatypeid=37&ppid=12278&ppname=LDPE&cycletype=day'),
+                ('zc_zs_category', 'https://index.sci99.com/channel/product/hy/%E5%A1%91%E6%96%99/3.html'),
+                ('zc_zs_downloadDetail', 'https://index.sci99.com/channel/product/hy/%E5%A1%91%E6%96%99/3.html'),
+                ('zc_search', 'https://www.sci99.com/search/?key=LDPE&siteid=0'),
+                ('zc_pp_messages', 'https://www.sci99.com/search/?key=PP%E8%A3%85%E7%BD%AE%E5%8A%A8%E6%80%81%E6%B1%87%E6%80%BB&siteid=0'),
 
                 ('zc_pe_装置动态_article', 'https://plas.chem99.com/news/41765441.html'),
                 ('zc_pe_国内石化_article', 'https://plas.chem99.com/news/41725745.html'),
@@ -332,7 +380,7 @@ class location_login:
                 ('zc_pe_塑膜收盘_article', 'https://plas.chem99.com/news/41727049.html'),
                 ('zc_pe_神华竞拍_article', 'https://plas.chem99.com/news/41770856.html'),
 
-                # ('zc_pp_article', 'https://plas.chem99.com/news/37665388.html'),
+                ('zc_pp_article', 'https://plas.chem99.com/news/41775116.html'),
                 # ('zc_pp_bxxy_article', 'https://chem.chem99.com/news/36724085.html'),
                 # second
                 # ('zc_sj_category_second', 'https://prices.sci99.com/cn/product.aspx?ppid=12555&ppname=%u518D%u751F%u9AD8%u538B&navid=552'),
@@ -382,9 +430,6 @@ class CookieSearch:
 
         self.executablePath = conf.get("Google", "EXECUTABLE_PATH")
         self.platform = ['zszx', 'ywcq']
-        self.JinLianChuangUrl = 'http://member.315i.com/'
-        self.ZhuoChuangUrl = 'https://www.sci99.com/'
-        self.LongZhongUrl = 'https://dc.oilchem.net/'
         self.driver = webdriver.Chrome(options=options, executable_path=self.executablePath)
         self.driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {
             "source": """
@@ -450,10 +495,27 @@ class CookieSearch:
 
 
 def kill_chrome_mitmproxy():
-    for key in ['chrome', 'mitmproxy']:
-        cmd = f"ps -ef|grep {key}" + "|awk '{print $2}'|xargs kill -9"
-        subprocess.Popen(cmd, shell=True)
-        time.sleep(1)
+    # linux
+    try:
+        for key in ['chrome', 'mitmproxy']:
+            cmd = f"ps -ef|grep {key}" + "|awk '{print $2}'|xargs kill -9"
+            subprocess.Popen(cmd, shell=True)
+            time.sleep(1)
+    except:
+        pass
+
+    # windows
+    try:
+        cmd = 'tasklist -v'
+        info = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
+        for txt in str(info.stdout.read()).split('\\r\\n'):
+            if 'chromedriver.exe' in txt or 'chrome.exe' in txt:
+                pid_list = re.findall(' (\d+) Console ', txt, re.S)
+                if pid_list:
+                    cmd = "taskkill -f -pid {}".format(pid_list[0])
+                    subprocess.Popen(cmd, shell=True)
+    except:
+        pass
 
 
 def cookies_run():

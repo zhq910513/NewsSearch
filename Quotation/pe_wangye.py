@@ -2062,7 +2062,7 @@ def perun():
     ]:
         pass
         # print(info['Type'])
-        # pe.GetAllMessages(info)
+        pe.GetAllMessages(info)
 
     for info in [
         {'url': 'https://search.oilchem.net/oilsearch/newsearch/oilchem/search/searchArticle', 'Type': 'PE国内企业装置检修'},
@@ -2070,7 +2070,7 @@ def perun():
     ]:
         pass
         # print(info['Type'])
-        # pe.GetPeLongzhong(info)
+        pe.GetPeLongzhong(info)
 
     # 多进程获取数据
     pe.CommandThread()

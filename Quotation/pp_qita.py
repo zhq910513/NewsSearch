@@ -9,7 +9,6 @@ import os
 import pprint
 import random
 import re
-import threading
 import time
 from multiprocessing.pool import ThreadPool
 from os import path
@@ -20,8 +19,6 @@ import requests
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
 from pymongo import MongoClient
-
-from Cookies.proxy import HandleProxy
 
 requests.packages.urllib3.disable_warnings()
 pp = pprint.PrettyPrinter(indent=4)
@@ -129,7 +126,6 @@ class PPQita:
             autocommit=True
         )
         return conn
-
 
     # 获取最新文章
     def GetAllMessages(self, info, history=False, pageNum=1):
@@ -293,6 +289,7 @@ class PPQita:
                             elif '华中地区' in p.get_text():
                                 location = '华中地区'
                             elif p.find('img'):
+                                location = None
                                 data.update({
                                     'imageLink': 'https:' + p.find('img').get('src')
                                 })
@@ -515,7 +512,7 @@ class PPQita:
     """
 
     # 多进程获取数据
-    def CommandThread(self, proxy=False, remove_bad=False, Async=True):
+    def CommandThread(self, remove_bad=False, Async=True):
         thread_list = []
 
         # 设置进程数
@@ -524,9 +521,9 @@ class PPQita:
         logger.warning(self.message_coll.find({'status': None}, no_cursor_timeout=True).count())
         for info in self.message_coll.find({'status': None}):
             if Async:
-                out = pool.apply_async(func=self.GetUrlFromMongo, args=(info, proxy,))  # 异步
+                out = pool.apply_async(func=self.GetUrlFromMongo, args=(info,))  # 异步
             else:
-                out = pool.apply(func=self.GetUrlFromMongo, args=(info, proxy,))  # 同步
+                out = pool.apply(func=self.GetUrlFromMongo, args=(info,))  # 同步
             thread_list.append(out)
             # break
 

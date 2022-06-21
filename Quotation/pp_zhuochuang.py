@@ -18,7 +18,6 @@ from urllib.parse import urlencode
 import requests
 from bs4 import BeautifulSoup
 from pymongo import MongoClient
-from Cookies.proxy import HandleProxy
 
 requests.packages.urllib3.disable_warnings()
 pp = pprint.PrettyPrinter(indent=4)
@@ -129,6 +128,7 @@ class PPZhuoChuang:
                     if history:
                         for info in data.get('dataList'):
                             info.update({'Type': Type})
+                            print(info)
 
                             if Type == '丙烯下游周度开工率统计':
                                 if info['FColumnName'] == '装置动态' and info["WebSite"] == "化工":
@@ -141,7 +141,7 @@ class PPZhuoChuang:
                                     self.message_coll.update_one({'link': info['link']}, {'$set': info}, upsert=True)
 
                             elif Type == 'PP装置动态汇总':
-                                if info['FColumnName'] == '石化动态':
+                                if info['ClassID'] == '1712':
                                     # print(info)
                                     self.message_coll.update_one({'link': info['link']}, {'$set': info}, upsert=True)
 
@@ -156,6 +156,7 @@ class PPZhuoChuang:
                     else:
                         for info in data.get('dataList'):
                             info.update({'Type': Type})
+                            print(info)
 
                             if Type == '丙烯下游周度开工率统计':
                                 if info['FColumnName'] == '装置动态' and info["WebSite"] == "化工":
@@ -919,7 +920,7 @@ def run():
         '塑膜收盘价格表'
     ]:
         # pass
-        pp.GetAllMessages(word, history=True)
+        pp.GetAllMessages(word, history=False)
 
     # 获取文章数据
     pp.CommandThread()
