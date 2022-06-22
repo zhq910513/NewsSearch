@@ -54,11 +54,11 @@ class ZhuoChuang:
         datadb = conf.get("Mongo", "QUOTATIONDB")
         cookiedb = conf.get("Mongo", "COOKIE")
 
-        # client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=datadb))
-        client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=datadb))
+        client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=datadb))
+        # client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=datadb))
 
-        # cookieclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=cookiedb))
-        cookieclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=cookiedb))
+        cookieclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=cookiedb))
+        # cookieclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=cookiedb))
         self.cookie_coll = cookieclient[cookiedb]['cookies']
 
         self.category_coll = client[datadb]['zc_sj_category']
@@ -1192,7 +1192,8 @@ class ZhuoChuang:
         pool = ThreadPool(processes=3)
 
         # 每周一更新详细类目
-        if (pd.to_datetime(str(time.strftime("%Y-%m-%d", time.localtime(time.time())))) - pd.to_datetime('20160103')).days % 7 == 1:
+        if (pd.to_datetime(str(time.strftime("%Y-%m-%d", time.localtime(time.time())))) - pd.to_datetime(
+                '20160103')).days % 7 == 1:
             """
                 主类目：68   有数据：68   无数据：0
             """
@@ -1228,13 +1229,14 @@ class ZhuoChuang:
 def zcsjrun():
     zc = ZhuoChuang()
 
-    # if str(time.strftime("%H", time.localtime(time.time()))) == '10':
-    # 清除标记
-    zc.removeStatus(zc.category_coll, 'link')
-    zc.removeStatus(zc.categoryData_coll, 'hashKey')
+    if str(time.strftime("%H", time.localtime(time.time()))) == '10':
+        # 清除标记
+        zc.removeStatus(zc.category_coll, 'link')
+        zc.removeStatus(zc.categoryData_coll, 'hashKey')
 
-    # 多进程获取数据   params: proxy history
-    if (pd.to_datetime(str(time.strftime("%Y-%m-%d", time.localtime(time.time())))) - pd.to_datetime('20160103')).days % 7 not in [6, 7]:
+    # 多进程获取数据   params: history
+    if (pd.to_datetime(str(time.strftime("%Y-%m-%d", time.localtime(time.time())))) - pd.to_datetime(
+            '20160103')).days % 7 not in [6, 7]:
         zc.CommandThread(history=False)
 
     print('zc 获取历史数据--完成')

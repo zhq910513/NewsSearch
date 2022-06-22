@@ -1758,7 +1758,7 @@ def lzrun():
         lz.removeStatus(lz.category_coll, 'link')
         lz.removeStatus(lz.categoryData_coll, 'hashKey')
 
-    # 多进程获取数据  params: proxy  history
+    # 多进程获取数据  params: history
     lz.CommandThread()
 
     print('lz_sj 获取历史数据--完成')

@@ -49,11 +49,11 @@ class PPQita:
         datadb = conf.get("Mongo", "QUOTATIONDB")
         cookiedb = conf.get("Mongo", "COOKIE")
 
-        # client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=datadb))
-        client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=datadb))
+        client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=datadb))
+        # client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=datadb))
 
-        # cookieclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=cookiedb))
-        cookieclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=cookiedb))
+        cookieclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=cookiedb))
+        # cookieclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=cookiedb))
         self.cookie_coll = cookieclient[cookiedb]['cookies']
 
         self.message_coll = client[datadb]['pp_qita_messages']
@@ -518,7 +518,6 @@ class PPQita:
         # 设置进程数
         pool = ThreadPool(processes=1)
 
-        logger.warning(self.message_coll.find({'status': None}, no_cursor_timeout=True).count())
         for info in self.message_coll.find({'status': None}):
             if Async:
                 out = pool.apply_async(func=self.GetUrlFromMongo, args=(info,))  # 异步
@@ -551,8 +550,8 @@ if __name__ == '__main__':
         {'keyword': '塑编企业原料库存分析', 'Type': '塑编企业原料库存分析'},
         {'keyword': 'BOPP成品库存分析', 'Type': 'BOPP成品库存分析'}
     ]:
-        print(info)
-        ppqt.GetAllMessages(info, history=True)
+        # print(info)
+        ppqt.GetAllMessages(info, history=False)
 
     # 多进程获取数据
     ppqt.CommandThread()

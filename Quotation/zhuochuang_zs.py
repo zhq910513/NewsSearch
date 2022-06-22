@@ -1,6 +1,5 @@
 #!/usr/local/python3/bin/python3
 # -*- coding:utf-8 -*-
-import json
 import sys
 
 sys.path.append("../")
@@ -54,13 +53,13 @@ class ZhuoChuang:
         datadb = conf.get("Mongo", "QUOTATIONDB")
         cookiedb = conf.get("Mongo", "COOKIE")
 
-        # client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=datadb))
         client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=datadb))
+        # client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=datadb))
 
-        # cookieclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=cookiedb))
         cookieclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=cookiedb))
-        self.cookie_coll = cookieclient[cookiedb]['cookies']
+        # cookieclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=cookiedb))
 
+        self.cookie_coll = cookieclient[cookiedb]['cookies']
         self.category_coll = client[datadb]['zc_zs_category']
 
         # 下载文件存放地址
@@ -134,13 +133,14 @@ class ZhuoChuang:
             resp = requests.get(link, headers=self.categoryHeaders, timeout=5, verify=False)
             if resp.status_code == 200:
                 if resp.json() and isinstance(resp.json(), list):
-                    hy_index = [num for num, i in enumerate(resp.json()) if i.get('Hy')=='塑料' or i.get('Hy')=='橡胶']
+                    hy_index = [num for num, i in enumerate(resp.json()) if i.get('Hy') == '塑料' or i.get('Hy') == '橡胶']
                     if hy_index:
                         for _index in hy_index:
                             for num, item in enumerate(resp.json()[_index:]):
                                 try:
-                                    if num==0 or not item.get('Hy'):
-                                        self.category_coll.update_one({'Name': item['Name']}, {'$set': item}, upsert=True)
+                                    if num == 0 or not item.get('Hy'):
+                                        self.category_coll.update_one({'Name': item['Name']}, {'$set': item},
+                                                                      upsert=True)
                                     else:
                                         break
                                 except Exception as error:
@@ -339,7 +339,8 @@ def zczsrun():
     zc = ZhuoChuang()
 
     # 主类目：22   有数据：22   无数据：0    每周天更新
-    if (pd.to_datetime(str(time.strftime("%Y-%m-%d", time.localtime(time.time())))) - pd.to_datetime('20160103')).days % 7 == 0:
+    if (pd.to_datetime(str(time.strftime("%Y-%m-%d", time.localtime(time.time())))) - pd.to_datetime(
+            '20160103')).days % 7 == 0:
         zc.GetCategory()
 
     # 详细分类：22   有数据：22   无数据：0

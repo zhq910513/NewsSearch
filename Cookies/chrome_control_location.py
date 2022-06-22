@@ -1,12 +1,5 @@
 #!/usr/local/python3/bin/python3
 # -*- coding:utf-8 -*-
-
-import base64
-import json
-# 主函数加入这两行，将项目的根目录(webapp)的上级路径加入到系统PATH中
-import os
-import sys
-
 # 一、图片文字类型(默认 3 数英混合)：
 # 1 : 纯数字
 # 1001：纯数字2
@@ -38,7 +31,11 @@ import sys
 # 33 : 单缺口识别（返回X轴坐标 只需要1张图）
 # 五、拼图识别
 # 53：拼图识别
-
+import base64
+import json
+# 主函数加入这两行，将项目的根目录(webapp)的上级路径加入到系统PATH中
+import os
+import sys
 
 sys.path.append("../")
 import configparser
@@ -135,10 +132,18 @@ class location_login:
             time.sleep(1)
 
             # 填写账户
+            self.driver.find_element(By.ID, 'dialogUsername').click()
+            time.sleep(1)
+            self.driver.find_element(By.ID, 'dialogUsername').clear()
+            time.sleep(1)
             self.driver.find_element(By.ID, 'dialogUsername').send_keys(self.account)
             time.sleep(1)
 
             # 填写密码
+            self.driver.find_element(By.ID, 'dialogPassword').click()
+            time.sleep(1)
+            self.driver.find_element(By.ID, 'dialogPassword').clear()
+            time.sleep(1)
             self.driver.find_element(By.ID, 'dialogPassword').send_keys(self.pwd)
             time.sleep(1)
 
@@ -179,10 +184,18 @@ class location_login:
             time.sleep(3)
 
             # 填写账户
+            self.driver.find_element(By.XPATH, '//*[@id="SciName"]').click()
+            time.sleep(1)
+            self.driver.find_element(By.XPATH, '//*[@id="SciName"]').clear()
+            time.sleep(1)
             self.driver.find_element(By.XPATH, '//*[@id="SciName"]').send_keys(self.account)
             time.sleep(1)
 
             # 填写密码
+            self.driver.find_element(By.XPATH, '//*[@id="SciPwd"]').click()
+            time.sleep(1)
+            self.driver.find_element(By.XPATH, '//*[@id="SciPwd"]').clear()
+            time.sleep(1)
             self.driver.find_element(By.XPATH, '//*[@id="SciPwd"]').send_keys(self.pwd)
             time.sleep(1)
 
@@ -214,10 +227,19 @@ class location_login:
                     self.driver.switch_to.frame(self.driver.find_elements(By.TAG_NAME, "iframe")[0])
 
                     # 填写账户
+                    self.driver.find_element(By.XPATH, '//*[@id="SciName"]').click()
+                    time.sleep(1)
+                    self.driver.find_element(By.XPATH, '//*[@id="SciName"]').clear()
+                    time.sleep(1)
+
                     self.driver.find_element(By.XPATH, '//*[@id="SciName"]').send_keys(self.account)
                     time.sleep(1)
 
                     # 填写密码
+                    self.driver.find_element(By.XPATH, '//*[@id="SciPwd"]').click()
+                    time.sleep(1)
+                    self.driver.find_element(By.XPATH, '//*[@id="SciPwd"]').clear()
+                    time.sleep(1)
                     self.driver.find_element(By.XPATH, '//*[@id="SciPwd"]').send_keys(self.pwd)
                     time.sleep(1)
 

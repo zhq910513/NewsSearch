@@ -56,11 +56,11 @@ class PE:
         datadb = conf.get("Mongo", "QUOTATIONDB")
         cookiedb = conf.get("Mongo", "COOKIE")
 
-        # client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=datadb))
-        client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=datadb))
+        client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=datadb))
+        # client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=datadb))
 
-        # cookieclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=cookiedb))
-        cookieclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=cookiedb))
+        cookieclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=cookiedb))
+        # cookieclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=cookiedb))
         self.cookie_coll = cookieclient[cookiedb]['cookies']
 
         self.message_coll = client[datadb]['pe_wangye_messages']
@@ -168,7 +168,7 @@ class PE:
         国内PE装置动态汇总 / 国际装置投产及检修计划汇总 / 聚乙烯企业开工率跟踪报道 / 石化库存PE+PP / PE包装膜
     """
 
-    def GetAllMessages(self, info, proxy=False, history=False, pageNum=1):
+    def GetAllMessages(self, info, history=False, pageNum=1):
         print('第 {} 页'.format(pageNum))
         link = info.get('url').format(page=pageNum)
         zc_api = 'https://www.sci99.com/search/ajax.aspx'
@@ -219,7 +219,7 @@ class PE:
                     if history:
                         if pageNum <= data.get('maxPage'):
                             time.sleep(3)
-                            return self.GetAllMessages(info, proxy, history, pageNum + 1)
+                            return self.GetAllMessages(info, history, pageNum + 1)
                         else:
                             pass
                     else:
@@ -234,7 +234,7 @@ class PE:
 
                         if todayStatus:
                             time.sleep(3)
-                            return self.GetAllMessages(info, proxy, history, pageNum + 1)
+                            return self.GetAllMessages(info, history, pageNum + 1)
                         else:
                             pass
                 else:
@@ -270,7 +270,7 @@ class PE:
 
                             if pageNum <= data.get('maxPage'):
                                 time.sleep(3)
-                                return self.GetAllMessages(info, proxy, history, pageNum + 1)
+                                return self.GetAllMessages(info, history, pageNum + 1)
                             else:
                                 pass
                         else:
@@ -285,7 +285,7 @@ class PE:
 
                             if todayStatus:
                                 time.sleep(3)
-                                return self.GetAllMessages(info, proxy, history, pageNum + 1)
+                                return self.GetAllMessages(info, history, pageNum + 1)
                             else:
                                 pass
                     else:
@@ -896,7 +896,7 @@ class PE:
                                 tr.find_all('td')) == 1 and '投产' in tr.find('td').get_text():
                             if '2020' in tr.find('td').get_text() or '2021' in tr.find(
                                     'td').get_text() or '2022' in tr.find('td').get_text() or '2023' in tr.find(
-                                    'td').get_text():
+                                'td').get_text():
                                 num_list.append(num)
                             elif tr.find('td').get_text() == '国外聚乙烯装置投产计划' or tr.find('td').get_text() == '国外聚乙烯装置检修计划':
                                 num_list.append(num)
@@ -2038,7 +2038,6 @@ class PE:
 
 
 def perun():
-    start_time = time.time()
     pe = PE()
 
     # 1 初始化翻第一页  True 加载历史数据  False 不加载历史数据
@@ -2060,7 +2059,7 @@ def perun():
             'url': 'http://plas.315i.com/common/goArticleList?pageIndex={page}&productIds=004001001&columnIds=005010&type=0&pageId=255',
             'Type': '进出口数据'},
     ]:
-        pass
+        # pass
         # print(info['Type'])
         pe.GetAllMessages(info)
 
@@ -2068,7 +2067,7 @@ def perun():
         {'url': 'https://search.oilchem.net/oilsearch/newsearch/oilchem/search/searchArticle', 'Type': 'PE国内企业装置检修'},
         {'url': 'https://search.oilchem.net/oilsearch/newsearch/oilchem/search/searchArticle', 'Type': '国内PP装置检修'},
     ]:
-        pass
+        # pass
         # print(info['Type'])
         pe.GetPeLongzhong(info)
 
@@ -2079,9 +2078,6 @@ def perun():
     pe.GetSelectDate()
 
     print('pe-wangye 获取历史数据--完成')
-
-    end_time = time.time()
-    logger.warning(end_time - start_time)
 
 
 if __name__ == '__main__':

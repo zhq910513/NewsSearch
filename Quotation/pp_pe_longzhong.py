@@ -2,7 +2,6 @@
 # -*- coding:utf-8 -*-
 import random
 import sys
-import threading
 from multiprocessing.pool import ThreadPool
 
 import pymysql
@@ -52,19 +51,13 @@ class PPZhuoChuang:
         # 实例化 Mongo
         datadb = conf.get("Mongo", "QUOTATIONDB")
         cookiedb = conf.get("Mongo", "COOKIE")
-        proxydb = conf.get("Mongo", "PROXY")
 
-        # client = MongoClient('mongodb://127.0.0.1:27017/{db}'.format(db=datadb))
-        client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=datadb))
+        client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=datadb))
+        # client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=datadb))
 
-        # cookieclient = MongoClient('mongodb://127.0.0.1:27017/{db}'.format(db=cookiedb))
-        cookieclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=cookiedb))
+        cookieclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=cookiedb))
+        # cookieclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=cookiedb))
         self.cookie_coll = cookieclient[cookiedb]['cookies']
-
-        # proxyclient = MongoClient('mongodb://127.0.0.1:27017/{db}'.format(db=proxydb))
-        proxyclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=proxydb))
-        self.proxy_coll = proxyclient[proxydb]['proxies']
-        self.pros = [pro.get('pro') for pro in self.proxy_coll.find({'status': 1})]
 
         self.message_coll = client[datadb]['pp_zhuochuang_messages']
         self.articleData_coll = client[datadb]['pp_zhuochuang_articleData']
@@ -123,39 +116,8 @@ class PPZhuoChuang:
         )
         return conn
 
-    def GetProxy(self):
-        try:
-            if self.pros:
-                usePro = self.pros.pop()
-            else:
-                self.pros = [pro.get('pro') for pro in self.proxy_coll.find({'status': 1})]
-                return self.GetProxy()
-
-            if usePro:
-                return {
-                    'http': 'http://{}'.format(usePro),
-                    'https': 'http://{}'.format(usePro),
-                }
-            else:
-                return
-        except:
-            return
-
-    def DisProxy(self, pro):
-        if isinstance(pro, dict):
-            pro = pro.get('http').split('//')[1]
-
-        # 改写数据库IP
-        try:
-            self.proxy_coll.update_one({'pro': pro}, {'$set': {
-                'status': 0,
-                'update_time': time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())),
-            }}, upsert=True)
-        except:
-            pass
-
     # 获取最新数据或者历史数据
-    def GetAllMessages(self, Type, pageNum=1, proxy=False, history=False):
+    def GetAllMessages(self, Type, pageNum=1, history=False):
         # print('第 {} 页'.format(pageNum))
         try:
             jsonData = {
@@ -170,18 +132,8 @@ class PPZhuoChuang:
             self.pageApiHeaders.update({
                 'cookie': self.cookie_coll.find_one({'name': 'zc_pp_messages'}).get('cookie'),
             })
-            if proxy:
-                # 获取代理
-                pro = self.GetProxy()
-                if pro:
-                    resp = requests.post(url=self.pageApiUrl, headers=self.pageApiHeaders, proxies=pro,
-                                         data=urlencode(jsonData), timeout=5, verify=False)
-                else:
-                    resp = requests.post(url=self.pageApiUrl, headers=self.pageApiHeaders, data=urlencode(jsonData),
-                                         timeout=5, verify=False)
-            else:
-                resp = requests.post(url=self.pageApiUrl, headers=self.pageApiHeaders, data=urlencode(jsonData),
-                                     timeout=5, verify=False)
+            resp = requests.post(url=self.pageApiUrl, headers=self.pageApiHeaders, data=urlencode(jsonData), timeout=5,
+                                 verify=False)
             resp.encoding = 'utf-8'
             if resp.status_code == 200:
                 data = self.ParseMessages(resp.json()[0])
@@ -194,7 +146,7 @@ class PPZhuoChuang:
                         if pageNum < int(data.get('maxPage')):
                             # 随机休眠
                             time.sleep(random.uniform(3, 5))
-                            return self.GetAllMessages(Type, pageNum + 1, proxy, history)
+                            return self.GetAllMessages(Type, pageNum + 1, history)
                     else:
                         todayStatus = False
                         for info in data.get('dataList'):
@@ -206,11 +158,9 @@ class PPZhuoChuang:
 
                         if todayStatus:
                             time.sleep(3)
-                            return self.GetAllMessages(Type, pageNum + 1, history, proxy)
+                            return self.GetAllMessages(Type, pageNum + 1, history)
         except requests.exceptions.ConnectionError:
-            threading.Thread(target=self.DisProxy, args=(pro,)).start()
-            print('网络问题，重试中...')
-            return self.GetAllMessages(Type, pageNum + 1, proxy, history)
+            return self.GetAllMessages(Type, pageNum + 1, history)
         except TimeoutError:
             logger.warning('第 {} 页 TimeoutError'.format(pageNum))
         except Exception as error:
@@ -243,7 +193,7 @@ class PPZhuoChuang:
             logger.warning(error)
 
     # 获取每一篇文章的内容
-    def GetUrlFromMongo(self, info, proxy=False):
+    def GetUrlFromMongo(self, info):
         Type = info['Type']
         link = info['link']
         print(link.replace('http://', 'https://'))
@@ -258,18 +208,8 @@ class PPZhuoChuang:
                     'cookie': self.cookie_coll.find_one({'name': 'zc_pp_article'}).get('cookie'),
                 })
 
-            if proxy:
-                # 获取代理
-                pro = self.GetProxy()
-                if pro:
-                    resp = requests.get(url=link.replace('http://', 'https://'), headers=self.articleHeaders,
-                                        proxies=pro, timeout=5, verify=False)
-                else:
-                    resp = requests.get(url=link.replace('http://', 'https://'), headers=self.articleHeaders, timeout=5,
-                                        verify=False)
-            else:
-                resp = requests.get(url=link.replace('http://', 'https://'), headers=self.articleHeaders, timeout=5,
-                                    verify=False)
+            resp = requests.get(url=link.replace('http://', 'https://'), headers=self.articleHeaders, timeout=5,
+                                verify=False)
             resp.encoding = 'utf-8'
             if resp.status_code == 200:
                 dataList = self.ParseArticle(Type, resp.text, link, pubTime)
@@ -294,9 +234,7 @@ class PPZhuoChuang:
                 print('*{}*'.format(resp.status_code))
                 self.message_coll.update_one({'link': link}, {'$set': {'status': resp.status_code}}, upsert=True)
         except requests.exceptions.ConnectionError:
-            threading.Thread(target=self.DisProxy, args=(pro,)).start()
-            print('网络问题，重试中...')
-            return self.GetUrlFromMongo(info, proxy)
+            return self.GetUrlFromMongo(info)
         except TimeoutError:
             logger.warning(link)
         except Exception as error:
@@ -816,7 +754,7 @@ class PPZhuoChuang:
                         'dateTime': pubTime
                     })
 
-            except Exception as  error:
+            except Exception as error:
                 logger.warning(error)
 
         elif Type == '聚丙烯粉料及上游丙烯价格一览':
@@ -857,7 +795,7 @@ class PPZhuoChuang:
                         for tr in soup.find('tbody').find_all('tr')[1:]:
                             if len(tr.find_all('td')) == 9 and '环比' not in tr.find_all('td')[0].get_text().replace('\n',
                                                                                                                    '').replace(
-                                    '\t', '').replace('\r', '').strip():
+                                '\t', '').replace('\r', '').strip():
                                 dataList.append({
                                     '日期': tr.find_all('td')[0].get_text().replace('\n', '').replace('\t', '').replace(
                                         '\r', '').strip(),
@@ -882,7 +820,7 @@ class PPZhuoChuang:
                         logger.warning('没有表结构   %s' % link)
                 else:
                     logger.warning('没有找到数据，可能cookies过期   %s' % link)
-            except Exception as  error:
+            except Exception as error:
                 logger.warning(error)
 
         elif Type == '塑膜收盘价格表':
@@ -902,7 +840,6 @@ class PPZhuoChuang:
                         })
                 elif '企业名称' in soup.find('tbody').find_all('tr')[0].find_all('td')[0].get_text().strip():
                     self.message_coll.update_one({'link': link}, {'$set': {'status': '企业名称'}}, upsert=True)
-
             except Exception as error:
                 logger.warning(error)
 
@@ -918,7 +855,7 @@ class PPZhuoChuang:
             return None
 
     # 多进程获取数据
-    def CommandThread(self, proxy=False, remove_bad=False, Async=True):
+    def CommandThread(self, remove_bad=False, Async=True):
         thread_list = []
 
         # 设置进程数
@@ -928,9 +865,9 @@ class PPZhuoChuang:
             self.message_coll.find({'$nor': [{"ClassName": "管材管件"}], "status": None}, no_cursor_timeout=True).count())
         for info in self.message_coll.find({'$nor': [{"ClassName": "管材管件"}], "status": None}, no_cursor_timeout=True):
             if Async:
-                out = pool.apply_async(func=self.GetUrlFromMongo, args=(info, proxy,))  # 异步
+                out = pool.apply_async(func=self.GetUrlFromMongo, args=(info,))  # 异步
             else:
-                out = pool.apply(func=self.GetUrlFromMongo, args=(info, proxy,))  # 同步
+                out = pool.apply(func=self.GetUrlFromMongo, args=(info,))  # 同步
             thread_list.append(out)
             break
 
@@ -964,14 +901,12 @@ def run():
         #     '丙烯下游周度开工率统计',
         #     '塑膜收盘价格表'
     ]:
-        print(word)
-        pp.GetAllMessages(word, 1, proxy=True, history=False)
+        # print(word)
+        pp.GetAllMessages(word, 1, history=False)
 
-        # 随机休眠
-        # time.sleep(random.uniform(5, 10))
 
     # 获取文章数据
-    pp.CommandThread(proxy=False)
+    pp.CommandThread()
 
 
 if __name__ == '__main__':

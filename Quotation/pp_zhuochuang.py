@@ -49,19 +49,13 @@ class PPZhuoChuang:
         # 实例化 Mongo
         datadb = conf.get("Mongo", "QUOTATIONDB")
         cookiedb = conf.get("Mongo", "COOKIE")
-        proxydb = conf.get("Mongo", "PROXY")
 
-        # client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=datadb))
-        client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=datadb))
+        client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=datadb))
+        # client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=datadb))
 
-        # cookieclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=cookiedb))
-        cookieclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=cookiedb))
+        cookieclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=cookiedb))
+        # cookieclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=cookiedb))
         self.cookie_coll = cookieclient[cookiedb]['cookies']
-
-        # proxyclient = MongoClient('mongodb://127.0.0.1:27017/{db}'.format(db=proxydb))
-        proxyclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=proxydb))
-        self.proxy_coll = proxyclient[proxydb]['proxies']
-        self.pros = [pro.get('pro') for pro in self.proxy_coll.find({'status': 1})]
 
         self.message_coll = client[datadb]['pp_zhuochuang_messages']
         self.articleData_coll = client[datadb]['pp_zhuochuang_articleData']
@@ -119,7 +113,7 @@ class PPZhuoChuang:
                 'cookie': self.cookie_coll.find_one({'name': 'zc_pp_messages'}).get('cookie'),
             })
             resp = requests.post(url=self.pageApiUrl, headers=self.pageApiHeaders, data=urlencode(jsonData),
-                                     timeout=5, verify=False)
+                                 timeout=5, verify=False)
 
             resp.encoding = 'utf-8'
             if resp.status_code == 200:
@@ -224,7 +218,7 @@ class PPZhuoChuang:
                 })
 
             resp = requests.get(url=link.replace('http://', 'https://'), headers=self.articleHeaders, timeout=5,
-                                    verify=False)
+                                verify=False)
             resp.encoding = 'utf-8'
             if resp.status_code == 200:
                 pubTime_new, dataList = self.ParseArticle(Type, resp.text, info['link'], pubTime)
