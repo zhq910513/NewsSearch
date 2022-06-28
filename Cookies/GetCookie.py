@@ -591,7 +591,7 @@ def kill_chrome_mitmproxy():
     # linux
     try:
         for key in ['chrome', 'mitmproxy']:
-            cmd = f"ps -ef|grep {key}" + "|awk '{print $2}'|xargs kill -9"
+            cmd = "ps -ef |grep " + key + " |awk '{print $2}'|xargs kill -9"
             subprocess.Popen(cmd, shell=True)
             time.sleep(1)
     except:
