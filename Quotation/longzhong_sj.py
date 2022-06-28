@@ -60,11 +60,11 @@ class LongZhong:
         datadb = conf.get("Mongo", "QUOTATIONDB")
         cookiedb = conf.get("Mongo", "COOKIE")
 
-        client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=datadb))
-        # client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=datadb))
+        # client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=datadb))
+        client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=datadb))
 
-        cookieclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=cookiedb))
-        # cookieclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=cookiedb))
+        # cookieclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=cookiedb))
+        cookieclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=cookiedb))
         self.cookie_coll = cookieclient[cookiedb]['cookies']
 
         self.category_coll = client[datadb]['lz_sj_category']
@@ -1180,7 +1180,6 @@ class LongZhong:
 
     # 读取 excel 表格数据
     def GetDataFromExcel(self, businessType, productFormat, sourceLink, fp, hash_key, history):
-
         conn = self.MySql()
 
         try:
@@ -1753,10 +1752,11 @@ class LongZhong:
 
 def lzrun():
     lz = LongZhong()
-    if str(time.strftime("%H", time.localtime(time.time()))) == '16':
-        # 清除标记
-        lz.removeStatus(lz.category_coll, 'link')
-        lz.removeStatus(lz.categoryData_coll, 'hashKey')
+
+    # 清除标记
+    # if str(time.strftime("%H", time.localtime(time.time()))) == '16':
+    lz.removeStatus(lz.category_coll, 'link')
+    lz.removeStatus(lz.categoryData_coll, 'hashKey')
 
     # 多进程获取数据  params: history
     lz.CommandThread()
