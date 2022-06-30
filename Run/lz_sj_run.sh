@@ -9,7 +9,7 @@ do
         h=`expr $ht \* 60`
         m=$(date "+%M")
         now=`expr $h + $m`
-        if [ 1099 -lt $now -a $now -lt 1101 ]:
+        if [ 1079 -lt $now -a $now -lt 1081 ]
         then
                 for name in longzhong_sj.py
                 do
@@ -17,10 +17,10 @@ do
 
                         if [ $count -eq 0 ]
                         then
-                                echo ${time}    $name start process.....  >> /home/zyl/NewsSearch/Logs/longzhong_sj_run.log
-                                nohup /usr/local/python3/bin/python3  /home/zyl/NewsSearch/$name >/dev/null 2>&1 &
+                                echo ${time}    $name start process.....  >> /home/zyl/NewsSearch/Logs/longzhong_sj.log
+                                nohup /usr/local/python3/bin/python3  /home/zyl/NewsSearch/Quotation/$name >/dev/null 2>&1 &
                         else
-                                echo ${time}    $name runing.....  >> /home/zyl/NewsSearch/Logs/longzhong_sj_run.log
+                                echo ${time}    $name runing.....  >> /home/zyl/NewsSearch/Logs/longzhong_sj.log
                         fi
                 done
         fi
