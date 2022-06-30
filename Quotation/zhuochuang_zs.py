@@ -20,8 +20,6 @@ from pymongo import MongoClient
 import pymysql
 from pymysql.err import IntegrityError
 
-from Cookies.GetCookie import cookies_run
-
 requests.packages.urllib3.disable_warnings()
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -335,7 +333,6 @@ class ZhuoChuang:
 
 
 def zczsrun():
-    cookies_run()
     zc = ZhuoChuang()
 
     # 主类目：22   有数据：22   无数据：0    每周天更新
