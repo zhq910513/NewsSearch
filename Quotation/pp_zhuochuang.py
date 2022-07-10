@@ -839,7 +839,7 @@ class PPZhuoChuang:
             except Exception as error:
                 logger.warning(error)
 
-        elif Type == '塑膜收盘价格表':
+        elif Type == '塑膜收盘价格表' or Type == '塑膜价格汇总表':
             try:
                 date = re.findall('\d+-\d+-\d+', soup.find('div', {'style': 'float: left'}).get_text(), re.S)[0]
 
@@ -911,7 +911,7 @@ def run():
         '塑料两油库存',
         '聚丙烯粉料及上游丙烯价格一览',
         '丙烯下游周度开工率统计',
-        '塑膜收盘价格表'
+        '塑膜价格汇总表'
     ]:
         # pass
         pp.GetAllMessages(word, history=False)

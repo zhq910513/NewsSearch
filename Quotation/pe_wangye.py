@@ -605,7 +605,7 @@ class PE:
                 self.ZCarticleHeaders.update(
                     {'cookie': self.cookie_coll.find_one({'name': 'zc_pe_农膜日评_article'}).get('cookie'),
                      'referer': link})
-            elif info['Type'] == '塑膜收盘价格表':
+            elif info['Type'] == '塑膜收盘价格表' or info['Type'] == '塑膜价格汇总表':
                 self.ZCarticleHeaders.update(
                     {'cookie': self.cookie_coll.find_one({'name': 'zc_pe_塑膜收盘_article'}).get('cookie'),
                      'referer': link})
@@ -1715,7 +1715,7 @@ class PE:
 
             return dataList
 
-        elif info.get('Type') == '塑膜收盘价格表':
+        elif info.get('Type') == '塑膜收盘价格表' or info.get('Type') == '塑膜价格汇总表':
             date = re.findall('\d+-\d+-\d+', soup.find('div', {'style': 'float: left'}).get_text(), re.S)[0]
             try:
                 if 'Panel_Login' in str(Html) or '未找到您的权限信息' in str(Html):
@@ -2044,7 +2044,7 @@ def perun():
     for info in [
         {'url': 'https://plas.chem99.com/news/?page={page}&sid=9978&siteid=3', 'Type': '国内PE装置动态汇总'},
         {'url': 'https://plas.chem99.com/news/?page={page}&sid=4520&siteid=3', 'Type': '农膜日评'},
-        {'url': 'https://plas.chem99.com/news/?page={page}&sid=4602&siteid=3', 'Type': '塑膜收盘价格表'},
+        {'url': 'https://plas.chem99.com/news/?page={page}&sid=4602&siteid=3', 'Type': '塑膜价格汇总表'},
         {'url': 'https://plas.chem99.com/news/?page={page}&sid=610&siteid=3', 'Type': '神华PE竞拍'},
         {'url': 'https://plas.chem99.com/news/?page={page}&sid=9978&k=1&sname=%e4%b8%ad%e7%9f%b3%e5%8c%96&siteid=3',
          'Type': '国内石化PE生产比例汇总'},
