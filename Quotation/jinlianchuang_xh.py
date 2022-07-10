@@ -797,7 +797,7 @@ def jlcrun():
     jlc.removeStatus(jlc.category_coll, 'link')
     jlc.removeStatus(jlc.categoryData_coll, 'hashKey')
 
-    # 多进程获取数据  params: proxy  history
+    # 多进程获取数据  params: history
     jlc.CommandThread(history=False)
 
     logger.info('jlc 获取历史数据--完成')
