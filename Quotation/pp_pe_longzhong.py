@@ -52,11 +52,11 @@ class PPZhuoChuang:
         datadb = conf.get("Mongo", "QUOTATIONDB")
         cookiedb = conf.get("Mongo", "COOKIE")
 
-        client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=datadb))
-        # client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=datadb))
+        # client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=datadb))
+        client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=datadb))
 
-        cookieclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=cookiedb))
-        # cookieclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=cookiedb))
+        # cookieclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=cookiedb))
+        cookieclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=cookiedb))
         self.cookie_coll = cookieclient[cookiedb]['cookies']
 
         self.message_coll = client[datadb]['pp_zhuochuang_messages']
@@ -823,7 +823,7 @@ class PPZhuoChuang:
             except Exception as error:
                 logger.warning(error)
 
-        elif Type == '塑膜收盘价格表':
+        elif Type == '塑膜收盘价格表' or Type == '塑膜价格汇总表':
             try:
                 date = re.findall('\d+\-\d+\-\d+', soup.find('div', {'style': 'float: left'}).get_text(), re.S)[0]
 
@@ -861,9 +861,7 @@ class PPZhuoChuang:
         # 设置进程数
         pool = ThreadPool(processes=5)
 
-        logger.warning(
-            self.message_coll.find({'$nor': [{"ClassName": "管材管件"}], "status": None}, no_cursor_timeout=True).count())
-        for info in self.message_coll.find({'$nor': [{"ClassName": "管材管件"}], "status": None}, no_cursor_timeout=True):
+        for info in self.message_coll.find({'$nor': [{"ClassName": "管材管件"}], "status": None}):
             if Async:
                 out = pool.apply_async(func=self.GetUrlFromMongo, args=(info,))  # 异步
             else:
