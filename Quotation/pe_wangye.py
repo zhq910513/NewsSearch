@@ -1411,144 +1411,207 @@ class PE:
         elif info.get('Type') == '国内石化PE生产比例汇总':
             try:
                 if soup.find('tbody'):
-                    # 纵向
-                    if '日' in soup.find('tbody').find_all('tr')[0].find_all('td')[2].get_text() or '月' in \
-                            soup.find('tbody').find_all('tr')[0].find_all('td')[2].get_text():
-                        print('纵向--长')
-                        if len(soup.find('tbody').find_all('tr')) == 15:
-                            titles = [td.get_text().replace('\n', '').replace('\t', '').replace('\r', '').strip() for td
-                                      in soup.find('tbody').find_all('tr')[0].find_all('td')]
-                            values = soup.find('tbody').find_all('tr')
-                            for num in range(1, len(soup.find('tbody').find_all('tr')[0].find_all('td')[1:]) + 1):
-                                try:
-                                    dataList.append({
-                                        '日期': titles[num],
-                                        '高压': {
-                                            '高压': values[1].find_all('td')[num + 1].get_text().replace('\n',
-                                                                                                       '').replace('\t',
-                                                                                                                   '').replace(
-                                                '\r', '').strip(),
-                                            '涂覆': values[2].find_all('td')[num + 1].get_text().replace('\n',
-                                                                                                       '').replace('\t',
-                                                                                                                   '').replace(
-                                                '\r', '').strip()
-                                        },
-                                        '低压管材': {
-                                            '80级管材': values[3].find_all('td')[num + 1].get_text().replace('\n',
-                                                                                                          '').replace(
-                                                '\t', '').replace('\r', '').strip(),
-                                            '100级管材': values[4].find_all('td')[num + 1].get_text().replace('\n',
-                                                                                                           '').replace(
-                                                '\t', '').replace('\r', '').strip(),
-                                            '地暖级管材': values[5].find_all('td')[num + 1].get_text().replace('\n',
-                                                                                                          '').replace(
-                                                '\t', '').replace('\r', '').strip()
-                                        },
-                                        '低压中空': {
-                                            '大中空': values[6].find_all('td')[num + 1].get_text().replace('\n',
-                                                                                                        '').replace(
-                                                '\t', '').replace('\r', '').strip(),
-                                            '小中空': values[7].find_all('td')[num + 1].get_text().replace('\n',
-                                                                                                        '').replace(
-                                                '\t', '').replace('\r', '').strip()
-                                        },
-                                        '低压注塑': {
-                                            '低熔注塑': values[8].find_all('td')[num + 1].get_text().replace('\n',
-                                                                                                         '').replace(
-                                                '\t', '').replace('\r', '').strip(),
-                                            '高熔注塑': values[9].find_all('td')[num + 1].get_text().replace('\n',
-                                                                                                         '').replace(
-                                                '\t', '').replace('\r', '').strip()
-                                        },
-                                        '低压薄膜': values[10].find_all('td')[num + 1].get_text().replace('\n', '').replace(
-                                            '\t', '').replace('\r', '').strip(),
-                                        '低压拉丝': values[11].find_all('td')[num + 1].get_text().replace('\n', '').replace(
-                                            '\t', '').replace('\r', '').strip(),
-                                        '线性': values[12].find_all('td')[num + 1].get_text().replace('\n', '').replace(
-                                            '\t', '').replace('\r', '').strip(),
-                                        '其他': values[13].find_all('td')[num + 1].get_text().replace('\n', '').replace(
-                                            '\t', '').replace('\r', '').strip(),
-                                        '检修': values[14].find_all('td')[num + 1].get_text().replace('\n', '').replace(
-                                            '\t', '').replace('\r', '').strip()
-                                    })
-                                except:
-                                    pass
-                    # 横向
+                    # # 纵向
+                    # if '日' in soup.find('tbody').find_all('tr')[0].find_all('td')[2].get_text() or '月' in soup.find('tbody').find_all('tr')[0].find_all('td')[2].get_text():
+                    #     print('纵向--长')
+                    #     if len(soup.find('tbody').find_all('tr')) == 15:
+                    #         titles = [td.get_text().replace('\n', '').replace('\t', '').replace('\r', '').strip() for td in soup.find('tbody').find_all('tr')[0].find_all('td')]
+                    #         values = soup.find('tbody').find_all('tr')
+                    #         for num in range(1, len(soup.find('tbody').find_all('tr')[0].find_all('td')[1:]) + 1):
+                    #             try:
+                    #                 dataList.append({
+                    #                     '日期': titles[num],
+                    #                     '高压': {
+                    #                         '高压': values[1].find_all('td')[num + 1].get_text().replace('\n',
+                    #                                                                                    '').replace('\t',
+                    #                                                                                                '').replace(
+                    #                             '\r', '').strip(),
+                    #                         '涂覆': values[2].find_all('td')[num + 1].get_text().replace('\n',
+                    #                                                                                    '').replace('\t',
+                    #                                                                                                '').replace(
+                    #                             '\r', '').strip()
+                    #                     },
+                    #                     '低压管材': {
+                    #                         '80级管材': values[3].find_all('td')[num + 1].get_text().replace('\n',
+                    #                                                                                       '').replace(
+                    #                             '\t', '').replace('\r', '').strip(),
+                    #                         '100级管材': values[4].find_all('td')[num + 1].get_text().replace('\n',
+                    #                                                                                        '').replace(
+                    #                             '\t', '').replace('\r', '').strip(),
+                    #                         '地暖级管材': values[5].find_all('td')[num + 1].get_text().replace('\n',
+                    #                                                                                       '').replace(
+                    #                             '\t', '').replace('\r', '').strip()
+                    #                     },
+                    #                     '低压中空': {
+                    #                         '大中空': values[6].find_all('td')[num + 1].get_text().replace('\n',
+                    #                                                                                     '').replace(
+                    #                             '\t', '').replace('\r', '').strip(),
+                    #                         '小中空': values[7].find_all('td')[num + 1].get_text().replace('\n',
+                    #                                                                                     '').replace(
+                    #                             '\t', '').replace('\r', '').strip()
+                    #                     },
+                    #                     '低压注塑': {
+                    #                         '低熔注塑': values[8].find_all('td')[num + 1].get_text().replace('\n',
+                    #                                                                                      '').replace(
+                    #                             '\t', '').replace('\r', '').strip(),
+                    #                         '高熔注塑': values[9].find_all('td')[num + 1].get_text().replace('\n',
+                    #                                                                                      '').replace(
+                    #                             '\t', '').replace('\r', '').strip()
+                    #                     },
+                    #                     '低压薄膜': values[10].find_all('td')[num + 1].get_text().replace('\n', '').replace(
+                    #                         '\t', '').replace('\r', '').strip(),
+                    #                     '低压拉丝': values[11].find_all('td')[num + 1].get_text().replace('\n', '').replace(
+                    #                         '\t', '').replace('\r', '').strip(),
+                    #                     '线性': values[12].find_all('td')[num + 1].get_text().replace('\n', '').replace(
+                    #                         '\t', '').replace('\r', '').strip(),
+                    #                     '其他': values[13].find_all('td')[num + 1].get_text().replace('\n', '').replace(
+                    #                         '\t', '').replace('\r', '').strip(),
+                    #                     '检修': values[14].find_all('td')[num + 1].get_text().replace('\n', '').replace(
+                    #                         '\t', '').replace('\r', '').strip()
+                    #                 })
+                    #             except:
+                    #                 pass
+                    # # 横向
+                    # else:
+                    #     if len(soup.find('tbody').find_all('tr')[1].find_all('td')) == 10:
+                    #         print('横向--短')
+                    #         for tr in soup.find('tbody').find_all('tr')[1:]:
+                    #             data = {}
+                    #             titles = [td.get_text().replace('\n', '').replace('\r', '').replace('\t', '').strip() for td in soup.find('tbody').find_all('tr')[0].find_all('td')]
+                    #             if '日期' not in tr.find_all('td')[0].get_text():
+                    #                 try:
+                    #                     for num in range(len(titles)):
+                    #                         value = tr.find_all('td')[num].get_text().replace('\n', '').replace('\t',
+                    #                                                                                             '').replace(
+                    #                             '\r', '').strip()
+                    #                         data.update({
+                    #                             titles[num]: value
+                    #                         })
+                    #                 except:
+                    #                     pass
+                    #             if data:
+                    #                 dataList.append(data)
+                    #
+                    #     elif len(soup.find('tbody').find_all('tr')[1].find_all('td')) != 10:
+                    #         try:
+                    #             if len(soup.find('tbody').find_all('tr')[2].find_all('td')) == 15:
+                    #                 print('横向--长')
+                    #                 for tr in soup.find('tbody').find_all('tr')[2:]:
+                    #                     data = {}
+                    #                     titles = ['日期', '高压', '涂覆', '80级管材', '100级管材', '地暖级管材', '大中空', '小中空',
+                    #                               '低熔注塑', '高熔注塑', '低压薄膜', '低压拉丝', '线性', '其他', '检修']
+                    #                     if '日期' not in tr.find_all('td')[0].get_text():
+                    #                         try:
+                    #                             for num in range(len(titles)):
+                    #                                 value = tr.find_all('td')[num].get_text().replace('\n', '').replace(
+                    #                                     '\t', '').replace('\r', '').strip()
+                    #                                 if '日' in value or '月' in value:
+                    #                                     value = info.get('uploadTime').split(' ')[0].replace('[',
+                    #                                                                                          '').replace(
+                    #                                         '-', '/')
+                    #                                 data.update({
+                    #                                     titles[num]: value
+                    #                                 })
+                    #                         except:
+                    #                             pass
+                    #                     if data:
+                    #                         dataList.append(data)
+                    #         except:
+                    #             pass
+                    #         try:
+                    #             if len(soup.find('table', {'align': 'center'}).find_all('tr')[1].find_all('td')) == 15:
+                    #                 print('横向--长')
+                    #                 for tr in soup.find('table', {'align': 'center'}).find_all('tr')[1:]:
+                    #                     data = {}
+                    #                     titles = ['日期', '高压', '涂覆', '80级管材', '100级管材', '地暖级管材', '大中空', '小中空',
+                    #                               '低熔注塑', '高熔注塑', '低压薄膜', '低压拉丝', '线性', '其他', '检修']
+                    #                     if '日期' not in tr.find_all('td')[0].get_text():
+                    #                         try:
+                    #                             for num in range(len(titles)):
+                    #                                 value = tr.find_all('td')[num].get_text().replace('\n', '').replace(
+                    #                                     '\t', '').replace('\r', '').strip()
+                    #                                 if '日' in value or '月' in value:
+                    #                                     value = info.get('uploadTime').split(' ')[0].replace('[',
+                    #                                                                                          '').replace(
+                    #                                         '-', '/')
+                    #                                 data.update({
+                    #                                     titles[num]: value
+                    #                                 })
+                    #                         except:
+                    #                             pass
+                    #                     if data:
+                    #                         dataList.append(data)
+                    #         except:
+                    #             pass
+                    #
+                    #     else:
+                    #         print('出现新界面！')
+                    if len(soup.find('tbody').find_all('tr')[0].find_all('td')) == 10 and len(soup.find('tbody').find_all('tr')[1].find_all('td')) == 10 and len(soup.find('tbody').find_all('tr')[2].find_all('td')) == 16:
+                        for tr in soup.find('tbody').find_all('tr')[2:]:
+                            tds = tr.find_all('td')
+                            try:
+                                dataList.append({
+                                    '日期': tds[0].get_text().replace('\n','').replace('\t','').replace('\r', '').strip(),
+                                    '高压': {
+                                        '高压': tds[1].get_text().replace('\n','').replace('\t','').replace('\r', '').strip(),
+                                        '涂覆': tds[2].get_text().replace('\n','').replace('\t','').replace('\r', '').strip()
+                                    },
+                                    '低压管材': {
+                                        '80级管材': tds[3].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip(),
+                                        '100级管材': tds[4].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip(),
+                                        '地暖级管材': tds[5].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip(),
+                                        '其他管材': tds[6].get_text().replace('\n', '').replace('\t', '').replace('\r','').strip()
+                                    },
+                                    '低压中空': {
+                                        '大中空': tds[7].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip(),
+                                        '小中空': tds[8].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip()
+                                    },
+                                    '低压注塑': {
+                                        '低熔注塑': tds[9].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip(),
+                                        '高熔注塑': tds[10].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip()
+                                    },
+                                    '低压薄膜': tds[11].get_text().replace('\n', '').replace('\t', '').replace('\r', '').strip(),
+                                    '拉丝': tds[12].get_text().replace('\n', '').replace('\t', '').replace('\r', '').strip(),
+                                    '线性': tds[13].get_text().replace('\n', '').replace('\t', '').replace('\r', '').strip(),
+                                    '其他': tds[14].get_text().replace('\n', '').replace('\t', '').replace('\r', '').strip(),
+                                    '检修': tds[15].get_text().replace('\n', '').replace('\t', '').replace('\r', '').strip()
+                                })
+                            except:
+                                pass
+                    elif len(soup.find('tbody').find_all('tr')[0].find_all('td')) == 10 and len(soup.find('tbody').find_all('tr')[1].find_all('td')) == 9 and len(soup.find('tbody').find_all('tr')[2].find_all('td')) == 15:
+                        for tr in soup.find('tbody').find_all('tr')[2:]:
+                            tds = tr.find_all('td')
+                            try:
+                                dataList.append({
+                                    '日期': tds[0].get_text().replace('\n','').replace('\t','').replace('\r', '').strip(),
+                                    '高压': {
+                                        '高压': tds[1].get_text().replace('\n','').replace('\t','').replace('\r', '').strip(),
+                                        '涂覆': tds[2].get_text().replace('\n','').replace('\t','').replace('\r', '').strip()
+                                    },
+                                    '低压管材': {
+                                        '80级管材': tds[3].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip(),
+                                        '100级管材': tds[4].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip(),
+                                        '地暖级管材': tds[5].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip()
+                                    },
+                                    '低压中空': {
+                                        '大中空': tds[6].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip(),
+                                        '小中空': tds[7].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip()
+                                    },
+                                    '低压注塑': {
+                                        '低熔注塑': tds[8].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip(),
+                                        '高熔注塑': tds[9].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip()
+                                    },
+                                    '低压薄膜': tds[10].get_text().replace('\n', '').replace('\t', '').replace('\r', '').strip(),
+                                    '拉丝': tds[11].get_text().replace('\n', '').replace('\t', '').replace('\r', '').strip(),
+                                    '线性': tds[12].get_text().replace('\n', '').replace('\t', '').replace('\r', '').strip(),
+                                    '其他': tds[13].get_text().replace('\n', '').replace('\t', '').replace('\r', '').strip(),
+                                    '检修': tds[14].get_text().replace('\n', '').replace('\t', '').replace('\r', '').strip()
+                                })
+                            except:
+                                pass
                     else:
-                        if len(soup.find('tbody').find_all('tr')[1].find_all('td')) == 10:
-                            print('横向--短')
-                            for tr in soup.find('tbody').find_all('tr')[1:]:
-                                data = {}
-                                titles = [td.get_text().replace('\n', '').replace('\r', '').replace('\t', '').strip()
-                                          for td in soup.find('tbody').find_all('tr')[0].find_all('td')]
-                                if '日期' not in tr.find_all('td')[0].get_text():
-                                    try:
-                                        for num in range(len(titles)):
-                                            value = tr.find_all('td')[num].get_text().replace('\n', '').replace('\t',
-                                                                                                                '').replace(
-                                                '\r', '').strip()
-                                            data.update({
-                                                titles[num]: value
-                                            })
-                                    except:
-                                        pass
-                                if data:
-                                    dataList.append(data)
-
-                        elif len(soup.find('tbody').find_all('tr')[1].find_all('td')) != 10:
-                            try:
-                                if len(soup.find('tbody').find_all('tr')[2].find_all('td')) == 15:
-                                    print('横向--长')
-                                    for tr in soup.find('tbody').find_all('tr')[2:]:
-                                        data = {}
-                                        titles = ['日期', '高压', '涂覆', '80级管材', '100级管材', '地暖级管材', '大中空', '小中空',
-                                                  '低熔注塑', '高熔注塑', '低压薄膜', '低压拉丝', '线性', '其他', '检修']
-                                        if '日期' not in tr.find_all('td')[0].get_text():
-                                            try:
-                                                for num in range(len(titles)):
-                                                    value = tr.find_all('td')[num].get_text().replace('\n', '').replace(
-                                                        '\t', '').replace('\r', '').strip()
-                                                    if '日' in value or '月' in value:
-                                                        value = info.get('uploadTime').split(' ')[0].replace('[',
-                                                                                                             '').replace(
-                                                            '-', '/')
-                                                    data.update({
-                                                        titles[num]: value
-                                                    })
-                                            except:
-                                                pass
-                                        if data:
-                                            dataList.append(data)
-                            except:
-                                pass
-                            try:
-                                if len(soup.find('table', {'align': 'center'}).find_all('tr')[1].find_all('td')) == 15:
-                                    print('横向--长')
-                                    for tr in soup.find('table', {'align': 'center'}).find_all('tr')[1:]:
-                                        data = {}
-                                        titles = ['日期', '高压', '涂覆', '80级管材', '100级管材', '地暖级管材', '大中空', '小中空',
-                                                  '低熔注塑', '高熔注塑', '低压薄膜', '低压拉丝', '线性', '其他', '检修']
-                                        if '日期' not in tr.find_all('td')[0].get_text():
-                                            try:
-                                                for num in range(len(titles)):
-                                                    value = tr.find_all('td')[num].get_text().replace('\n', '').replace(
-                                                        '\t', '').replace('\r', '').strip()
-                                                    if '日' in value or '月' in value:
-                                                        value = info.get('uploadTime').split(' ')[0].replace('[',
-                                                                                                             '').replace(
-                                                            '-', '/')
-                                                    data.update({
-                                                        titles[num]: value
-                                                    })
-                                            except:
-                                                pass
-                                        if data:
-                                            dataList.append(data)
-                            except:
-                                pass
-
-                        else:
-                            print('出现新界面！')
+                        self.message_coll.update_one({'link': link}, {'$set': {'status': '无表结构'}}, upsert=True)
+                        print('出现新的页面结构！')
                 else:
                     self.message_coll.update_one({'link': link}, {'$set': {'status': '无表结构'}}, upsert=True)
                     print('出现新的页面结构！')
@@ -2026,6 +2089,7 @@ class PE:
         pool = ThreadPool(processes=3)
 
         for info in self.message_coll.find({'$nor': [{'status': 1}]}).sort('_id', -1):
+        # for info in self.message_coll.find({"Type" : "国内石化PE生产比例汇总"}).sort('_id', -1):
             if Async:
                 out = pool.apply_async(func=self.GetUrlFromMongo, args=(info,))  # 异步
             else:
