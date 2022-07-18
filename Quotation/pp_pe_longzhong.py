@@ -118,7 +118,7 @@ class PPZhuoChuang:
 
     # 获取最新数据或者历史数据
     def GetAllMessages(self, Type, pageNum=1, history=False):
-        # print('第 {} 页'.format(pageNum))
+        print('第 {} 页'.format(pageNum))
         try:
             jsonData = {
                 'action': 'getlist',
@@ -141,6 +141,7 @@ class PPZhuoChuang:
                     if history:
                         for info in data.get('dataList'):
                             info.update({'Type': Type})
+                            print(info)
                             self.message_coll.update_one({'link': info['link']}, {'$set': info}, upsert=True)
 
                         if pageNum < int(data.get('maxPage')):
@@ -151,6 +152,7 @@ class PPZhuoChuang:
                         todayStatus = False
                         for info in data.get('dataList'):
                             info.update({'Type': Type})
+                            print(info)
                             self.message_coll.update_one({'link': info['link']}, {'$set': info}, upsert=True)
 
                             if str(time.strftime("%Y-%m-%d", time.localtime(time.time()))) in info.get('PubTime'):
@@ -891,17 +893,16 @@ def run():
     # 初始化翻第一页  True 加载历史数据  False 不加载历史数据
     for word in [
         'PP装置动态汇总',
-        #     '国内石化PP生产比例汇总',
-        #     '聚丙烯PP粉料产量',
-        #     '神华PP竞拍结果',
-        #     '塑料两油库存',
-        #     '聚丙烯粉料及上游丙烯价格一览',
-        #     '丙烯下游周度开工率统计',
-        #     '塑膜收盘价格表'
+        '国内石化PP生产比例汇总',
+        '聚丙烯PP粉料产量',
+        '神华PP竞拍结果',
+        '塑料两油库存',
+        '聚丙烯粉料及上游丙烯价格一览',
+        '丙烯下游周度开工率统计',
+        '塑膜收盘价格表'
     ]:
-        # print(word)
-        pp.GetAllMessages(word, 1, history=False)
-
+        print(word)
+        # pp.GetAllMessages(word)
 
     # 获取文章数据
     pp.CommandThread()

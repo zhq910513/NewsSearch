@@ -50,11 +50,11 @@ class PPZhuoChuang:
         datadb = conf.get("Mongo", "QUOTATIONDB")
         cookiedb = conf.get("Mongo", "COOKIE")
 
-        client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=datadb))
-        # client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=datadb))
+        # client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=datadb))
+        client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=datadb))
 
-        cookieclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=cookiedb))
-        # cookieclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=cookiedb))
+        # cookieclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=cookiedb))
+        cookieclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=cookiedb))
         self.cookie_coll = cookieclient[cookiedb]['cookies']
 
         self.message_coll = client[datadb]['pp_zhuochuang_messages']
@@ -226,17 +226,17 @@ class PPZhuoChuang:
                     pubTime = pubTime_new
                 if dataList:
                     hashKey = hashlib.md5((pubTime + link).encode("utf8")).hexdigest()
-                    print(hashKey)
+                    print(dataList)
                     try:
-                        self.articleData_coll.update_one({'hashKey': hashKey},
-                                                         {'$set':
-                                                             {
+                        insert_data = {
                                                                  'hashKey': hashKey,
                                                                  'Type': Type,
                                                                  'link': info['link'],
                                                                  'pubTime': pubTime,
                                                                  'dataList': dataList
-                                                             }},
+                                                             }
+                        self.articleData_coll.update_one({'hashKey': hashKey},
+                                                         {'$set': insert_data},
                                                          upsert=True)
                         self.message_coll.update_one({'link': info['link']}, {'$set': {'status': 1}}, upsert=True)
                     except Exception as error:
@@ -914,7 +914,7 @@ def run():
         '塑膜价格汇总表'
     ]:
         # pass
-        pp.GetAllMessages(word, history=False)
+        pp.GetAllMessages(word)
 
     # 获取文章数据
     pp.CommandThread()
