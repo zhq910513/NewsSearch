@@ -56,11 +56,11 @@ class PE:
         datadb = conf.get("Mongo", "QUOTATIONDB")
         cookiedb = conf.get("Mongo", "COOKIE")
 
-        client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=datadb))
-        # client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=datadb))
+        # client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=datadb))
+        client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=datadb))
 
-        cookieclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=cookiedb))
-        # cookieclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=cookiedb))
+        # cookieclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=cookiedb))
+        cookieclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=cookiedb))
         self.cookie_coll = cookieclient[cookiedb]['cookies']
 
         self.message_coll = client[datadb]['pe_wangye_messages']
@@ -1552,24 +1552,16 @@ class PE:
                             try:
                                 dataList.append({
                                     '日期': tds[0].get_text().replace('\n','').replace('\t','').replace('\r', '').strip(),
-                                    '高压': {
-                                        '高压': tds[1].get_text().replace('\n','').replace('\t','').replace('\r', '').strip(),
-                                        '涂覆': tds[2].get_text().replace('\n','').replace('\t','').replace('\r', '').strip()
-                                    },
-                                    '低压管材': {
-                                        '80级管材': tds[3].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip(),
-                                        '100级管材': tds[4].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip(),
-                                        '地暖级管材': tds[5].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip(),
-                                        '其他管材': tds[6].get_text().replace('\n', '').replace('\t', '').replace('\r','').strip()
-                                    },
-                                    '低压中空': {
-                                        '大中空': tds[7].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip(),
-                                        '小中空': tds[8].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip()
-                                    },
-                                    '低压注塑': {
-                                        '低熔注塑': tds[9].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip(),
-                                        '高熔注塑': tds[10].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip()
-                                    },
+                                    '高压': tds[1].get_text().replace('\n','').replace('\t','').replace('\r', '').strip(),
+                                    '涂覆': tds[2].get_text().replace('\n','').replace('\t','').replace('\r', '').strip(),
+                                    '80级管材': tds[3].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip(),
+                                    '100级管材': tds[4].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip(),
+                                    '地暖级管材': tds[5].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip(),
+                                    '其他管材': tds[6].get_text().replace('\n', '').replace('\t', '').replace('\r','').strip(),
+                                    '大中空': tds[7].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip(),
+                                    '小中空': tds[8].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip(),
+                                    '低熔注塑': tds[9].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip(),
+                                    '高熔注塑': tds[10].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip(),
                                     '低压薄膜': tds[11].get_text().replace('\n', '').replace('\t', '').replace('\r', '').strip(),
                                     '拉丝': tds[12].get_text().replace('\n', '').replace('\t', '').replace('\r', '').strip(),
                                     '线性': tds[13].get_text().replace('\n', '').replace('\t', '').replace('\r', '').strip(),
@@ -1584,23 +1576,15 @@ class PE:
                             try:
                                 dataList.append({
                                     '日期': tds[0].get_text().replace('\n','').replace('\t','').replace('\r', '').strip(),
-                                    '高压': {
-                                        '高压': tds[1].get_text().replace('\n','').replace('\t','').replace('\r', '').strip(),
-                                        '涂覆': tds[2].get_text().replace('\n','').replace('\t','').replace('\r', '').strip()
-                                    },
-                                    '低压管材': {
-                                        '80级管材': tds[3].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip(),
-                                        '100级管材': tds[4].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip(),
-                                        '地暖级管材': tds[5].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip()
-                                    },
-                                    '低压中空': {
-                                        '大中空': tds[6].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip(),
-                                        '小中空': tds[7].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip()
-                                    },
-                                    '低压注塑': {
-                                        '低熔注塑': tds[8].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip(),
-                                        '高熔注塑': tds[9].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip()
-                                    },
+                                    '高压': tds[1].get_text().replace('\n','').replace('\t','').replace('\r', '').strip(),
+                                    '涂覆': tds[2].get_text().replace('\n','').replace('\t','').replace('\r', '').strip(),
+                                    '80级管材': tds[3].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip(),
+                                    '100级管材': tds[4].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip(),
+                                    '地暖级管材': tds[5].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip(),
+                                    '大中空': tds[6].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip(),
+                                    '小中空': tds[7].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip(),
+                                    '低熔注塑': tds[8].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip(),
+                                    '高熔注塑': tds[9].get_text().replace('\n','').replace('\t', '').replace('\r', '').strip(),
                                     '低压薄膜': tds[10].get_text().replace('\n', '').replace('\t', '').replace('\r', '').strip(),
                                     '拉丝': tds[11].get_text().replace('\n', '').replace('\t', '').replace('\r', '').strip(),
                                     '线性': tds[12].get_text().replace('\n', '').replace('\t', '').replace('\r', '').strip(),
@@ -2124,7 +2108,6 @@ def perun():
             'Type': '进出口数据'},
     ]:
         # pass
-        # print(info['Type'])
         pe.GetAllMessages(info)
 
     for info in [
@@ -2132,14 +2115,13 @@ def perun():
         {'url': 'https://search.oilchem.net/oilsearch/newsearch/oilchem/search/searchArticle', 'Type': '国内PP装置检修'},
     ]:
         # pass
-        # print(info['Type'])
         pe.GetPeLongzhong(info)
 
     # 多进程获取数据
     pe.CommandThread()
 
     # 获取聚丙烯数据
-    pe.GetSelectDate()
+    # pe.GetSelectDate()
 
     print('pe-wangye 获取历史数据--完成')
 
