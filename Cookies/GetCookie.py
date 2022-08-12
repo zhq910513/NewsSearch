@@ -470,7 +470,7 @@ class Cookie:
                 ('zc_pe_塑膜收盘_article', 'https://plas.chem99.com/news/41727049.html'),
                 ('zc_pe_神华竞拍_article', 'https://plas.chem99.com/news/41770856.html'),
 
-                ('zc_pp_article', 'https://plas.chem99.com/news/41775116.html'),
+                ('zc_pp_article', 'https://plas.chem99.com/news/42125752.html'),
                 # ('zc_pp_bxxy_article', 'https://chem.chem99.com/news/36724085.html'),
                 # second
                 # ('zc_sj_category_second', 'https://prices.sci99.com/cn/product.aspx?ppid=12555&ppname=%u518D%u751F%u9AD8%u538B&navid=552'),

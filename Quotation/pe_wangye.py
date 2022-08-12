@@ -56,11 +56,11 @@ class PE:
         datadb = conf.get("Mongo", "QUOTATIONDB")
         cookiedb = conf.get("Mongo", "COOKIE")
 
-        # client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=datadb))
-        client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=datadb))
+        client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=datadb))
+        # client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=datadb))
 
-        # cookieclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=cookiedb))
-        cookieclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=cookiedb))
+        cookieclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=cookiedb))
+        # cookieclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=cookiedb))
         self.cookie_coll = cookieclient[cookiedb]['cookies']
 
         self.message_coll = client[datadb]['pe_wangye_messages']
@@ -701,9 +701,12 @@ class PE:
                     else:
                         print(dataList)
                         try:
+                            Type = info['Type']
+                            if Type == '塑膜价格汇总表':
+                                Type = '塑膜收盘价格表'
                             self.articleData_coll.update_one({'link': link}, {'$set': {
                                 'link': link,
-                                'Type': info['Type'],
+                                'Type': Type,
                                 'title': info['title'],
                                 'uploadTime': info['uploadTime'].replace(
                                     '                                                ',

@@ -60,11 +60,11 @@ class LongZhong:
         datadb = conf.get("Mongo", "QUOTATIONDB")
         cookiedb = conf.get("Mongo", "COOKIE")
 
-        client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=datadb))
-        # client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=datadb))
+        # client = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=datadb))
+        client = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=datadb))
 
-        cookieclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=cookiedb))
-        # cookieclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=cookiedb))
+        # cookieclient = MongoClient('mongodb://readWrite:readWrite123456@127.0.0.1:27017/{db}'.format(db=cookiedb))
+        cookieclient = MongoClient('mongodb://readWrite:readWrite123456@27.150.182.135:27017/{db}'.format(db=cookiedb))
         self.cookie_coll = cookieclient[cookiedb]['cookies']
 
         self.category_coll = client[datadb]['lz_sj_category']
@@ -358,7 +358,7 @@ class LongZhong:
                         'Referer': 'https://dc.oilchem.net/price_search/list.htm?businessType=2&varietiesName=HDPE&varietiesId=313&templateType=6&flagAndTemplate=2-7;1-6;3-4&channelId=1776&oneName=%E5%A1%91%E6%96%99&twoName=%E9%80%9A%E7%94%A8%E5%A1%91%E6%96%99',
                         'Accept-Encoding': 'gzip, deflate, br',
                         'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
-                        'Cookie': '_username=13428976742; _member_user_tonken_=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzZWMiOiIkMmEkMTAkODF0R2I4UUVHL2tPNmY0RU13ZmZuLk9QQjE5TUEzbTdtV1ZnQ1pMdnBoMFprVkxUNGFYMnUiLCJuaWNrTmFtZSI6IiIsInBpYyI6IiIsImV4cCI6MTYxMDIwOTc4NCwidXNlcklkIjoxMTExNDMzLCJpYXQiOjE2MDc2MTc3ODQsImp0aSI6IjBkZjljNzU3LWU5MjUtNDA2My05YTYzLTZhYTM3ZDQ3ZWJlNyIsInVzZXJuYW1lIjoiMTM0Mjg5NzY3NDIifQ.rJ5pLdhTQ6aPP_OjxGOb-2vPa7PJGdDUzBqNOF9F5m4; refcheck=ok; refpay=0; refsite=; oilchem_refer_url=; oilchem_land_url=https://dc.oilchem.net/price_search/list.htm?businessType=2&varietiesName=HDPE&varietiesId=313&templateType=6&flagAndTemplate=2-7; Hm_lvt_e91cc445fdd1ff22a6e5c7ea9e9d5406=1608133066,1608172567,1608187804,1608199697; Hm_lvt_47f485baba18aaaa71d17def87b5f7ec=1608133066,1608172567,1608187804,1608199697; Hm_lpvt_e91cc445fdd1ff22a6e5c7ea9e9d5406=1608201236; Hm_lpvt_47f485baba18aaaa71d17def87b5f7ec=1608201237',
+                        'Cookie': "_username=13428976742; _member_user_tonken_=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzZWMiOiIkMmEkMTAkODF0R2I4UUVHL2tPNmY0RU13ZmZuLk9QQjE5TUEzbTdtV1ZnQ1pMdnBoMFprVkxUNGFYMnUiLCJuaWNrTmFtZSI6IiIsInBpYyI6IiIsImV4cCI6MTYxMDIwOTc4NCwidXNlcklkIjoxMTExNDMzLCJpYXQiOjE2MDc2MTc3ODQsImp0aSI6IjBkZjljNzU3LWU5MjUtNDA2My05YTYzLTZhYTM3ZDQ3ZWJlNyIsInVzZXJuYW1lIjoiMTM0Mjg5NzY3NDIifQ.rJ5pLdhTQ6aPP_OjxGOb-2vPa7PJGdDUzBqNOF9F5m4; refcheck=ok; refpay=0; refsite=; oilchem_refer_url=; oilchem_land_url=https://dc.oilchem.net/price_search/list.htm?businessType=2&varietiesName=HDPE&varietiesId=313&templateType=6&flagAndTemplate=2-7; Hm_lvt_e91cc445fdd1ff22a6e5c7ea9e9d5406=1608133066,1608172567,1608187804,1608199697; Hm_lvt_47f485baba18aaaa71d17def87b5f7ec=1608133066,1608172567,1608187804,1608199697; Hm_lpvt_e91cc445fdd1ff22a6e5c7ea9e9d5406=1608201236; Hm_lpvt_47f485baba18aaaa71d17def87b5f7ec=1608201237",
                     }
 
                     link = 'https://dc.oilchem.net/priceCompany/channellist.htm'
