@@ -9,7 +9,7 @@ do
         h=`expr $ht \* 60`
         m=$(date "+%M")
         now=`expr $h + $m`
-        if [ 579 -lt $now -a $now -lt 581 ] || [ 1069 -lt $now -a $now -lt 1071 ]
+        if [ 559 -lt $now -a $now -lt 561 ] || [ 739 -lt $now -a $now -lt 741 ] || [ 1039 -lt $now -a $now -lt 1041 ]
         then
                 for name in GetCookie.py
                 do

@@ -9,7 +9,7 @@ do
         h=`expr $ht \* 60`
         m=$(date "+%M")
         now=`expr $h + $m`
-        if [ 569 -lt $now -a $now -lt 571 ]|| [ 749 -lt $now -a $now -lt 751 ] || [ 1049 -lt $now -a $now -lt 1051 ]
+        if [ 569 -lt $now -a $now -lt 571 ] || [ 1049 -lt $now -a $now -lt 1051 ]
         then
                 for name in longzhong_sj.py
                 do
